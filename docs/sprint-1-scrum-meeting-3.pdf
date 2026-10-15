@@ -1,0 +1,680 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R] /Count 6 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 5 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+5 0 obj << /Length 2622 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+() Tj
+0 -13 Td
+(Sprint 1 - Scrum Meeting 3 Script \(QWERTY\)) Tj
+0 -13 Td
+(==========================================) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Speaking script for the team's third Daily Scrum. Same three-question format as Meeting 2,) Tj
+0 -13 Td
+(from the instructor's feedback.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Meeting at a glance) Tj
+0 -13 Td
+(-------------------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Meeting 3 is a 10-minute stand-up at the start of Sprint Day 4. It reports Day 3 work. Each) Tj
+0 -13 Td
+(member answers the same three questions. The Scrum board stays on screen the whole time.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Meeting 2 \(start of Day 3\) closed three blockers: message format, food-bank sample data, and) Tj
+0 -13 Td
+(the QA test endpoint. This meeting checks that those landed, then moves US1a toward Done) Tj
+0 -13 Td
+(using the Definition of Done.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Note: The progress below is drafted from Day 3 of the Sprint 1 Backlog plus what is now on) Tj
+0 -13 Td
+(`main` \(`d7df8e3`\). Replace any line with that person's real status before you speak.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Item | Detail) Tj
+0 -13 Td
+(Length | About 10 minutes \(about 1.5 minutes per person\)) Tj
+0 -13 Td
+(Facilitator | Napat Tayommai \(Scrum Master\)) Tj
+0 -13 Td
+(Speakers | Pratanin \(Dev 1\), Jirathiwat \(Dev 3\), Sirapassorn \(Dev 2\), Sakkaraj \(QA 1\)) Tj
+0 -13 Td
+(Shared on screen | Scrum board \(Sprint 1 cards\) and the Definition of Done) Tj
+0 -13 Td
+(Three questions | 1. What did I accomplish since the last Scrum meeting? 2. What will I) Tj
+0 -13 Td
+(focus on until the next Scrum meeting? 3. Are there any blockers or obstacles in my way?) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Before the meeting) Tj
+0 -13 Td
+(------------------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Napat prepares these so the meeting can run without setup time.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(1. Open the Scrum board and share it.) Tj
+0 -13 Td
+(2. Move cards to match real status \(see Example card positions below\).) Tj
+0 -13 Td
+(3. Pin the Definition of Done.) Tj
+0 -13 Td
+(4. Have the demo URL ready: `http://localhost:3000` \(QWERTY Rescue ERP\).) Tj
+0 -13 Td
+(5. Have the US1a contract ready: `GET /api/contract`.) Tj
+0 -13 Td
+(6. Ask each person to update their own cards and hours before the meeting starts.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(The script) Tj
+0 -13 Td
+(----------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 1 of 6) Tj
+ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 7 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+7 0 obj << /Length 3197 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+(1. Opening \(Napat, about 1 minute\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Good morning, everyone. This is our third Scrum meeting for Sprint 1. Yesterday was Day 3,) Tj
+0 -13 Td
+(and the board is on screen, so please follow along there.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Same three questions as last time: what did I accomplish since the last Scrum meeting, what) Tj
+0 -13 Td
+(will I focus on until the next one, and is anything blocking me. Name the card you are) Tj
+0 -13 Td
+(talking about. We do not move a card to Done unless every item on the Definition of Done is) Tj
+0 -13 Td
+(ticked.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Last meeting we left with three blockers: the donation message format, food-bank sample) Tj
+0 -13 Td
+(data, and the QA test endpoint. We will confirm those first through your updates.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Pratanin, would you like to start?) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(2. Pratanin, Dev 1 \(about 1.5 minutes\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Accomplished: My card is US1a Build donation entry form UI. The form is in the donor portal.) Tj
+0 -13 Td
+(It has food type as a dropdown, quantity in kilograms, expiry date and time, and the pickup) Tj
+0 -13 Td
+(window from US6. Input validation and error messages are in place, which was the risk I) Tj
+0 -13 Td
+(raised in Meeting 1. A blank food type is rejected. I connected the form to Jirathiwat's) Tj
+0 -13 Td
+(queue so a valid submit shows up on `/queue` immediately. The card is In Review / QA, not) Tj
+0 -13 Td
+(Done.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Next: Day 4 on the plan is US1b Integrate matching service with queue triggers \(4 hours\). I) Tj
+0 -13 Td
+(will confirm the form-to-queue path with Sakkaraj, then keep matching tied to ingestion so a) Tj
+0 -13 Td
+(queued donation can be proposed to a food bank within 2 minutes. If review comments come in) Tj
+0 -13 Td
+(on the form, I fix those first.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Blockers: None for the form. I need Sakkaraj's QA pass before this card can move to Done.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(3. Napat to Jirathiwat) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Thanks, Pratanin. Jirathiwat, you're next.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(4. Jirathiwat, Dev 3 \(about 1.5 minutes\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Accomplished: My card is US1a Implement donation queue ingestion backend logic. I finished) Tj
+0 -13 Td
+(ingestion. The agreed JSON message is donation ID, food type, quantity, expiry date and) Tj
+0 -13 Td
+(time, pickup window, donor ID, and timezone Asia/Bangkok. A donation is written to the) Tj
+0 -13 Td
+(matching queue immediately, which meets the 1-minute acceptance criterion. Duplicate) Tj
+0 -13 Td
+(protection is the donation ID plus an `Idempotency-Key`. I also delivered the QA test) Tj
+0 -13 Td
+(endpoint `POST /api/test/queue`, which was my blocker last meeting. The card is In Review /) Tj
+0 -13 Td
+(QA. I am about done with the 8 hours I estimated.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Next: Day 4 on the plan is US1b Develop matching algorithm food bank capacity check \(3) Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 2 of 6) Tj
+ET
+endstream endobj
+8 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 9 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+9 0 obj << /Length 3088 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+(hours\). I will finish capacity scoring against remaining kilograms and keep it on the same) Tj
+0 -13 Td
+(path as Sirapassorn's proximity score. After that I can help with the expiry monitor if I) Tj
+0 -13 Td
+(have time.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Blockers: None. Message format is agreed. Sakkaraj can hit `/api/test/queue` and) Tj
+0 -13 Td
+(`/api/queue` without waiting on me.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(5. Napat to Sirapassorn) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Thanks, Jirathiwat. Sirapassorn, you're next. Please tell us which card you're working on) Tj
+0 -13 Td
+(and what exactly you built.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(6. Sirapassorn, Dev 2 \(about 1.5 minutes\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Accomplished: My card for Day 3 was US1b Develop matching algorithm proximity scoring \(4) Tj
+0 -13 Td
+(hours on the plan\). I have a working version that ranks food banks by distance inside each) Tj
+0 -13 Td
+(bank's delivery range. Sample food-bank data is in the system: SOS Food Bank Bangkok,) Tj
+0 -13 Td
+(Mahidol Community Kitchen, Thonburi Shelter Pantry, and Min Buri Neighbourhood Bank, each) Tj
+0 -13 Td
+(with coordinates, reported capacity, remaining capacity, and range. On a test donation the) Tj
+0 -13 Td
+(system proposed SOS Food Bank Bangkok at about 3.7 km. The card is In Progress / In Review.) Tj
+0 -13 Td
+(No merge to Done yet.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Next: Day 4 on the plan is 3 more hours on proximity scoring. I will tighten ranking, then) Tj
+0 -13 Td
+(hook it to Jirathiwat's capacity check so we only propose a match when the bank is in range) Tj
+0 -13 Td
+(and has remaining capacity. That is the US1b acceptance criterion: propose a match within 2) Tj
+0 -13 Td
+(minutes.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Blockers: None. I had asked Sakkaraj for sample food-bank data; that is now in the app under) Tj
+0 -13 Td
+(Food banks.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(7. Napat to Sakkaraj) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Thank you, Sirapassorn. Sakkaraj, last of the builders.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(8. Sakkaraj, QA 1 \(about 1.5 minutes\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Accomplished: My card is US1a QA test donation creation and queue timing. Day 3 on the plan) Tj
+0 -13 Td
+(was 2 of 4 hours. I converted the high-priority text cases to API tests in) Tj
+0 -13 Td
+(`qa/api/test-log-donation.py`. Against the running app, 15 tests passed, including valid) Tj
+0 -13 Td
+(queueing under 60 seconds, field validation, past expiry, duplicate submit, and non-donor) Tj
+0 -13 Td
+(blocked. I can inject messages with `POST /api/test/queue`. The card stays In Progress until) Tj
+0 -13 Td
+(I finish the remaining QA hours and the UI pass.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Next: Day 4 is the remaining 2 hours on US1a QA. I will rerun the suite, do the manual form) Tj
+0 -13 Td
+(cases \(TC-01 to TC-11\), and record actual queue time. If US1a is clean, I start preparing) Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 3 of 6) Tj
+ET
+endstream endobj
+10 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 11 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+11 0 obj << /Length 3169 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+(US1b auto-match cases: in range with capacity, out of range, and over capacity.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Blockers: None for the API. I still need a short walkthrough of the donor form on a test) Tj
+0 -13 Td
+(environment from Pratanin before I sign the QA box on the Definition of Done.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(9. Napat's own update \(about 1 minute\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Accomplished: I updated the board from Day 3. The three blockers from Meeting 2 are closed:) Tj
+0 -13 Td
+(message format, sample food-bank data, and the test endpoint. US1a cards are in Review / QA,) Tj
+0 -13 Td
+(not Done. Burndown should show Jirathiwat's 4 hours, Sirapassorn's 4 hours, and Sakkaraj's 2) Tj
+0 -13 Td
+(hours logged for Day 3, plus Pratanin's review and integration time.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Next: I will keep the burndown current, chase the Definition of Done on US1a, and make sure) Tj
+0 -13 Td
+(Day 4 cards are in To-Do or In Progress before people leave.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Blockers: None for me. The remaining gate for US1a is review plus Sakkaraj's QA sign-off,) Tj
+0 -13 Td
+(then Product Owner accept.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(10. Blocker and risk review \(Napat, about 1 minute\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Let me summarize. Last meeting's three blockers are closed. Today's open items are quality) Tj
+0 -13 Td
+(gates, not waits: Pratanin's form needs QA, Jirathiwat's ingestion needs QA, Sirapassorn's) Tj
+0 -13 Td
+(proximity needs the capacity check tomorrow, and Sakkaraj needs the UI walkthrough.) Tj
+0 -13 Td
+(Validation and duplicate-donation risks from Meeting 1 are handled in the form and the) Tj
+0 -13 Td
+(donation ID. Does anyone disagree or want to add a blocker?) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(11. Definition of Done check \(Napat, about 1.5 minutes\)) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Now the Definition of Done. US1a is not Done yet even though the form and queue work in) Tj
+0 -13 Td
+(demo. Before those cards move to Done, we tick all of these:) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(- Acceptance criteria met: donor submits food type, quantity, expiry, and it appears in the) Tj
+0 -13 Td
+(matching queue within 1 minute.) Tj
+0 -13 Td
+(- Another team member has reviewed the code, and it is on `main`.) Tj
+0 -13 Td
+(- Unit tests and QA tests pass, including Sakkaraj's US1a cases.) Tj
+0 -13 Td
+(- Input validation and duplicate handling are in place.) Tj
+0 -13 Td
+(- Time target is met \(queue within 1 minute\).) Tj
+0 -13 Td
+(- QA has run the cases with no open critical bugs.) Tj
+0 -13 Td
+(- The card and hours are updated on the board.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Sakkaraj, you confirm the QA tick. Pratanin and Jirathiwat, you do not move US1a to Done) Tj
+0 -13 Td
+(until that list is complete. Everyone, same check for US1b before it goes to Done: match) Tj
+0 -13 Td
+(within 2 minutes when a food bank is in range and has capacity.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(12. Closing \(Napat, about 30 seconds\)) Tj
+0 -13 Td
+() Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 4 of 6) Tj
+ET
+endstream endobj
+12 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 13 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+13 0 obj << /Length 2611 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+() Tj
+0 -13 Td
+(Thank you all. Please keep cards and hours updated every day, and use the Blocked column if) Tj
+0 -13 Td
+(something stops you. Day 4 on the plan is US1b capacity, matching integration, more) Tj
+0 -13 Td
+(proximity work, and finishing US1a QA. If you need help, message me directly. The next Scrum) Tj
+0 -13 Td
+(meeting is [date and time]. Thank you.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Definition of Done) Tj
+0 -13 Td
+(------------------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(A card moves to Done only when every item is ticked.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(- The work meets every Given/When/Then acceptance criterion of its user story.) Tj
+0 -13 Td
+(- Another team member has reviewed the code, and it is merged into `main`.) Tj
+0 -13 Td
+(- Unit tests are written and pass.) Tj
+0 -13 Td
+(- Input validation and error handling are in place \(bad quantity or expiry, duplicate) Tj
+0 -13 Td
+(donation\).) Tj
+0 -13 Td
+(- Time targets are met where the story sets one \(queue within 1 minute, match within 2) Tj
+0 -13 Td
+(minutes\).) Tj
+0 -13 Td
+(- QA has run the test cases for the card, with no open critical bugs.) Tj
+0 -13 Td
+(- The card is updated on the board and the hours are logged in the Sprint Backlog.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Scrum board) Tj
+0 -13 Td
+(-----------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Columns run left to right. The Definition of Done is the gate into Done.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Column | Meaning) Tj
+0 -13 Td
+(Sprint 1 To-Do | Planned in the Sprint Backlog, not started) Tj
+0 -13 Td
+(In Progress | Someone is working on it now) Tj
+0 -13 Td
+(Blocked | Waiting on a decision, data, or another person) Tj
+0 -13 Td
+(In Review / QA | Code review and QA testing) Tj
+0 -13 Td
+(Done | Passed every item of the Definition of Done) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Example card positions at the start of Meeting 3) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Adjust to real status before the meeting.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Card | Owner | Column) Tj
+0 -13 Td
+(US1a Build donation entry form UI | Pratanin | In Review / QA) Tj
+0 -13 Td
+(US1a Implement donation queue ingestion backend logic | Jirathiwat | In Review / QA) Tj
+0 -13 Td
+(US1a QA test donation creation and queue timing | Sakkaraj | In Progress \(API suite passing;) Tj
+0 -13 Td
+(UI pass still open\)) Tj
+0 -13 Td
+(US1b Develop matching algorithm proximity scoring | Sirapassorn | In Progress) Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 5 of 6) Tj
+ET
+endstream endobj
+14 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 15 0 R /Resources << /Font << /F1 3 0 R >> >> >> endobj
+15 0 obj << /Length 1858 >> stream
+BT
+/F1 10 Tf
+50 742 Td
+(US1b Develop matching algorithm food bank capacity check | Jirathiwat | Sprint 1 To-Do) Tj
+0 -13 Td
+(\(starts Day 4\)) Tj
+0 -13 Td
+(US1b Integrate matching service with queue triggers | Pratanin | Sprint 1 To-Do \(starts Day) Tj
+0 -13 Td
+(4\)) Tj
+0 -13 Td
+(US1b QA test auto-matching performance and criteria | Sakkaraj | Sprint 1 To-Do) Tj
+0 -13 Td
+(US6 / US2a / US2b / US5a / US3a | Various | Sprint 1 To-Do) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Day 3 hours vs plan \(for the burndown\)) Tj
+0 -13 Td
+(--------------------------------------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(From the Sprint 1 Backlog spreadsheet.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Person | Day 3 plan | What to log if the demo matches this script) Tj
+0 -13 Td
+(Jirathiwat | 4h queue ingestion | 4h, card to In Review / QA) Tj
+0 -13 Td
+(Sirapassorn | 4h proximity scoring | 4h, card stays In Progress) Tj
+0 -13 Td
+(Sakkaraj | 2h US1a QA | 2h, 2h left on Day 4) Tj
+0 -13 Td
+(Pratanin | 0h on the Day 3 column | Log review / form-to-queue time if you worked; do not) Tj
+0 -13 Td
+(silently skip hours) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Demo talking points \(only if Napat asks\)) Tj
+0 -13 Td
+(----------------------------------------) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(Keep this off the 10-minute clock unless someone needs proof.) Tj
+0 -13 Td
+() Tj
+0 -13 Td
+(- App: `web/` -> `npm run dev` -> http://localhost:3000) Tj
+0 -13 Td
+(- Donor: `donor@qwerty.test` / `donor123`) Tj
+0 -13 Td
+(- Queue page: `/queue` · API: `GET /api/queue`) Tj
+0 -13 Td
+(- QA inject: `POST /api/test/queue`) Tj
+0 -13 Td
+(- Tests: `python -m pytest qa/api/test-log-donation.py -q`) Tj
+0 -13 Td
+(- Contract: `GET /api/contract`) Tj
+0 -26 Td
+(Sprint 1 - Scrum Meeting 3 Script (QWERTY)  -  page 6 of 6) Tj
+ET
+endstream endobj
+xref
+0 16
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000148 00000 n 
+0000000218 00000 n 
+0000000344 00000 n 
+0000003018 00000 n 
+0000003144 00000 n 
+0000006393 00000 n 
+0000006519 00000 n 
+0000009659 00000 n 
+0000009787 00000 n 
+0000013009 00000 n 
+0000013137 00000 n 
+0000015801 00000 n 
+0000015929 00000 n 
+trailer << /Size 16 /Root 1 0 R >>
+startxref
+17840
+%%EOF

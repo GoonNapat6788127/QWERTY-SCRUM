@@ -9,7 +9,7 @@ Living file. The daily-sprint agent reads and updates this every run.
 | Sprint | 1 of 2 |
 | last_completed_day | 3 |
 | next_day_to_run | 4 |
-| last_meeting_script | 3 (`docs/sprint-1-scrum-meeting-3.md`) |
+| last_meeting_script | 3 (`docs/sprint-1-scrum-meeting-3.md`, `docs/sprint-1-scrum-meeting-3.pdf`) |
 | Branch / commit at last log | `main` / `d7df8e3` |
 | App | `web/` → http://localhost:3000 |
 

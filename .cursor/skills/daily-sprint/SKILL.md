@@ -56,7 +56,7 @@ Edit `docs/sprint-1-progress.md`:
 
 ### 4. Write the meeting script
 
-Path: `docs/sprint-1-scrum-meeting-{N}.md`
+Path: `docs/sprint-1-scrum-meeting-{N}.md` (and `.pdf` when you can produce one, matching Meeting 2/3).
 
 For N ≥ 3: **Meeting N**, held at the **start of Day N+1**, reports **Day N**.
 
