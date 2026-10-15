@@ -25,6 +25,8 @@ Optional: `Run sprint day 5` or `Meeting script only`.
 
 The agent implements `next_day_to_run`, updates this file, and writes `docs/sprint-1-scrum-meeting-{N}.md`.
 
+Source PDFs: `docs/sprint-1-presentation.pdf`, `docs/sprint-1-backlog.pdf`, `docs/sprint-1-scrum-meeting-2.pdf`.
+
 ## Team
 
 | Person | Role |

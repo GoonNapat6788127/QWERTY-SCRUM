@@ -10,8 +10,9 @@ Each user run = **one Sprint day**: implement the plan, update progress, write t
 ## Quick start
 
 1. Read [docs/sprint-1-progress.md](../../../docs/sprint-1-progress.md).
-2. `next_day_to_run` is the day to execute unless the user names a day (`day 5`, `meeting 4`).
-3. Follow **Workflow** below. Do not skip the progress file or the meeting script.
+2. For hours use `docs/sprint-1-backlog.pdf`. For stories use `docs/sprint-1-presentation.pdf`. For script voice use `docs/sprint-1-scrum-meeting-2.pdf`.
+3. `next_day_to_run` is the day to execute unless the user names a day (`day 5`, `meeting 4`).
+4. Follow **Workflow** below. Do not skip the progress file or the meeting script.
 
 ## Workflow
 

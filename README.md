@@ -90,4 +90,4 @@ The agent reads `docs/sprint-1-progress.md`, implements that day’s backlog, up
 
 Also: `Run sprint day 5` or `Meeting script only`.
 
-Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Current standup: `docs/sprint-1-scrum-meeting-3.md`.
+Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Current standup: `docs/sprint-1-scrum-meeting-3.md`. Source PDFs: `docs/sprint-1-presentation.pdf`, `docs/sprint-1-backlog.pdf`, `docs/sprint-1-scrum-meeting-2.pdf`.
