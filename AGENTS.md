@@ -18,6 +18,7 @@ Source PDFs in `docs/`:
 
 - `sprint-1-presentation.pdf` — product backlog and Sprint 1 plan
 - `sprint-1-backlog.pdf` — task hours by day
+- `sprint-1-scrum-meeting-1.pdf` — first Daily Scrum script
 - `sprint-1-scrum-meeting-2.pdf` — speaking-script format to copy
 - `sprint-1-scrum-meeting-3.md` / `sprint-1-scrum-meeting-3.pdf` — latest standup script
 
