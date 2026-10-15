@@ -49,16 +49,17 @@ Work the **Day N hour cells** in the progress file (owner + story + hours).
 
 Edit `docs/sprint-1-progress.md`:
 
-- Set `last_completed_day` = N, `next_day_to_run` = N+1, `last_meeting_script` = N (for N ≥ 3).
-- Log hours and status per card.
+- Set `last_completed_day` = N and `next_day_to_run` = N+1 only after Day N's planned hours are actually done.
+- Set `last_meeting_script` = N+1. That file is the **next morning's** standup, not proof that Day N+1 is finished.
+- Log only Day N hours. Leave later days at 0.
 - Note blockers closed or opened.
 - Add a short **Day N log** (what shipped).
 
 ### 4. Write the meeting script
 
-Path: `docs/sprint-1-scrum-meeting-{N}.md` (and `.pdf` when you can produce one, matching Meeting 2/3).
+Path: `docs/sprint-1-scrum-meeting-{N+1}.md` and `.pdf`.
 
-For N ≥ 3: **Meeting N**, held at the **start of Day N+1**, reports **Day N**.
+**Meeting (N+1)** is held at the **start of Day N+1** (the morning after Day N). It reports **finished Day N**. Day N+1 cards are "Next". Do not say yesterday was Day N+1.
 
 Use [docs/templates/daily-scrum-script.md](../../../docs/templates/daily-scrum-script.md).
 
@@ -75,13 +76,18 @@ Must include:
 
 If the user asked to add/push/save to GitHub: commit the script, progress file, and code, then push `main`. Do not force-push.
 
-## Meeting numbering
+## Meeting clock
 
-| Meeting | When | Reports |
-|---|---|---|
-| 1 | After Day 1 / start Day 2 | Plans and early risks |
-| 2 | Start of Day 3 | Day 1–2 |
-| 3+ | Start of Day N+1 | Day N |
+Do not advance the sprint day just because code for a later card exists.
+
+| Meeting | When | Reports | Status |
+|---|---|---|---|
+| 1 | Oct 14 kickoff | Plans and risks. No build yet. | Done. PDF only. |
+| 2 | Draft in the Meeting 2 PDF | Planned Day 1–2 wording. Format to copy. | Template. Not "Day 3 is done". |
+| 3 | Start of Day 3, morning after Day 2 | Day 2 finished. Day 3 is next. | Script exists. Day 3 is not done. |
+| M (4+) | Start of Day M | Day M-1, only after that day is completed | Write only after that day is run. |
+
+Read `last_completed_day` and `next_day_to_run` from `docs/sprint-1-progress.md`. Do not infer the day from how much code is already in `web/`.
 
 ## Do not
 

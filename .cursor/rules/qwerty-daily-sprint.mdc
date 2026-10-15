@@ -10,6 +10,6 @@ When the user runs the sprint, asks for standup/daily scrum, or wants today’s 
 1. Read `docs/sprint-1-progress.md` first (current day and card status).
 2. Build only that day’s Sprint Backlog tasks unless the user names another day.
 3. Update `docs/sprint-1-progress.md` after the work.
-4. Write `docs/sprint-1-scrum-meeting-{N}.md` from `docs/templates/daily-scrum-script.md`.
+4. Write the next morning's script: after Day N, that is `docs/sprint-1-scrum-meeting-{N+1}.md`. It reports Day N. Day N+1 is "Next".
 5. Three questions, board on screen, Definition of Done before Done. Do not mark Done without QA.
 6. Commit/push those docs (and code) when the user wants GitHub updated.

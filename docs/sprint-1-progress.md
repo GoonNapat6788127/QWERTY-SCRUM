@@ -7,25 +7,30 @@ Living file. The daily-sprint agent reads and updates this every run.
 | Field | Value |
 |---|---|
 | Sprint | 1 of 2 |
-| last_completed_day | 3 |
-| next_day_to_run | 4 |
+| Today | Day 2 is finished. Day 3 has not started. |
+| last_completed_day | 2 |
+| next_day_to_run | 3 |
+| Next standup | Meeting 3, tomorrow morning, start of Day 3 |
 | last_meeting_script | 3 (`docs/sprint-1-scrum-meeting-3.md`, `docs/sprint-1-scrum-meeting-3.pdf`) |
-| Branch / commit at last log | `main` / `d7df8e3` |
+| What Meeting 3 reports | Finished Day 2. Day 3 is "Next", not accomplished. |
 | App | `web/` → http://localhost:3000 |
 
-## How to run the agent
+## Clock (do not skip this)
 
-In Cursor chat:
+- Meeting 1 (Oct 14) was the kickoff. Plans and risks only.
+- Meeting 2 PDF is the speaking-format template. It is not evidence that Day 3 is done.
+- Meeting 3 is tomorrow's standup. It reports Day 2.
+- `Run today's sprint` implements **Day 3**, then writes **Meeting 4** for the morning after Day 3.
+- Do not set `last_completed_day` to 3 until Day 3's planned hours are actually done.
+- Code that exists ahead of the plan does not move later cards to Done or log later days' hours.
+
+## How to run the agent
 
 ```text
 Run today's sprint
 ```
 
-Optional: `Run sprint day 5` or `Meeting script only`.
-
-The agent implements `next_day_to_run`, updates this file, and writes `docs/sprint-1-scrum-meeting-{N}.md`.
-
-Source PDFs: `docs/sprint-1-presentation.pdf`, `docs/sprint-1-backlog.pdf`, `docs/sprint-1-scrum-meeting-1.pdf`, `docs/sprint-1-scrum-meeting-2.pdf`, `docs/sprint-1-scrum-meeting-3.pdf`.
+That run is Day 3. Optional: `Run sprint day 5` or `Meeting script only`.
 
 ## Team
 
@@ -37,31 +42,28 @@ Source PDFs: `docs/sprint-1-presentation.pdf`, `docs/sprint-1-backlog.pdf`, `doc
 | Jirathiwat Suntipreedatham | Dev 3 |
 | Sakkaraj Tuvajit | QA 1 |
 
-## Board status (after Day 3)
+## Board status (end of Day 2)
 
 | Card | Owner | Status | Hours plan | Hours logged |
 |---|---|---|---|---|
-| US1a Build donation entry form UI | Pratanin | In Review / QA | 8 | 8 |
-| US1a Queue ingestion backend | Jirathiwat | In Review / QA | 8 | 8 |
-| US1a QA donation creation and queue timing | Sakkaraj | In Progress | 4 | 2 (2 left Day 4) |
-| US1b Proximity scoring | Sirapassorn | In Progress | 12 | 4 (8 left) |
-| US1b Capacity check | Jirathiwat | To-Do | 8 | 0 (starts Day 4) |
-| US1b Integrate matching with queue | Pratanin | To-Do | 12 | 0 (starts Day 4) |
-| US1b QA auto-matching | Sakkaraj | To-Do | 8 | 0 |
-| US6 / US2a / US2b / US5a / US3a | Various | To-Do | — | 0 |
+| US1a Build donation entry form UI | Pratanin | In Review / QA | 8 | 8 (4 on Day 1, 4 on Day 2) |
+| US1a Queue ingestion backend | Jirathiwat | In Progress | 8 | 4 (Day 2). 4h left on Day 3 |
+| US1a QA donation creation and queue timing | Sakkaraj | To-Do | 4 | 0. Starts Day 3 (2h) |
+| US1b Proximity scoring | Sirapassorn | To-Do | 12 | 0. Starts Day 3 (4h) |
+| US1b Capacity check | Jirathiwat | To-Do | 8 | 0. Starts Day 4 |
+| US1b Integrate matching with queue | Pratanin | To-Do | 12 | 0. Starts Day 4 |
+| Later Sprint 1 cards | Various | To-Do | — | 0 |
 
-Closed blockers: message format, food-bank sample data, `POST /api/test/queue`.
+Open from Meeting 1: message format, duplicate donations, validation, QA has no queue to hit yet.
 
-Open gates: US1a DoD (QA UI pass + PO accept).
-
-## Day 4 plan (next run)
+## Day 3 plan (next run, after tomorrow's meeting)
 
 | Owner | Card | Hours |
 |---|---|---|
-| Sakkaraj | US1a QA remaining | 2 |
-| Sirapassorn | US1b proximity scoring | 3 |
-| Jirathiwat | US1b capacity check | 3 |
-| Pratanin | US1b integrate matching with queue | 4 |
+| Jirathiwat | Finish US1a queue ingestion | 4 |
+| Sirapassorn | US1b proximity scoring | 4 |
+| Sakkaraj | US1a QA, first slice | 2 |
+| Pratanin | No planned hours. Stay on form review. | 0 |
 
 ## Sprint 1 hour plan by day
 
@@ -87,10 +89,10 @@ Totals: 4, 8, 10, 12, 12, 14, 8, 7, 6, 9, 9, 6, 7, 2, 0
 
 ## Day log
 
-### Day 1–2
+### Day 1
 
-Form UI started; ingestion started; Meeting 1 risks: message format, duplicates, validation.
+Meeting 1. Team read US1a. Risks: message format, duplicate donations, form validation. Sakkaraj drafted test cases. No build hours beyond Pratanin's first 4h on the form.
 
-### Day 3
+### Day 2 (finished)
 
-Rescue ERP on `main` (`d7df8e3`). Queue ingestion immediate; US1a API tests 15 passed; proximity + sample food banks; test endpoint live. Meeting script: `docs/sprint-1-scrum-meeting-3.md`.
+Pratanin finished the donation entry form (food type, quantity in kg, expiry, validation). Card is In Review / QA, not Done. Jirathiwat logged 4h on queue ingestion; the card stays In Progress with 4h left on Day 3. Meeting 3 script is ready for tomorrow morning.

@@ -4,7 +4,7 @@ Speaking script for Daily Scrum {N}. Three-question format from instructor feedb
 
 ## Meeting at a glance
 
-Meeting {N} is a **10-minute stand-up at the start of Sprint Day {N+1}**. It reports **Day {N} work**. Each member answers the same three questions. The Scrum board stays on screen the whole time.
+Meeting {N} (N ≥ 3) is a **10-minute stand-up at the start of Sprint Day {N}**. It reports **Day {N-1}**, which is already finished. Day {N} work is "Next", not accomplished. Each member answers the same three questions. The Scrum board stays on screen the whole time.
 
 **Note:** Replace any line with that person's real status before you speak.
 

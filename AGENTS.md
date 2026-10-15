@@ -9,7 +9,7 @@ Read `.cursor/skills/daily-sprint/SKILL.md` and do that workflow:
 1. Read `docs/sprint-1-progress.md` to learn the current day.
 2. Implement that day’s Sprint Backlog tasks in `web/` (and QA tests in `qa/` when the owner is QA).
 3. Update progress: hours, card status, blockers, burndown notes.
-4. Write today’s Daily Scrum script to `docs/sprint-1-scrum-meeting-{N}.md`.
+4. Write the next morning's standup to `docs/sprint-1-scrum-meeting-{N+1}.md`. It reports the day just finished. It does not mark the next day done.
 5. Commit and push when the user asked to save to GitHub.
 
 Triggers: `daily sprint`, `run sprint`, `today’s sprint`, `standup`, `daily scrum`, `meeting script`, `day N`.
