@@ -1,0 +1,5 @@
+web/node_modules/
+web/.next/
+web/data/db.json
+web/*.tsbuildinfo
+.DS_Store

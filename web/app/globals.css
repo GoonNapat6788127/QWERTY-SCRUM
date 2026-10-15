@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3efe4;
+  --ink: #13241b;
+  --muted: #5d6b63;
+  --line: #d9d1c3;
+  --panel: #fffdf8;
+  --forest: #143528;
+  --forest-2: #1f4a36;
+  --leaf: #2f9e62;
+  --urgent: #c45c26;
+  --gold: #c9a227;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-panel: var(--panel);
+  --color-forest: var(--forest);
+  --color-forest-2: var(--forest-2);
+  --color-leaf: var(--leaf);
+  --color-urgent: var(--urgent);
+  --color-gold: var(--gold);
+  --font-sans: var(--font-ibm);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-ibm-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ibm), "Segoe UI", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.erp-grid {
+  background-image:
+    linear-gradient(rgba(20, 53, 40, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 53, 40, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
