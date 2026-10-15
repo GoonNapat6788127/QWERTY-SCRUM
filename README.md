@@ -77,3 +77,17 @@ pytest api/test-log-donation.py -q
 ```
 
 The API server must already be running on `http://localhost:3000`, or set `BASE_URL`.
+
+## Daily sprint agent
+
+In Cursor, run:
+
+```text
+Run today's sprint
+```
+
+The agent reads `docs/sprint-1-progress.md`, implements that day’s backlog, updates hours/status, and writes `docs/sprint-1-scrum-meeting-{N}.md`.
+
+Also: `Run sprint day 5` or `Meeting script only`.
+
+Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Current standup: `docs/sprint-1-scrum-meeting-3.md`.
