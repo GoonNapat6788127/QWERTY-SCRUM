@@ -128,6 +128,11 @@ def test_us5a_receipt_has_weight_food_type_timestamp_and_email():
     listed = donor().get(f"{BASE_URL}/api/receipts", timeout=10)
     ids = {item["id"] for item in listed.json()["receipts"]}
     assert receipt["id"] in ids
+    pdf = donor().get(f"{BASE_URL}/api/receipts/{receipt['id']}", timeout=10)
+    assert pdf.status_code == 200, pdf.text
+    assert "pdf" in pdf.headers.get("Content-Type", "")
+    assert b"Bakery" in pdf.content
+    assert b"7.2" in pdf.content
 
 
 def test_us3a_expiry_within_24_hours_is_flagged_urgent():
@@ -136,3 +141,11 @@ def test_us3a_expiry_within_24_hours_is_flagged_urgent():
     queue = donor().get(f"{BASE_URL}/api/queue", timeout=10).json()["items"]
     row = next(item for item in queue if item["donationId"] == body["donation"]["donationId"])
     assert row["urgent"] is True
+
+
+def test_us3a_expiry_beyond_24_hours_is_not_urgent():
+    body = create_donation(donor(), expiryDateTime=future_expiry(48 * 60))
+    assert body["donation"]["urgent"] is False
+    queue = donor().get(f"{BASE_URL}/api/queue", timeout=10).json()["items"]
+    row = next(item for item in queue if item["donationId"] == body["donation"]["donationId"])
+    assert row["urgent"] is False

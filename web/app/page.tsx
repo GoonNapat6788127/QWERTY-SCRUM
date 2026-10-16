@@ -27,7 +27,7 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
-      router.replace("/dashboard");
+      router.replace("/queue");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not sign in.");
       setPending(false);
@@ -38,7 +38,7 @@ export default function LoginPage() {
     <div className="erp-grid min-h-screen">
       <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 py-12 lg:grid-cols-2">
         <section>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-leaf">Team QWERTY · Sprint 1 Day 2</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-leaf">Team QWERTY · Sprint 1 · closes 23 October 2026</p>
           <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-tight text-forest">
             Rescue ERP for surplus food logistics
           </h1>
@@ -51,7 +51,7 @@ export default function LoginPage() {
             <li className="rounded-xl border border-line bg-panel p-4">US1a Log a donation into the queue</li>
             <li className="rounded-xl border border-line bg-panel p-4">US1b Auto-match by proximity + capacity</li>
             <li className="rounded-xl border border-line bg-panel p-4">US6 Pickup window on dispatch feeds</li>
-            <li className="rounded-xl border border-line bg-panel p-4">US2–US5 Pickup, proof, receipts, urgent flags</li>
+            <li className="rounded-xl border border-line bg-panel p-4">US2a, US2b, US5a, US3a Pickup, proof, receipt, urgent flag</li>
           </ul>
         </section>
         <form

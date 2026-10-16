@@ -3,9 +3,9 @@
 **Story / Acceptance Criteria**
 Given a donor, when they submit food type, quantity, and expiry date/time, then the donation appears in the matching queue within 1 minute.
 
-**Status:** Draft (text-first). Field names, units, and endpoints are not final.
-**Author:** QA
-**Automation plan:** Convert High-priority cases first (TC-01, 03, 04, 06, 11) once the contract is agreed.
+**Status:** Agreed at Meeting 3 (Friday 16 October 2026). Automated in `qa/api/test-log-donation.py`.
+**Author:** Sakkaraj Tuvajit (QA)
+**Contract:** `GET /api/contract`. Queue `GET /api/queue` and `/queue`. Fields: donationId, foodType, quantity (kg), expiryDateTime, pickupWindow, donorId, timezone Asia/Bangkok. Only donors `POST /api/donations`. QA inject: `POST /api/test/queue`. Queue under 60 seconds.
 
 ---
 
@@ -139,16 +139,16 @@ Given a donor, when they submit food type, quantity, and expiry date/time, then 
 
 ---
 
-## 3. Open Questions (agenda for the dev / PO chat)
+## 3. Answers agreed in Meeting 3 (no longer open)
 
-1. Where is the matching queue exposed (page, endpoint)? Which fields does it show?
-2. Is food type free text or a fixed list?
-3. What is the quantity unit, and what are the min/max values?
-4. Which timezone is used for expiry, and is there a minimum time before expiry?
-5. Which fields are mandatory, and what error format is used?
-6. Is duplicate submission prevented?
-7. Which user roles exist and who may log donations?
-8. Is the queue updated by a background job (affects the 1-minute timing)?
+1. Queue is `/queue` and `GET /api/queue`. The item includes donationId, foodType, quantity, expiryDateTime, pickupWindow, donorId, timezone.
+2. Food type is a required dropdown in the UI and a required string on the API.
+3. Quantity is kilograms. Minimum 0.1. Maximum 5000. Zero, negative, and non-numeric values are rejected.
+4. Timezone is Asia/Bangkok. Expiry must be in the future. Five minutes ahead is accepted.
+5. Required: foodType, quantity, expiryDateTime. Errors name the field.
+6. Duplicate donationId and Idempotency-Key create one queue entry.
+7. Roles: donor, foodbank, driver, logistics. Only a donor may `POST /api/donations`.
+8. Ingestion is immediate, under 60 seconds. It is not a background job.
 
 ## 4. Cases to add once answers are known
 

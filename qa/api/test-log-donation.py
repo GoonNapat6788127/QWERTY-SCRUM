@@ -84,6 +84,9 @@ def test_tc01_valid_donation_is_queued(donor):
     assert elapsed < 60
     assert match["quantity"] == payload["quantity"]
     assert match["expiryDateTime"]
+    assert match["donorId"] == "usr-donor-1"
+    assert match["timezone"] == "Asia/Bangkok"
+    assert match["pickupWindow"]["start"]
 
 
 def test_tc02_queued_item_shows_submitted_details(donor):

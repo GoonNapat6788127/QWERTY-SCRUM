@@ -84,10 +84,10 @@ Do not advance the sprint day just because code for a later card exists.
 |---|---|---|---|
 | 1 | Oct 14 kickoff | Plans and risks. No build yet. | Done. PDF only. |
 | 2 | Draft in the Meeting 2 PDF | Planned Day 1–2 wording. Format to copy. | Template. Not "Day 3 is done". |
-| 3 | Friday 16 Oct window (after Day 2) | Day 2 finished. | Script exists. |
-| 4 | Monday 19 October 2026 | US1a close, US1b start | `docs/sprint-1-scrum-meeting-4.md` |
-| 5 | Wednesday 21 October 2026 | US1b, US6, US2a | `docs/sprint-1-scrum-meeting-5.md` |
-| 6 | Friday 23 October 2026 | US2b, US5a, US3a, Sprint 1 close | `docs/sprint-1-scrum-meeting-6.md` |
+| 3 | **Today, Friday 16 October 2026** | Day 2 finished. Day 3 starts after the meeting. Sprint ends Friday 23. | Live script. |
+| 4 | Monday 19 October 2026 | Days 3–4 (22h): finish US1a ingestion + QA hours; start US1b | `docs/sprint-1-scrum-meeting-4.md` |
+| 5 | Wednesday 21 October 2026 | Days 5–8 (41h): finish US1b + US6; US2a pickup 2 of 4h | `docs/sprint-1-scrum-meeting-5.md` |
+| 6 | Friday 23 October 2026 | Days 9–14 (39h): finish US2a, US2b, US5a, US3a; close | `docs/sprint-1-scrum-meeting-6.md` |
 
 Read `last_completed_day` and `next_day_to_run` from `docs/sprint-1-progress.md`. Do not infer the day from how much code is already in `web/`.
 

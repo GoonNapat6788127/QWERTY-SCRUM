@@ -75,6 +75,12 @@ function db(): Database {
   return loadDb();
 }
 
+/** Restores the demo seed so Sprint 1 QA and the Friday demo start with capacity. */
+export function resetDemoData(): void {
+  memory.__qwertyDb = emptyDb();
+  persist();
+}
+
 function publicUser(user: User): PublicUser {
   const { password: _password, ...safe } = user;
   return safe;
@@ -266,6 +272,7 @@ export function matchingQueue() {
       quantityUnit: donation.quantityUnit,
       expiryDateTime: donation.expiryDateTime,
       pickupWindow: donation.pickupWindow,
+      donorId: donation.donorId,
       urgent: donation.urgent,
       status: donation.status,
       queuedAt: donation.queuedAt,
@@ -431,9 +438,4 @@ export function decayEstimate(donationId: string) {
     method: "heuristic-spike",
     note: "Sprint 2 US8 research spike: perishable types decay faster; this is not a trained model.",
   };
-}
-
-export function resetDemoData() {
-  memory.__qwertyDb = emptyDb();
-  persist();
 }

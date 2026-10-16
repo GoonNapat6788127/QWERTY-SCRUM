@@ -6,19 +6,19 @@ import { useEffect, useMemo, useState } from "react";
 import { api } from "@/lib/client";
 import type { PublicUser, Role } from "@/lib/types";
 
-type NavItem = { href: string; label: string; roles: Role[] };
+type NavItem = { href: string; label: string; roles: Role[]; sprint: 1 | 2 };
 
 const NAV: NavItem[] = [
-  { href: "/dashboard", label: "Operations board", roles: ["donor", "foodbank", "driver", "logistics"] },
-  { href: "/donations/new", label: "Log a donation", roles: ["donor"] },
-  { href: "/donations", label: "Donations", roles: ["donor", "foodbank", "driver", "logistics"] },
-  { href: "/queue", label: "Matching queue", roles: ["donor", "foodbank", "driver", "logistics"] },
-  { href: "/dispatch", label: "Driver dispatch", roles: ["driver", "foodbank", "logistics"] },
-  { href: "/incoming", label: "Incoming pickups", roles: ["foodbank", "logistics"] },
-  { href: "/food-banks", label: "Food banks", roles: ["foodbank", "driver", "logistics"] },
-  { href: "/drivers", label: "Driver activity", roles: ["foodbank", "logistics"] },
-  { href: "/receipts", label: "Receipts & tax", roles: ["donor", "logistics"] },
-  { href: "/notifications", label: "Expiry alerts", roles: ["donor", "foodbank", "driver", "logistics"] },
+  { href: "/donations/new", label: "Log a donation", roles: ["donor"], sprint: 1 },
+  { href: "/donations", label: "Donations", roles: ["donor", "foodbank", "driver", "logistics"], sprint: 1 },
+  { href: "/queue", label: "Matching queue", roles: ["donor", "foodbank", "driver", "logistics"], sprint: 1 },
+  { href: "/dispatch", label: "Driver dispatch", roles: ["driver", "foodbank", "logistics"], sprint: 1 },
+  { href: "/incoming", label: "Incoming pickups", roles: ["foodbank", "logistics"], sprint: 1 },
+  { href: "/food-banks", label: "Food banks", roles: ["foodbank", "driver", "logistics"], sprint: 1 },
+  { href: "/receipts", label: "Receipts", roles: ["donor", "logistics"], sprint: 1 },
+  { href: "/dashboard", label: "Operations board", roles: ["donor", "foodbank", "driver", "logistics"], sprint: 2 },
+  { href: "/drivers", label: "Driver activity", roles: ["foodbank", "logistics"], sprint: 2 },
+  { href: "/notifications", label: "Expiry alerts", roles: ["donor", "foodbank", "driver", "logistics"], sprint: 2 },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -59,24 +59,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen lg:grid lg:grid-cols-[260px_1fr]">
       <aside className="bg-forest text-paper">
         <div className="flex h-full flex-col px-5 py-6">
-          <Link href="/dashboard" className="block">
+          <Link href="/queue" className="block">
             <p className="font-[family-name:var(--font-display)] text-2xl leading-none">QWERTY</p>
             <p className="mt-1 text-xs uppercase tracking-[0.22em] text-leaf">Rescue ERP</p>
           </Link>
-          <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-white/50">Sprint 1 workspace</p>
-          <nav className="mt-3 flex flex-col gap-1">
-            {items.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-lg px-3 py-2 text-sm ${active ? "bg-white/10 text-white" : "text-white/75 hover:bg-white/5 hover:text-white"}`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="mt-6 flex flex-col gap-1">
+            <p className="px-3 text-[11px] uppercase tracking-[0.16em] text-white/50">Sprint 1</p>
+            {items
+              .filter((item) => item.sprint === 1)
+              .map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-lg px-3 py-2 text-sm ${active ? "bg-white/10 text-white" : "text-white/75 hover:bg-white/5 hover:text-white"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            <p className="mt-4 px-3 text-[11px] uppercase tracking-[0.16em] text-white/50">Sprint 2 backlog</p>
+            {items
+              .filter((item) => item.sprint === 2)
+              .map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-lg px-3 py-2 text-sm ${active ? "bg-white/10 text-white" : "text-white/75 hover:bg-white/5 hover:text-white"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
           </nav>
           <div className="mt-auto rounded-xl bg-forest-2 p-3 text-sm">
             <p className="font-medium">{user.name}</p>

@@ -19,10 +19,13 @@ export default function ReceiptsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US5a · US5b"
-        title="Digital receipts and tax export"
-        description="Delivered donations generate a receipt with weight, food type, and timestamp, then email it to the donor."
+        eyebrow="US5a · Sprint 1"
+        title="Digital receipts"
+        description="A delivered donation generates a receipt with weight, food type, and timestamp, then records it as emailed to the donor."
       />
+      <section className="mb-4 rounded-2xl border border-dashed border-line bg-panel p-4">
+        <p className="text-xs uppercase tracking-wider text-muted">Sprint 2 · US5b · not part of Sprint 1 Done</p>
+        <p className="mt-1 text-sm">Monthly tax export stays on the product backlog.</p>
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm">
           Month
@@ -40,6 +43,7 @@ export default function ReceiptsPage() {
           Export PDF
         </a>
       </div>
+      </section>
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
