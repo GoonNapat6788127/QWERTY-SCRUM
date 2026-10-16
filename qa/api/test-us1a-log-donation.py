@@ -1,4 +1,11 @@
-"""US1a API tests: log a donation into the matching queue.
+"""US1a — Log a donation into the matching queue.
+
+Product backlog: Given a donor, when they submit food type, quantity, and expiry,
+then the donation appears in the matching queue within 1 minute.
+
+Standup: Meeting 3 (Fri 16 Oct) starts this QA card (Day 3, 2 hours).
+Meeting 4 (Mon 19 Oct) reports the API suite done (Day 4, 2 hours). The UI pass
+is reported at Meeting 5. Owners: Pratanin (form), Jirathiwat (ingestion), Sakkaraj (QA).
 
 Contract answers used by these tests:
 - Queue: GET /api/queue and page /queue

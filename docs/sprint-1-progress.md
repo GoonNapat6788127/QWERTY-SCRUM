@@ -129,7 +129,7 @@ Same mapping as `docs/sprint-1-backlog-conclusion.md`. Speak only the cards whos
 - US2b: delivery requires photo or signature; incoming shows proof and delivery timestamp.
 - US5a: receipt with weight, food type, timestamp, emailed to the donor (`emailStatus: sent`).
 - US3a: queue flags **urgent** when expiry is within 24 hours.
-- QA: `qa/api/test-log-donation.py` and `qa/api/test-sprint1-remaining.py`.
+- QA, one file per Sprint 1 story: `qa/api/test-us1a-log-donation.py`, `test-us1b-auto-match.py`, `test-us6-pickup-window.py`, `test-us2a-pickup-status.py`, `test-us2b-delivery-proof.py`, `test-us5a-receipt.py`, `test-us3a-urgent-flag.py`.
 
 ## Day log
 

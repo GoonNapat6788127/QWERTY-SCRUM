@@ -30,15 +30,15 @@ Good morning. Scrum meeting **five**, **Wednesday 21 October**. Last meeting was
 
 Three questions, name the card. We do not mark Done without the Definition of Done.
 
-Monday we were closing US1a QA, finishing auto-match, building US6, and starting the pickup endpoint. Days 5–8 on the hour plan were those cards. US2a food-bank view and delivery proof are **next**, not yesterday.
+Monday we were closing the US1a pytest suite, finishing `proposeMatch`, building the `pickupWindow` field, and starting `POST /api/pickup`. Days 5–8 were those cards. `GET /api/incoming` and `POST /api/delivery` are **next**, not yesterday.
 
 Pratanin, please start.
 
 ### 2. Pratanin, Dev 1 (about 1.5 minutes)
 
-**Accomplished:** I finished **US1b Integrate matching service with queue triggers** — remaining **8 hours** on Days 5–7, so the 12-hour card is built. When a donor submits, the matcher runs on the same ingest path. I also finished **US6 Add pickup time window UI** — **2 hours** on Day 6 and **3 hours** on Day 7. The donor picks a slot and it is stored on the donation. Those cards are **In Review / QA**. I did **not** start the food-bank incoming view — that is Day 9.
+**Accomplished:** I finished **US1b Integrate matching service with queue triggers** — the remaining **8 hours** on Days 5–7, so the 12-hour card is built. `POST /api/donations` now calls `proposeMatch` before it returns 201, and a success sets `status: "matched"`. I also finished **US6 Add pickup time window UI** — **2 hours** on Day 6 and **3 hours** on Day 7. `/donations/new` sends `pickupWindow: { start, end }` and the API stores it on the donation. Both cards are **In Review / QA**. I did **not** build `GET /api/incoming`. That view is Day 9.
 
-**Next:** Until Friday I build **US2a Update food bank view** (Day 9, 2 hours), then **US2b Render delivery proof and timestamp** (Days 10–11, 6 hours).
+**Next:** Until Friday I build **US2a Update food bank view** (Day 9, 2 hours) so `/incoming` renders `driverId` and `pickedUpAt`, then **US2b Render delivery proof and timestamp** (Days 10–11, 6 hours) for `proofKind` and `deliveredAt`.
 
 **Blockers:** None.
 
@@ -48,9 +48,9 @@ Thanks, Pratanin. Jirathiwat.
 
 ### 4. Jirathiwat, Dev 3 (about 1.5 minutes)
 
-**Accomplished:** I finished **US1b capacity check** — remaining **5 hours** on Days 5–6. A match is proposed only if remaining capacity is enough. I also finished **US6 Connect time window to dispatch feed** — **3 hours** on Day 7 and **2 hours** on Day 8. Capacity and dispatch cards are **In Review / QA**. US1a ingestion is ready for Done if Sakkaraj ticks QA.
+**Accomplished:** I finished **US1b capacity check** — the remaining **5 hours** on Days 5–6. `hasCapacity` is false when `quantity` exceeds `remainingCapacityKg`, and that bank is skipped. I also finished **US6 Connect time window to dispatch feed** — **3 hours** on Day 7 and **2 hours** on Day 8. `GET /api/dispatch` includes `pickupWindow` for `matched` and `picked_up` rows. Both cards are **In Review / QA**. The US1a ingest handler is ready for Done if Sakkaraj ticks QA.
 
-**Next:** Until Friday I implement **US5a PDF receipt and email** and **US3a expiry monitor** (Days 12–13). Donations inside 24 hours are flagged urgent.
+**Next:** Until Friday I implement **US5a** `GET /api/receipts/{id}` as a PDF (weight, food type, timestamp, `emailStatus: "sent"`) and **US3a** the expiry flag (Days 12–13). If hours until `expiryDateTime` are 24 or less, the queue item has `urgent: true`.
 
 **Blockers:** None.
 
@@ -60,9 +60,9 @@ Thanks, Jirathiwat. Sirapassorn.
 
 ### 6. Sirapassorn, Dev 2 (about 1.5 minutes)
 
-**Accomplished:** I finished **US1b proximity scoring** — remaining **5 hours** on Days 5–6 — combined with capacity. Day 8 I started **US2a driver pickup endpoint** (**2 of 4 hours**). The driver can mark Picked Up; I still have **2 hours** on Day 9 to finish timestamp and driver ID. Pickup is **In Progress**, not Review yet. I have not started US2b — that begins Day 9.
+**Accomplished:** I finished **US1b proximity scoring** — the remaining **5 hours** on Days 5–6 — and combined it with capacity. `proposeMatch` now requires both `withinRange` and `hasCapacity`. Day 8 I started **US2a** `POST /api/pickup` (**2 of 4 hours**). A matched donation can move toward `picked_up`. I still have **2 hours** on Day 9 to persist `pickedUpAt` and `driverId`. The card is **In Progress**. I have not started `POST /api/delivery`. That handler begins Day 9.
 
-**Next:** Until Friday I finish the remaining **2 hours** of US2a pickup, then **US2b delivery confirmation API** with photo or signature (Days 9–11, 10 hours).
+**Next:** Until Friday I finish those **2 hours**, then **US2b** `POST /api/delivery` with `proofKind` `photo` or `signature` and a required `proofDataUrl` (Days 9–11, 10 hours). A call with no proof must return 400.
 
 **Blockers:** None.
 
@@ -72,9 +72,9 @@ Thank you, Sirapassorn. Sakkaraj.
 
 ### 8. Sakkaraj, QA 1 (about 1.5 minutes)
 
-**Accomplished:** US1a UI pass is done, so US1a can move to **Done** if every Definition of Done tick is complete. I ran **US1b QA** — Days 5–7, **8 hours**: match within 2 minutes when in range with capacity; no match when quantity is over remaining capacity. I ran **US6 QA** on Day 8, **3 hours**, on the pickup window and dispatch feed. US1b and US6 QA cards are **In Review**. I have **not** run US2a QA — that is Day 10.
+**Accomplished:** The US1a UI pass on `/donations/new` is done, so US1a can move to **Done** if every Definition of Done tick is complete. I ran **US1b QA** in `qa/api/test-us1b-auto-match.py` — Days 5–7, **8 hours**: `proposedAt` minus `createdAt` under 120 seconds when `withinRange` and `hasCapacity` are true; `match` is null and `status` stays `queued` when `quantity` is 4000. I ran **US6 QA** in `qa/api/test-us6-pickup-window.py` on Day 8, **3 hours**: the stored `pickupWindow.start` equals the row on `GET /api/dispatch`. Those QA cards are **In Review**. I have **not** run `test-us2a-pickup-status.py`. That file is Day 10.
 
-**Next:** Until Friday I run US2a cases (Day 10), then US2b proof, US5a receipt content, and US3a urgent flag. Those are the last Sprint 1 QA cards.
+**Next:** Until Friday I run `test-us2a-pickup-status.py` (Day 10), then `test-us2b-delivery-proof.py`, `test-us5a-receipt.py`, and `test-us3a-urgent-flag.py`. Those are the last Sprint 1 QA modules.
 
 **Blockers:** None.
 
@@ -92,7 +92,7 @@ No waits. The risk is time: US2a finish, US2b, US5a, and US3a must be Done by Fr
 
 ### 11. Definition of Done check (Napat, about 1.5 minutes)
 
-Sakkaraj, US1a QA is complete — we move US1a to Done only with every tick: criteria, review, tests, 1-minute queue, no critical bugs, hours updated. US1b needs the 2-minute match rule and QA. US6 needs the window on the donation and on the dispatch feed. Do not move US2a to Done — pickup is only halfway, and the food bank cannot see driver ID until Day 9.
+Sakkaraj, US1a QA is complete. We move US1a to Done only with every tick: acceptance criteria, review on `main`, `test-us1a-log-donation.py` green, queue under 60 seconds, no critical bugs, hours updated. US1b needs the 120-second match and `test-us1b-auto-match.py`. US6 needs `pickupWindow` on the donation and on `GET /api/dispatch`. Do not move US2a to Done. `POST /api/pickup` is 2 of 4 hours, and `GET /api/incoming` does not return `driverId` until Day 9.
 
 ### 12. Closing (Napat, about 30 seconds)
 

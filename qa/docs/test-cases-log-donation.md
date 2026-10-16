@@ -3,7 +3,7 @@
 **Story / Acceptance Criteria**
 Given a donor, when they submit food type, quantity, and expiry date/time, then the donation appears in the matching queue within 1 minute.
 
-**Status:** Agreed at Meeting 3 (Friday 16 October 2026). Automated in `qa/api/test-log-donation.py`.
+**Status:** Agreed at Meeting 3 (Friday 16 October 2026). Automated in `qa/api/test-us1a-log-donation.py`.
 **Author:** Sakkaraj Tuvajit (QA)
 **Contract:** `GET /api/contract`. Queue `GET /api/queue` and `/queue`. Fields: donationId, foodType, quantity (kg), expiryDateTime, pickupWindow, donorId, timezone Asia/Bangkok. Only donors `POST /api/donations`. QA inject: `POST /api/test/queue`. Queue under 60 seconds.
 

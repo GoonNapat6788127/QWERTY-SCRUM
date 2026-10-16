@@ -51,3 +51,10 @@ def valid_payload(**overrides):
     }
     payload.update(overrides)
     return payload
+
+
+def create_donation(session, **overrides):
+    payload = valid_payload(**overrides)
+    response = session.post(f"{BASE_URL}/api/donations", json=payload, timeout=10)
+    assert response.status_code == 201, response.text
+    return response.json()

@@ -77,13 +77,14 @@ Sprint 2 (product backlog, not Sprint 1 Done):
 
 ## QA
 
-```bash
-cd qa
-pip install -r requirements.txt
-python -m pytest api/test-log-donation.py api/test-sprint1-remaining.py -q
+Start the site first (`cd web` then `npm run dev`). Then, from the repo root, install the QA library and run the suite with the project virtual environment:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r qa\requirements.txt
+.\.venv\Scripts\python.exe -m pytest qa\api -q
 ```
 
-The API server must already be running on `http://localhost:3000`, or set `BASE_URL`.
+A pass is `24 passed`. `qa/api/helpers.py` is the shared library (login and payloads). `qa/api/conftest.py` resets demo capacity before the suite. Do not run those two files by themselves. Full steps: [qa/README.md](qa/README.md). The site must be on `http://localhost:3000`, or set `BASE_URL`.
 
 ## Daily sprint agent
 

@@ -35,17 +35,17 @@ Good morning. This is Scrum meeting **four** for Sprint 1, **Monday 19 October**
 
 Three questions, name the card, board on screen. Nothing moves to Done unless the Definition of Done is ticked.
 
-Friday we agreed the message format, food-bank sample data, and the test endpoint. Days 3–4 on the hour plan were: finish ingestion, start proximity, start capacity, start matching integration, and run US1a QA hours. We will confirm those landed. US6 pickup-window hours have **not** started yet — that is Day 6.
+Friday we accepted the `GET /api/contract` schema, the food-bank seed, and `POST /api/test/queue`. Days 3–4 were: finish the ingest handler, start haversine proximity scoring, start the capacity check, wire the matcher into `POST /api/donations`, and run the US1a pytest hours. US6 `pickupWindow` hours have **not** started. That field is Day 6.
 
 Pratanin, please start.
 
 ### 2. Pratanin, Dev 1 (about 1.5 minutes)
 
-**Accomplished:** My form card **US1a Build donation entry form UI** stayed in Review. I connected it to the live queue so a valid submit appears on `/queue`. Day 3 had no hours for me. Day 4 was **4 hours** on **US1b Integrate matching service with queue triggers**. Matching now starts when a donation is ingested. That card is **In Progress** (4 of 12 hours). I did not start the US6 pickup-window UI — that is Days 6–7.
+**Accomplished:** **US1a Build donation entry form UI** stayed In Review. A valid submit on `/donations/new` now `POST`s `/api/donations` and the row is on `/queue`. Day 3 was 0h for me. Day 4 was **4 hours** on **US1b Integrate matching service with queue triggers**: `proposeMatch` runs inside the ingest handler before the 201 response. That card is **In Progress** (4 of 12 hours). I did not add the US6 `pickupWindow` select. That component is Days 6–7.
 
-**Next:** Until Wednesday I finish the remaining **8 hours** of US1b integrate (Days 5–7), then start **US6 Add pickup time window UI**.
+**Next:** Until Wednesday I finish the remaining **8 hours** of the ingest-to-match integration (Days 5–7), then start **US6 Add pickup time window UI** so the form sends `pickupWindow.start` and `pickupWindow.end`.
 
-**Blockers:** None. I need Sakkaraj's US1a QA tick before the form goes to Done.
+**Blockers:** None. The form stays out of Done until `qa/api/test-us1a-log-donation.py` is green, including the UI pass.
 
 ### 3. Napat to Jirathiwat
 
@@ -53,11 +53,11 @@ Thanks, Pratanin. Jirathiwat, you're next.
 
 ### 4. Jirathiwat, Dev 3 (about 1.5 minutes)
 
-**Accomplished:** Day 3 was my last **4 hours** on **US1a Implement donation queue ingestion backend logic**. The JSON is donation ID, food type, quantity, expiry, pickup window, donor ID, timezone Asia/Bangkok. Queue time is under 1 minute. Duplicate protection is donation ID plus Idempotency-Key. QA can POST `/api/test/queue`. That card is **In Review / QA**. Day 4 I started **US1b capacity check** (**3 of 8 hours**): remaining kilograms must cover the donation. Capacity stays **In Progress**.
+**Accomplished:** Day 3 was my last **4 hours** on **US1a Implement donation queue ingestion backend logic**. The accepted body is `donationId`, `foodType`, `quantity`, `expiryDateTime`, `pickupWindow`, `donorId`, `timezone: "Asia/Bangkok"`. `GET /api/queue` returns that item in under 60 seconds. A repeated `donationId` or `Idempotency-Key` returns the same row with `duplicate: true`. QA injects with `POST /api/test/queue`. That card is **In Review / QA**. Day 4 I started **US1b capacity check** (**3 of 8 hours**): `hasCapacity` is true only when `remainingCapacityKg >= quantity`. Capacity stays **In Progress**.
 
-**Next:** Until Wednesday I finish capacity (Days 5–6, 5 hours left), then **US6 Connect time window to dispatch feed** on Days 7–8.
+**Next:** Until Wednesday I finish the capacity predicate (Days 5–6, 5 hours left), then **US6 Connect time window to dispatch feed**: `GET /api/dispatch` must echo `pickupWindow` on Days 7–8.
 
-**Blockers:** None. Message format is agreed.
+**Blockers:** None. The contract schema is accepted.
 
 ### 5. Napat to Sirapassorn
 
@@ -65,11 +65,11 @@ Thanks, Jirathiwat. Sirapassorn, name the card.
 
 ### 6. Sirapassorn, Dev 2 (about 1.5 minutes)
 
-**Accomplished:** I started **US1b Develop matching algorithm proximity scoring**. Day 3 was **4 hours**, Day 4 was **3 hours**, so **7 of 12 hours** are logged. Food banks are ranked by distance inside each delivery range. Sample data is in the app: SOS Food Bank Bangkok, Mahidol Community Kitchen, Thonburi Shelter Pantry, Min Buri Neighbourhood Bank. A test donation proposed SOS at about 3.7 km. The card is **In Progress**.
+**Accomplished:** I started **US1b Develop matching algorithm proximity scoring**. Day 3 was **4 hours**, Day 4 was **3 hours**, so **7 of 12 hours** are logged. `rankFoodBanks` sorts by haversine `distanceKm` inside each `deliveryRangeKm` and sets `proximityScore`. Seed rows: SOS Food Bank Bangkok, Mahidol Community Kitchen, Thonburi Shelter Pantry, Min Buri Neighbourhood Bank. A test donation from the donor coordinates proposed SOS at about 3.7 km with `withinRange: true`. The card is **In Progress**.
 
-**Next:** Until Wednesday I finish the remaining **5 hours** of proximity (Days 5–6) and only propose a match when the bank is in range **and** has remaining capacity.
+**Next:** Until Wednesday I finish the remaining **5 hours** (Days 5–6). `proposeMatch` returns a match only when `withinRange` and `hasCapacity` are both true. Otherwise the donation stays `status: "queued"`.
 
-**Blockers:** None. Sample food-bank data is in.
+**Blockers:** None. The seed data is in `web/lib/seed.ts`.
 
 ### 7. Napat to Sakkaraj
 
@@ -77,11 +77,11 @@ Thank you, Sirapassorn. Sakkaraj.
 
 ### 8. Sakkaraj, QA 1 (about 1.5 minutes)
 
-**Accomplished:** I ran **US1a QA test donation creation and queue timing** — Day 3 **2 hours** and Day 4 **2 hours**, so the **4-hour** QA card is executed. The API suite in `qa/api/test-log-donation.py` passed, including queue time under 60 seconds, validation, duplicates, and non-donor blocked. I can inject with `/api/test/queue`. The US1a QA card is **In Review / QA**. I have not ticked Done until the short UI pass on the donor form is recorded.
+**Accomplished:** I executed **US1a QA test donation creation and queue timing** — Day 3 **2 hours** and Day 4 **2 hours**, so the **4-hour** card is run. `qa/api/test-us1a-log-donation.py` passed: queue under 60 seconds, 400 on empty `foodType`, `quantity` 0 or non-numeric, past `expiryDateTime`, one row on double submit, 401 anonymous and 403 food-bank on `POST /api/donations`. Inject works at `POST /api/test/queue`. The card is **In Review / QA**. I have not marked Done until the UI pass on `/donations/new` is recorded.
 
-**Next:** Until Wednesday I finish the US1a UI pass, then start **US1b QA** (Days 5–7, 8 hours): in range with capacity, over capacity, and match time under 2 minutes.
+**Next:** Until Wednesday I finish that UI pass, then start **US1b QA** in `qa/api/test-us1b-auto-match.py` (Days 5–7, 8 hours): match under 120 seconds when `withinRange` and `hasCapacity`, no match when `quantity` is 4000, and `GET /api/matches` returns `proximityScore`, `capacityScore`, and `distanceKm`.
 
-**Blockers:** None for the API. I still need five minutes with Pratanin on the form for the UI pass.
+**Blockers:** None on the API. I still need five minutes with Pratanin on the form for the UI pass.
 
 ### 9. Napat's own update (about 1 minute)
 
@@ -93,11 +93,11 @@ Thank you, Sirapassorn. Sakkaraj.
 
 ### 10. Blocker and risk review (Napat, about 1 minute)
 
-Open item: Sakkaraj's US1a UI walkthrough with Pratanin. Matching must not propose a bank that is out of range or over capacity. US6 stays To-Do until Day 6. Does anyone want to add a blocker?
+Open item: Sakkaraj's UI pass on `/donations/new` with Pratanin. `proposeMatch` must not return a bank with `withinRange: false` or `hasCapacity: false`. The US6 `pickupWindow` select stays To-Do until Day 6. Does anyone want to add a blocker?
 
 ### 11. Definition of Done check (Napat, about 1.5 minutes)
 
-US1a is close. Before Done: acceptance criteria, review, tests, validation, 1-minute queue, QA with no critical bugs, hours on the board. Sakkaraj confirms the QA tick at Wednesday's meeting. US1b is not Done until match within 2 minutes, in range, with capacity, and QA has run those cases.
+US1a is close. Before Done: acceptance criteria, review on `main`, `test-us1a-log-donation.py` green, 400 validation, queue under 60 seconds, no critical bugs, hours on the board. Sakkaraj confirms that tick on Wednesday. US1b is not Done until `proposedAt - createdAt` is under 120 seconds, `withinRange` and `hasCapacity` are true, and `test-us1b-auto-match.py` has run.
 
 ### 12. Closing (Napat, about 30 seconds)
 

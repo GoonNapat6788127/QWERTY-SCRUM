@@ -49,11 +49,11 @@ Pratanin, would you like to start?
 
 ### 2. Pratanin, Dev 1 (about 1.5 minutes)
 
-**Accomplished:** My card is **US1a Build donation entry form UI**. Day 2 was my last 4 hours, so the 8-hour card is built. The form has food type, quantity in kilograms, and expiry date and time, plus validation and error messages. That covers the validation risk from Meeting 1. The card is **In Review / QA**, not Done.
+**Accomplished:** My card is **US1a Build donation entry form UI**. Day 2 closed the last 4h, so the 8h card is implemented. The client route is `/donations/new`. The payload fields are `foodType` (required dropdown), `quantity` in kilograms (min 0.1, max 5000), and `expiryDateTime` (must be in the future, timezone Asia/Bangkok). Invalid input stays on the form with a field error and does not call the API. The card is **In Review / QA**, not Done.
 
-**Next:** I have **0 hours on Day 3** (the rest of today). Before Monday I log **Day 4: 4 hours** on **US1b Integrate matching service with queue triggers**. Until then I take review comments on the form. I do not start US6. That is Days 6–7, reported at Meeting 5.
+**Next:** I have **0 hours on Day 3**. Before Monday I log **Day 4, 4 hours** on **US1b Integrate matching service with queue triggers**: after a successful ingest, `POST /api/donations` must call the matcher on the same request. I do not start the US6 `pickupWindow` control. That UI is Days 6–7, reported at Meeting 5.
 
-**Blockers:** None for the form. It cannot go to Done until Sakkaraj's QA pass.
+**Blockers:** None on the form component. It stays out of Done until Sakkaraj's suite `qa/api/test-us1a-log-donation.py` passes.
 
 ### 3. Napat to Jirathiwat
 
@@ -61,11 +61,11 @@ Thanks, Pratanin. Jirathiwat, you're next.
 
 ### 4. Jirathiwat, Dev 3 (about 1.5 minutes)
 
-**Accomplished:** My card is **US1a Implement donation queue ingestion backend logic**. Day 2 was the first **4 of 8 hours**. I read the acceptance criteria and started ingestion: a donation message goes into the matching queue. I am proposing this JSON so we can close the message-format risk: donation ID, food type, quantity, expiry date and time, pickup window, donor ID, timezone Asia/Bangkok. The donation ID is also how we avoid saving the same donation twice. The card stays **In Progress**.
+**Accomplished:** My card is **US1a Implement donation queue ingestion backend logic**. Day 2 was the first **4 of 8 hours**. A donor `POST /api/donations` persists the row and it is readable from `GET /api/queue` and the page `/queue`. I am proposing this JSON schema, to be published at `GET /api/contract`: `donationId`, `foodType`, `quantity`, `quantityUnit: "kg"`, `expiryDateTime` (ISO-8601), `pickupWindow.start`, `pickupWindow.end`, `donorId`, `timezone: "Asia/Bangkok"`. `donationId` is the idempotency key so the same donation is not inserted twice. The card stays **In Progress**.
 
-**Next:** Day 3 is my remaining **4 hours** on this same card. I will finish ingestion, check the 1-minute queue rule, add the duplicate check, and give Sakkaraj a way to send test messages by the end of today.
+**Next:** Day 3 is the remaining **4 hours** on this handler. I will enforce the acceptance criterion that the item is on the queue in under 60 seconds, return the existing row when `donationId` or the `Idempotency-Key` header repeats, and ship `POST /api/test/queue` (201, auth donor or logistics) so QA can inject a message.
 
-**Blockers:** I need Pratanin and Sakkaraj to agree the message format in this meeting. Until we agree, the fields stay a proposal.
+**Blockers:** I need Pratanin and Sakkaraj to accept this schema in this meeting. Until we accept it, the contract is still a proposal.
 
 ### 5. Napat to Sirapassorn
 
@@ -73,11 +73,11 @@ Thanks, Jirathiwat. Sirapassorn, you're next. Please name the card you will work
 
 ### 6. Sirapassorn, Dev 2 (about 1.5 minutes)
 
-**Accomplished:** I had no hours on Day 2. No card moved. I stayed with the US1b acceptance criteria: propose a match within 2 minutes when a food bank is within delivery range and has reported capacity.
+**Accomplished:** I logged **0 hours** on Day 2. No card moved. I stayed on the US1b acceptance criteria: propose a match within 120 seconds only when `distanceKm` is inside `deliveryRangeKm` and `remainingCapacityKg` is at least `quantity`.
 
-**Next:** My Day 3 card is **US1b Develop matching algorithm proximity scoring**, **4 hours**. I will rank food banks by distance inside their delivery range. The card moves to In Progress after this meeting, not before.
+**Next:** My Day 3 card is **US1b Develop matching algorithm proximity scoring**, **4 hours**. I will rank food banks with a haversine `distanceKm` and a `proximityScore`. The card moves to In Progress after this meeting, not before.
 
-**Blockers:** I need sample food bank data with location and reported capacity. Sakkaraj, can you include that in today's test data?
+**Blockers:** I need seed records with `lat`, `lng`, `deliveryRangeKm`, and `remainingCapacityKg`. Sakkaraj, can you put that fixture in today's test data?
 
 ### 7. Napat to Sakkaraj
 
@@ -85,11 +85,11 @@ Thank you, Sirapassorn. Sakkaraj, last one.
 
 ### 8. Sakkaraj, QA 1 (about 1.5 minutes)
 
-**Accomplished:** I had no test-execution hours on Day 2. The test-case document for donation ingestion and the entry form is already written, from Meeting 1. The QA card is still **To-Do**.
+**Accomplished:** I logged **0 execution hours** on Day 2. The cases are written in `qa/docs/test-cases-log-donation.md` (TC-01 through TC-11). The QA card is still **To-Do**. No pytest run yet.
 
-**Next:** Day 3 is **2 hours** on **US1a QA test donation creation and queue timing**. I will check that a donation appears in the queue within 1 minute, and I will add food bank sample data for Sirapassorn.
+**Next:** Day 3 is **2 hours** on **US1a QA test donation creation and queue timing**. I will assert that `POST /api/donations` returns 201 and the same `donationId` is on `GET /api/queue` in under 60 seconds. I will also add the food-bank seed Sirapassorn needs for proximity scoring.
 
-**Blockers:** I still cannot run the queue tests until Jirathiwat gives me the test endpoint today, and until Pratanin's form is on a test environment. That is today's work, not something I finished yesterday.
+**Blockers:** The suite cannot run until `POST /api/test/queue` is up and the donor form is served at `http://localhost:3000`. That is Day 3 work, not something I finished on Day 2.
 
 ### 9. Napat's own update (about 1 minute)
 
@@ -101,11 +101,11 @@ Thank you, Sirapassorn. Sakkaraj, last one.
 
 ### 10. Blocker and risk review (Napat, about 1 minute)
 
-Three items to close today, not yesterday. One: Jirathiwat, Pratanin, and Sakkaraj agree the message format before we leave. Two: Sakkaraj gives Sirapassorn food bank sample data. Three: Jirathiwat gives Sakkaraj the test endpoint by the end of Day 3. Pratanin's validation risk is already in the form. The duplicate-donation risk waits on the donation ID during today's ingestion hours. Does anyone disagree or want to add a blocker?
+Three items to close today, not yesterday. One: accept the `GET /api/contract` schema before we leave. Two: Sakkaraj adds food-bank seed data (`lat`, `lng`, `deliveryRangeKm`, `remainingCapacityKg`) for the proximity ranker. Three: Jirathiwat ships `POST /api/test/queue` by the end of Day 3. Form validation for bad `quantity` and `expiryDateTime` is already in the client. Duplicate protection waits on the `donationId` check in today's ingest hours. Does anyone disagree or want to add a blocker?
 
 ### 11. Definition of Done check (Napat, about 1.5 minutes)
 
-US1a is **not Done**. Pratanin's form is In Review. Before it moves to Done we still need: acceptance criteria met, code reviewed and on main, tests passing, QA passed, the 1-minute queue time met, and the card and hours updated. Sakkaraj starts that QA today. Jirathiwat's ingestion is only halfway, so it cannot go to Done this morning. Same rule later for US1b: match within 2 minutes, in range, with capacity.
+US1a is **not Done**. The form is In Review. Before Done we still need: the Given/When/Then met, the handler reviewed and on `main`, `qa/api/test-us1a-log-donation.py` green, 400s for bad input, queue latency under 60 seconds, and hours logged. Sakkaraj starts that suite today. Ingestion is only 4 of 8 hours, so it cannot go to Done this morning. The same rule later for US1b: `proposeMatch` under 120 seconds, `withinRange` true, and `hasCapacity` true.
 
 ### 12. Closing (Napat, about 30 seconds)
 
