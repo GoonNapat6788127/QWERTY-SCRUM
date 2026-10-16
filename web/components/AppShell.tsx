@@ -14,6 +14,7 @@ const NAV: NavItem[] = [
   { href: "/donations", label: "Donations", roles: ["donor", "foodbank", "driver", "logistics"] },
   { href: "/queue", label: "Matching queue", roles: ["donor", "foodbank", "driver", "logistics"] },
   { href: "/dispatch", label: "Driver dispatch", roles: ["driver", "foodbank", "logistics"] },
+  { href: "/incoming", label: "Incoming pickups", roles: ["foodbank", "logistics"] },
   { href: "/food-banks", label: "Food banks", roles: ["foodbank", "driver", "logistics"] },
   { href: "/drivers", label: "Driver activity", roles: ["foodbank", "logistics"] },
   { href: "/receipts", label: "Receipts & tax", roles: ["donor", "logistics"] },

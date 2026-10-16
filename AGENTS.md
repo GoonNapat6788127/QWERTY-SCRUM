@@ -20,7 +20,10 @@ Source PDFs in `docs/`:
 - `sprint-1-backlog.pdf` — task hours by day
 - `sprint-1-scrum-meeting-1.pdf` — first Daily Scrum script
 - `sprint-1-scrum-meeting-2.pdf` — speaking-script format to copy
-- `sprint-1-scrum-meeting-3.md` / `sprint-1-scrum-meeting-3.pdf` — latest standup script
+- `sprint-1-scrum-meeting-3.md` / `sprint-1-scrum-meeting-3.pdf` — Meeting 3 script
+- `sprint-1-scrum-meeting-4.md` / `.pdf` — Monday 19 Oct 2026
+- `sprint-1-scrum-meeting-5.md` / `.pdf` — Wednesday 21 Oct 2026
+- `sprint-1-scrum-meeting-6.md` / `.pdf` — Friday 23 Oct 2026 (Sprint 1 close)
 
 ## Team
 

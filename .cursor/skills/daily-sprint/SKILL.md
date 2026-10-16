@@ -34,7 +34,7 @@ Daily sprint:
 - Default: `next_day_to_run` in the progress file.
 - User said `day 7`: use 7.
 - User said `meeting script only`: skip implementation; still refresh the script from current progress.
-- Sprint 1 has 15 days. If `next_day_to_run` is 16, stop and say Sprint 1 is finished; offer Sprint 2 from the product backlog.
+- Sprint 1 has 15 planned hour-days packed into a calendar that holds **three Daily Scrums per week** (Monday, Wednesday, Friday) and ends **Friday 23 October 2026**. If `next_day_to_run` is 16, stop and say Sprint 1 implementation is finished; remaining work is the three standup scripts (Meetings 4–6) unless the user asks for Sprint 2.
 
 ### 2. Implement Day N
 
@@ -84,8 +84,10 @@ Do not advance the sprint day just because code for a later card exists.
 |---|---|---|---|
 | 1 | Oct 14 kickoff | Plans and risks. No build yet. | Done. PDF only. |
 | 2 | Draft in the Meeting 2 PDF | Planned Day 1–2 wording. Format to copy. | Template. Not "Day 3 is done". |
-| 3 | Start of Day 3, morning after Day 2 | Day 2 finished. Day 3 is next. | Script exists. Day 3 is not done. |
-| M (4+) | Start of Day M | Day M-1, only after that day is completed | Write only after that day is run. |
+| 3 | Friday 16 Oct window (after Day 2) | Day 2 finished. | Script exists. |
+| 4 | Monday 19 October 2026 | US1a close, US1b start | `docs/sprint-1-scrum-meeting-4.md` |
+| 5 | Wednesday 21 October 2026 | US1b, US6, US2a | `docs/sprint-1-scrum-meeting-5.md` |
+| 6 | Friday 23 October 2026 | US2b, US5a, US3a, Sprint 1 close | `docs/sprint-1-scrum-meeting-6.md` |
 
 Read `last_completed_day` and `next_day_to_run` from `docs/sprint-1-progress.md`. Do not infer the day from how much code is already in `web/`.
 

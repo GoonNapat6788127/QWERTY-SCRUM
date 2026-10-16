@@ -2,7 +2,7 @@
 
 Surplus-food logistics website for Team QWERTY. It follows the product backlog and Sprint 1 plan: donors log food, the matching queue ingests it within one minute, food banks are scored by distance and remaining capacity, drivers pick up and deliver with proof, and a digital receipt is issued.
 
-Sprint 1 Day 2 focus is **US1a**: donation entry form, queue ingestion, validation, duplicate protection, and the QA test endpoint.
+Sprint 1 stories through **Friday 23 October 2026**: US1a, US1b, US6, US2a, US2b, US5a, US3a. Daily Scrums are Monday, Wednesday, and Friday. Remaining standups: Meetings 4–6.
 
 ## Run the website
 
@@ -73,7 +73,7 @@ Live contract: `GET /api/contract`.
 ```bash
 cd qa
 pip install -r requirements.txt
-pytest api/test-log-donation.py -q
+python -m pytest api/test-log-donation.py api/test-sprint1-remaining.py -q
 ```
 
 The API server must already be running on `http://localhost:3000`, or set `BASE_URL`.
@@ -90,4 +90,4 @@ The agent reads `docs/sprint-1-progress.md`, implements that day’s backlog, up
 
 Also: `Run sprint day 5` or `Meeting script only`.
 
-Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Day 2 is finished. Tomorrow's standup is Meeting 3 (`docs/sprint-1-scrum-meeting-3.md` and `.pdf`), which reports Day 2. The next build run is Day 3.
+Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Sprint 1 implementation is complete as of 16 October 2026. Remaining Daily Scrums: Meeting 4 (Mon 19 Oct), Meeting 5 (Wed 21 Oct), Meeting 6 (Fri 23 Oct, Sprint 1 close). Scripts: `docs/sprint-1-scrum-meeting-4.md`, `5.md`, `6.md` (and PDFs).
