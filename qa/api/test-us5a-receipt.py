@@ -4,7 +4,7 @@ Product backlog: Given a donation marked Delivered, when delivery is confirmed,
 then a receipt with weight, food type, and timestamp is generated and emailed
 to the donor.
 
-Standup: Meeting 6 (Fri 23 Oct) reports this QA card done (Day 13, 2 hours).
+Standup: Meeting 6 (Thu 22 Oct) reports this QA card done (Day 13, 2 hours).
 Owners: Jirathiwat (receipt and email), Sakkaraj (QA).
 """
 

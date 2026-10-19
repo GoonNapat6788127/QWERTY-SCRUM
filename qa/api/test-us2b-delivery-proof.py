@@ -3,7 +3,7 @@
 Product backlog: Given a picked-up donation, when a driver marks it Delivered,
 then a delivery timestamp and digital proof (photo or signature) are attached.
 
-Standup: Meeting 6 (Fri 23 Oct) reports this QA card done (Days 11–12, 4 hours).
+Standup: Meeting 6 (Thu 22 Oct) reports this QA card done (Days 11–12, 4 hours).
 Owners: Sirapassorn (delivery API), Pratanin (proof on incoming), Sakkaraj (QA).
 """
 

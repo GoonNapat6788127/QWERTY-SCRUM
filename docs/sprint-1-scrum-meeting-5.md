@@ -4,7 +4,7 @@ Wednesday 21 October 2026. Three-question format.
 
 ## Meeting at a glance
 
-Meeting 5 is the **second of three remaining standups**. It reports **Days 5–8** on the W02 hour plan (Monday 19 and Tuesday 20 October). Sprint 1 still ends **Friday 23 October**.
+Meeting 5 is the **second of three remaining standups**. It reports **Days 5–8** on the W02 hour plan (Monday 19 and Tuesday 20 October). The last standup, Meeting 6, is **Thursday 22 October**. Friday 23 has no Daily Scrum.
 
 | Item | Detail |
 |---|---|
@@ -13,7 +13,7 @@ Meeting 5 is the **second of three remaining standups**. It reports **Days 5–8
 | Facilitator | Napat Tayommai |
 | Speakers | Pratanin, Jirathiwat, Sirapassorn, Sakkaraj |
 | Reports | Monday 19 – Tuesday 20 (**Days 5–8**, **41 hours**) |
-| Next | Friday 23 October, Meeting 6 (**Days 9–14**) and Sprint 1 close |
+| Next | Thursday 22 October, Meeting 6 (**Days 9–14**) and Sprint 1 close |
 | Three questions | Accomplished / Next / Blockers |
 
 ## Before the meeting
@@ -26,7 +26,7 @@ Share the board. Log Days 5–8 hours (table at the end). US1a should be Done if
 
 ### 1. Opening (Napat, about 1 minute)
 
-Good morning. Scrum meeting **five**, **Wednesday 21 October**. Last meeting was Monday. One standup left: **Friday 23 October**, which is also the last day of Sprint 1.
+Good morning. Scrum meeting **five**, **Wednesday 21 October**. Last meeting was Monday. One standup left: **Thursday 22 October**, Meeting 6, the Sprint 1 close. Friday 23 has no Daily Scrum.
 
 Three questions, name the card. We do not mark Done without the Definition of Done.
 
@@ -38,7 +38,7 @@ Pratanin, please start.
 
 **Accomplished:** I finished **US1b Integrate matching service with queue triggers** — the remaining **8 hours** on Days 5–7, so the 12-hour card is built. `POST /api/donations` now calls `proposeMatch` before it returns 201, and a success sets `status: "matched"`. I also finished **US6 Add pickup time window UI** — **2 hours** on Day 6 and **3 hours** on Day 7. `/donations/new` sends `pickupWindow: { start, end }` and the API stores it on the donation. Both cards are **In Review / QA**. I did **not** build `GET /api/incoming`. That view is Day 9.
 
-**Next:** Until Friday I build **US2a Update food bank view** (Day 9, 2 hours) so `/incoming` renders `driverId` and `pickedUpAt`, then **US2b Render delivery proof and timestamp** (Days 10–11, 6 hours) for `proofKind` and `deliveredAt`.
+**Next:** Until Thursday I build **US2a Update food bank view** (Day 9, 2 hours) so `/incoming` renders `driverId` and `pickedUpAt`, then **US2b Render delivery proof and timestamp** (Days 10–11, 6 hours) for `proofKind` and `deliveredAt`.
 
 **Blockers:** None.
 
@@ -50,7 +50,7 @@ Thanks, Pratanin. Jirathiwat.
 
 **Accomplished:** I finished **US1b capacity check** — the remaining **5 hours** on Days 5–6. `hasCapacity` is false when `quantity` exceeds `remainingCapacityKg`, and that bank is skipped. I also finished **US6 Connect time window to dispatch feed** — **3 hours** on Day 7 and **2 hours** on Day 8. `GET /api/dispatch` includes `pickupWindow` for `matched` and `picked_up` rows. Both cards are **In Review / QA**. The US1a ingest handler is ready for Done if Sakkaraj ticks QA.
 
-**Next:** Until Friday I implement **US5a** `GET /api/receipts/{id}` as a PDF (weight, food type, timestamp, `emailStatus: "sent"`) and **US3a** the expiry flag (Days 12–13). If hours until `expiryDateTime` are 24 or less, the queue item has `urgent: true`.
+**Next:** Until Thursday I implement **US5a** `GET /api/receipts/{id}` as a PDF (weight, food type, timestamp, `emailStatus: "sent"`) and **US3a** the expiry flag (Days 12–13). If hours until `expiryDateTime` are 24 or less, the queue item has `urgent: true`.
 
 **Blockers:** None.
 
@@ -62,7 +62,7 @@ Thanks, Jirathiwat. Sirapassorn.
 
 **Accomplished:** I finished **US1b proximity scoring** — the remaining **5 hours** on Days 5–6 — and combined it with capacity. `proposeMatch` now requires both `withinRange` and `hasCapacity`. Day 8 I started **US2a** `POST /api/pickup` (**2 of 4 hours**). A matched donation can move toward `picked_up`. I still have **2 hours** on Day 9 to persist `pickedUpAt` and `driverId`. The card is **In Progress**. I have not started `POST /api/delivery`. That handler begins Day 9.
 
-**Next:** Until Friday I finish those **2 hours**, then **US2b** `POST /api/delivery` with `proofKind` `photo` or `signature` and a required `proofDataUrl` (Days 9–11, 10 hours). A call with no proof must return 400.
+**Next:** Until Thursday I finish those **2 hours**, then **US2b** `POST /api/delivery` with `proofKind` `photo` or `signature` and a required `proofDataUrl` (Days 9–11, 10 hours). A call with no proof must return 400.
 
 **Blockers:** None.
 
@@ -74,7 +74,7 @@ Thank you, Sirapassorn. Sakkaraj.
 
 **Accomplished:** The US1a UI pass on `/donations/new` is done, so US1a can move to **Done** if every Definition of Done tick is complete. I ran **US1b QA** in `qa/api/test-us1b-auto-match.py` — Days 5–7, **8 hours**: `proposedAt` minus `createdAt` under 120 seconds when `withinRange` and `hasCapacity` are true; `match` is null and `status` stays `queued` when `quantity` is 4000. I ran **US6 QA** in `qa/api/test-us6-pickup-window.py` on Day 8, **3 hours**: the stored `pickupWindow.start` equals the row on `GET /api/dispatch`. Those QA cards are **In Review**. I have **not** run `test-us2a-pickup-status.py`. That file is Day 10.
 
-**Next:** Until Friday I run `test-us2a-pickup-status.py` (Day 10), then `test-us2b-delivery-proof.py`, `test-us5a-receipt.py`, and `test-us3a-urgent-flag.py`. Those are the last Sprint 1 QA modules.
+**Next:** Until Thursday I run `test-us2a-pickup-status.py` (Day 10), then `test-us2b-delivery-proof.py`, `test-us5a-receipt.py`, and `test-us3a-urgent-flag.py`. Those are the last Sprint 1 QA modules.
 
 **Blockers:** None.
 
@@ -82,13 +82,13 @@ Thank you, Sirapassorn. Sakkaraj.
 
 **Accomplished:** Days 5–8 hours are on the board: **41 hours** (12 + 13 + 9 + 7). US1a is ready for Done. US1b and US6 are in Review. US2a pickup is In Progress at 2 of 4 hours. Burndown still has Days 9–14: incoming view, delivery proof, receipts, and expiry.
 
-**Next:** Friday we need a Done increment: finish pickup, delivery with proof, receipt, urgent flag. I will book a short Sprint Review slot after Meeting 6.
+**Next:** Thursday we need a Done increment: finish pickup, delivery with proof, receipt, urgent flag. I will book a short Sprint Review slot after Meeting 6.
 
-**Blockers:** None. Schedule risk only: two calendar days left, **39 hours** still on Days 9–14.
+**Blockers:** None. Schedule risk only: Meeting 6 is tomorrow, Thursday 22, and **39 hours** are still on Days 9–14.
 
 ### 10. Blocker and risk review (Napat, about 1 minute)
 
-No waits. The risk is time: US2a finish, US2b, US5a, and US3a must be Done by Friday. If anyone is slipping, say it now. Anyone to add?
+No waits. The risk is time: US2a finish, US2b, US5a, and US3a must be Done by Thursday 22. If anyone is slipping, say it now. Anyone to add?
 
 ### 11. Definition of Done check (Napat, about 1.5 minutes)
 
@@ -96,7 +96,7 @@ Sakkaraj, US1a QA is complete. We move US1a to Done only with every tick: accept
 
 ### 12. Closing (Napat, about 30 seconds)
 
-Next meeting is **Friday 23 October**. That is the last Daily Scrum of Sprint 1. It reports **Days 9–14**. Finish pickup, incoming view, delivery proof, receipts, and urgent flags. Thank you.
+Next meeting is **Thursday 22 October**. That is the last Daily Scrum of Sprint 1. It reports **Days 9–14**. Finish pickup, incoming view, delivery proof, receipts, and urgent flags. Thank you.
 
 ---
 

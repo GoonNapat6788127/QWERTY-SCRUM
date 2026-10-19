@@ -2,7 +2,7 @@
 
 Surplus-food logistics website for Team QWERTY. It follows the product backlog and Sprint 1 plan: donors log food, the matching queue ingests it within one minute, food banks are scored by distance and remaining capacity, drivers pick up and deliver with proof, and a digital receipt is issued.
 
-Sprint 1 runs **Wednesday 14 October through Friday 23 October 2026**. Stories in the sprint: US1a, US1b, US6, US2a, US2b, US5a, US3a. Daily Scrums are Monday, Wednesday, and Friday. **Today, Friday 16 October, is Meeting 3** (Day 2 on the board). Sprint 1 closes at Meeting 6 on Friday 23 October.
+Sprint 1 runs **Wednesday 14 October through Friday 23 October 2026**. Stories in the sprint: US1a, US1b, US6, US2a, US2b, US5a, US3a. Daily Scrums are Monday, Wednesday, and Friday. **Today, Friday 16 October, is Meeting 3** (Day 2 on the board). Sprint 1 closes at Meeting 6 on Thursday 22 October. Friday 23 has no Daily Scrum.
 
 ## Run the website
 
@@ -52,7 +52,7 @@ Live contract: `GET /api/contract`.
 
 ## Product backlog
 
-Sprint 1 (must be Done by Friday 23 October, only after that meeting's Definition of Done):
+Sprint 1 (must be Done at Meeting 6 on Thursday 22 October, only after that meeting's Definition of Done):
 
 | Story | What the site does |
 |---|---|
@@ -98,4 +98,4 @@ The agent reads `docs/sprint-1-progress.md`, implements that day’s backlog, up
 
 Also: `Run sprint day 5` or `Meeting script only`.
 
-Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Today is Meeting 3 (`docs/sprint-1-scrum-meeting-3.md`). Next: Meeting 4 (Mon 19 Oct, Days 3–4), Meeting 5 (Wed 21 Oct, Days 5–8), Meeting 6 (Fri 23 Oct, Days 9–14, close). W02 conclusion (`docs/sprint-1-backlog-conclusion.xlsx`) is the Friday 23 result, not today's board.
+Instructions: `AGENTS.md` and `.cursor/skills/daily-sprint/SKILL.md`. Today is Meeting 3 (`docs/sprint-1-scrum-meeting-3.md`). Next: Meeting 4 (Mon 19 Oct, Days 3–4), Meeting 5 (Wed 21 Oct, Days 5–8), Meeting 6 (Thu 22 Oct, Days 9–14, close). W02 conclusion (`docs/sprint-1-backlog-conclusion.xlsx`) is the Thursday 22 result, not today's board.

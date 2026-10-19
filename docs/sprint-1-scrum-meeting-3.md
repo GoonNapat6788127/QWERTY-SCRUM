@@ -6,9 +6,9 @@ Speaking script for **today, Friday 16 October 2026**. Same three-question forma
 
 Meeting 3 is a **10-minute stand-up today, Friday 16 October 2026**. It reports **Day 2, which is finished** (Thursday 15 October). **Day 3 has not started.** Each member answers the same three questions. The Scrum board stays on screen the whole time.
 
-Sprint 1 started Wednesday 14 October (Meeting 1) and **must finish Friday 23 October** (Meeting 6). The Meeting 2 PDF is the speaking template, not a second live meeting. This script is the live standup.
+Sprint 1 started Wednesday 14 October (Meeting 1). Meeting 6, the close, is **Thursday 22 October**. Friday 23 has no Daily Scrum. The Meeting 2 PDF is the speaking template, not a second live meeting. This script is the live standup.
 
-**Note:** Replace any line with that person's real status before you speak. Do not say Day 3 tasks are already done. Do not call US1b, US6, US2a, US2b, US5a, or US3a Done. Those hours are Meetings 4–6. The W02 conclusion sheet is the **Friday 23** result, not today's board. Sprint 2 stories (US3b, US4a, US4b, US5b, US7, US8) stay on the product backlog.
+**Note:** Replace any line with that person's real status before you speak. Do not say Day 3 tasks are already done. Do not call US1b, US6, US2a, US2b, US5a, or US3a Done. Those hours are Meetings 4–6. The W02 conclusion sheet is the **Thursday 22** result, not today's board. Sprint 2 stories (US3b, US4a, US4b, US5b, US7, US8) stay on the product backlog.
 
 | Item | Detail |
 |---|---|
@@ -18,7 +18,7 @@ Sprint 1 started Wednesday 14 October (Meeting 1) and **must finish Friday 23 Oc
 | Facilitator | Napat Tayommai (Scrum Master) |
 | Speakers | Pratanin (Dev 1), Jirathiwat (Dev 3), Sirapassorn (Dev 2), Sakkaraj (QA 1) |
 | Shared on screen | Scrum board and the Definition of Done |
-| Sprint ends | Friday 23 October 2026 |
+| Sprint close | Thursday 22 October 2026, Meeting 6. Friday 23 has no standup. |
 | Next standup | Monday 19 October, Meeting 4 (reports Days 3–4) |
 | Three questions | 1. What did I accomplish since the last Scrum meeting? 2. What will I focus on until the next Scrum meeting? 3. Are there any blockers or obstacles in my way? |
 
@@ -39,7 +39,7 @@ Napat prepares these so the meeting can run without setup time.
 
 Good morning, everyone. Today is **Friday 16 October**. This is our **third Scrum meeting** for Sprint 1. It is the **start of Day 3**. **Thursday 15 October was Day 2**, and that day's planned work is finished. The board is on screen.
 
-Sprint 1 ends **Friday 23 October**. After today we have three standups: Monday 19, Wednesday 21, and Friday 23. We do not present the conclusion sheet today.
+The Sprint 1 close is **Thursday 22 October**. After today we have three standups: Monday 19, Wednesday 21, and Thursday 22. Friday 23 has no standup. We do not present the conclusion sheet today.
 
 Same three questions: what did I accomplish since the last Scrum meeting, what will I focus on until the next one, and is anything blocking me. Name the **card**. Day 3 cards are still To-Do. We do not move a card to Done unless every item on the Definition of Done is ticked.
 
@@ -109,7 +109,7 @@ US1a is **not Done**. The form is In Review. Before Done we still need: the Give
 
 ### 12. Closing (Napat, about 30 seconds)
 
-Thank you. Day 3 starts now, still **Friday 16 October**: finish ingestion (4h), start proximity scoring (4h), and start US1a QA (2h). Day 4 is before Monday. The next Scrum meeting is **Monday 19 October (Meeting 4)**. It reports **Days 3–4** (22h). Sprint 1 is Done only on **Friday 23 October**, after Meeting 6, if the Definition of Done passes. Thank you.
+Thank you. Day 3 starts now, still **Friday 16 October**: finish ingestion (4h), start proximity scoring (4h), and start US1a QA (2h). Day 4 is before Monday. The next Scrum meeting is **Monday 19 October (Meeting 4)**. It reports **Days 3–4** (22h). Sprint 1 is Done only on **Thursday 22 October**, after Meeting 6, if the Definition of Done passes. Thank you.
 
 ---
 
@@ -175,7 +175,7 @@ Three standups a week (Monday, Wednesday, Friday). The W02 Day 1–15 hours are 
 | Tue 20 Oct | Work, no standup | Part of Days 5–8 | — | Reported Wednesday |
 | Wed 21 Oct | 5 | Days 5–8 (41h) | US1a Done. US1b and US6 In Review. US2a pickup 2/4 | Incoming view, US2b, US5a, US3a To-Do |
 | Thu 22 Oct | Work, no standup | Part of Days 9–14 | — | Reported Friday |
-| **Fri 23 Oct** | **6 Sprint close** | **Days 9–14 (39h). Day 15 = 0** | **7 Sprint 1 stories Done if DoD passes. 114/114. Remaining 0** | Sprint 2 stays on the product backlog |
+| **Thu 22 Oct** | **6 Sprint close** | **Days 9–14 (39h). Day 15 on Fri 23 = 0** | **7 Sprint 1 stories Done if DoD passes. 114/114. Remaining 0** | Sprint 2 stays on the product backlog. Friday 23 has no standup. |
 
 Check: 4 + 8 + 22 + 41 + 39 + 0 = **114**.
 
@@ -187,6 +187,6 @@ Sprint 2, do not move today: **US3b, US4a, US4b, US5b, US7, US8**.
 
 ## What to do if the room goes off the plan
 
-- Someone asks to mark a later card Done because the website already shows it: leave the card in To-Do until the meeting that owns those hours. The Friday 23 demo can show it. Today's board cannot.
-- A critical bug is open: that card stays out of Done. On Friday 23, leave it off the conclusion Done column and do not say 7 of 7.
-- Friday 23 DoD passes for every Sprint 1 card: present `docs/sprint-1-backlog-conclusion.xlsx`. Remaining 0. Then Sprint Review, then Sprint 2 planning.
+- Someone asks to mark a later card Done because the website already shows it: leave the card in To-Do until the meeting that owns those hours. The Thursday 22 demo can show it. Today's board cannot.
+- A critical bug is open: that card stays out of Done. On Thursday 22, leave it off the conclusion Done column and do not say 7 of 7.
+- Thursday 22 DoD passes for every Sprint 1 card: present `docs/sprint-1-backlog-conclusion.xlsx`. Remaining 0. Then Sprint Review, then Sprint 2 planning.

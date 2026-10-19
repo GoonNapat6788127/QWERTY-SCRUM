@@ -4,7 +4,7 @@ Monday 19 October 2026. Three-question format.
 
 ## Meeting at a glance
 
-Meeting 4 is a **10-minute stand-up on Monday 19 October**, the first of the three remaining standups this sprint. It reports **Days 3–4** on the W02 hour plan (work since Friday 16 October, Meeting 3). Each week we hold three Daily Scrums: Monday, Wednesday, Friday. Sprint 1 must finish on **Friday 23 October 2026**.
+Meeting 4 is a **10-minute stand-up on Monday 19 October**, the first of the three remaining standups this sprint. It reports **Days 3–4** on the W02 hour plan (work since Friday 16 October, Meeting 3). Each week we hold three Daily Scrums: Monday, Wednesday, and Friday, except the close. Meeting 6 is **Thursday 22 October 2026**. Friday 23 has no standup.
 
 **Note:** Replace any line with live status before you speak. Do not report US6, US2a, or later cards as finished — those hours start on Day 6.
 
@@ -31,7 +31,7 @@ Meeting 4 is a **10-minute stand-up on Monday 19 October**, the first of the thr
 
 ### 1. Opening (Napat, about 1 minute)
 
-Good morning. This is Scrum meeting **four** for Sprint 1, **Monday 19 October**. Last meeting was **Friday 16 October (Meeting 3)**, the start of Day 3. We have **two standups left**: Wednesday 21 and Friday 23. Friday 23 October is the last day of Sprint 1. The conclusion sheet is for that day, not for this meeting. Sprint 2 stories stay on the product backlog.
+Good morning. This is Scrum meeting **four** for Sprint 1, **Monday 19 October**. Last meeting was **Friday 16 October (Meeting 3)**, the start of Day 3. We have **two standups left**: Wednesday 21 and Thursday 22. Thursday 22 October is Meeting 6, the Sprint 1 close. The conclusion sheet is for that meeting, not for this one. Friday 23 has no standup. Sprint 2 stories stay on the product backlog.
 
 Three questions, name the card, board on screen. Nothing moves to Done unless the Definition of Done is ticked.
 
@@ -87,7 +87,7 @@ Thank you, Sirapassorn. Sakkaraj.
 
 **Accomplished:** Days 3–4 hours are on the board: **22 hours** (10 + 12). US1a is In Review / QA. US1b is In Progress. Friday's three blockers are closed: format, sample data, test endpoint.
 
-**Next:** I keep the burndown current. Meeting 5 will report Days 5–8: finish US1b, build US6, and start US2a pickup. Remaining Sprint 1 stories after that are US2a finish, US2b, US5a, US3a. They must be Done by Friday 23 October.
+**Next:** I keep the burndown current. Meeting 5 will report Days 5–8: finish US1b, build US6, and start US2a pickup. Remaining Sprint 1 stories after that are US2a finish, US2b, US5a, US3a. They must be Done at Meeting 6 on Thursday 22 October.
 
 **Blockers:** None.
 

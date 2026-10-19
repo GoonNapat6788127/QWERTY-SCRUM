@@ -34,7 +34,7 @@ Daily sprint:
 - Default: `next_day_to_run` in the progress file.
 - User said `day 7`: use 7.
 - User said `meeting script only`: skip implementation; still refresh the script from current progress.
-- Sprint 1 has 15 planned hour-days packed into a calendar that holds **three Daily Scrums per week** (Monday, Wednesday, Friday) and ends **Friday 23 October 2026**. If `next_day_to_run` is 16, stop and say Sprint 1 implementation is finished; remaining work is the three standup scripts (Meetings 4–6) unless the user asks for Sprint 2.
+- Sprint 1 has 15 planned hour-days packed into a calendar that holds **three Daily Scrums per week** (Monday, Wednesday, Friday). Meeting 6, the close, is **Thursday 22 October 2026**. Friday 23 October has no standup. If `next_day_to_run` is 16, stop and say Sprint 1 implementation is finished; remaining work is the three standup scripts (Meetings 4–6) unless the user asks for Sprint 2.
 
 ### 2. Implement Day N
 
@@ -84,10 +84,10 @@ Do not advance the sprint day just because code for a later card exists.
 |---|---|---|---|
 | 1 | Oct 14 kickoff | Plans and risks. No build yet. | Done. PDF only. |
 | 2 | Draft in the Meeting 2 PDF | Planned Day 1–2 wording. Format to copy. | Template. Not "Day 3 is done". |
-| 3 | **Today, Friday 16 October 2026** | Day 2 finished. Day 3 starts after the meeting. Sprint ends Friday 23. | Live script. |
+| 3 | **Today, Friday 16 October 2026** | Day 2 finished. Day 3 starts after the meeting. Close is Thursday 22. | Live script. |
 | 4 | Monday 19 October 2026 | Days 3–4 (22h): finish US1a ingestion + QA hours; start US1b | `docs/sprint-1-scrum-meeting-4.md` |
 | 5 | Wednesday 21 October 2026 | Days 5–8 (41h): finish US1b + US6; US2a pickup 2 of 4h | `docs/sprint-1-scrum-meeting-5.md` |
-| 6 | Friday 23 October 2026 | Days 9–14 (39h): finish US2a, US2b, US5a, US3a; close | `docs/sprint-1-scrum-meeting-6.md` |
+| 6 | Thursday 22 October 2026 | Days 9–14 (39h): finish US2a, US2b, US5a, US3a; close. Friday 23 has no standup. | `docs/sprint-1-scrum-meeting-6.md` |
 
 Read `last_completed_day` and `next_day_to_run` from `docs/sprint-1-progress.md`. Do not infer the day from how much code is already in `web/`.
 

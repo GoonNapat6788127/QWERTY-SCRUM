@@ -1,18 +1,18 @@
 # Sprint 1 – Scrum Meeting 6 Script (QWERTY)
 
-Friday 23 October 2026. Last Daily Scrum of Sprint 1.
+Thursday 22 October 2026. Last Daily Scrum of Sprint 1.
 
 ## Meeting at a glance
 
-Meeting 6 is the **third remaining standup** and the **close of Sprint 1**. It reports **Days 9–14** on the W02 hour plan (Wednesday 21 and Thursday 22 October). Day 15 is the 0-hour buffer. After this meeting the increment is ready for Sprint Review.
+Meeting 6 is the **third remaining standup** and the **close of Sprint 1**. It is on **Thursday 22 October 2026**, moved from Friday 23. It reports work since Meeting 5 (Wednesday 21 October): **Days 9–14** on the W02 hour plan. Day 15 is the 0-hour buffer on Friday 23, and Friday has no Daily Scrum. After this meeting the increment is ready for Sprint Review.
 
 | Item | Detail |
 |---|---|
-| Date | Friday 23 October 2026 |
+| Date | Thursday 22 October 2026 |
 | Length | About 10 minutes, then Sprint Review if the PO is present |
 | Facilitator | Napat Tayommai |
 | Speakers | Pratanin, Jirathiwat, Sirapassorn, Sakkaraj |
-| Reports | Wednesday 21 – Thursday 22 (**Days 9–14**, **39 hours**). Day 15 buffer **0**. |
+| Reports | Since Wednesday 21 October, Meeting 5 (**Days 9–14**, **39 hours**). Friday 23 is Day 15 buffer **0**, no standup. |
 | Next | Sprint Review today. Sprint 2 planning after that. |
 | Three questions | Accomplished / Next / Blockers |
 
@@ -29,7 +29,7 @@ Meeting 6 is the **third remaining standup** and the **close of Sprint 1**. It r
 
 ### 1. Opening (Napat, about 1 minute)
 
-Good morning. This is Scrum meeting **six**, **Friday 23 October**, the last Daily Scrum of Sprint 1. Last meeting was Wednesday. Days 9–14 were: finish `POST /api/pickup` and `GET /api/incoming`, build `POST /api/delivery` with proof, generate the US5a PDF receipt, and set the US3a `urgent` flag. Today we check that increment against the Definition of Done, then demo it in the Sprint Review.
+Good morning. This is Scrum meeting **six**, **Thursday 22 October**, the last Daily Scrum of Sprint 1. It was moved from Friday 23. Last meeting was Wednesday. Days 9–14 were: finish `POST /api/pickup` and `GET /api/incoming`, build `POST /api/delivery` with proof, generate the US5a PDF receipt, and set the US3a `urgent` flag. Today we check that increment against the Definition of Done, then demo it in the Sprint Review. Friday 23 has no standup.
 
 Three questions, name the card. If a card is not Done, say what is still open. Do not hide it.
 
@@ -81,7 +81,7 @@ Thank you, Sirapassorn. Sakkaraj.
 
 ### 9. Napat's own update (about 1 minute)
 
-**Accomplished:** Days 9–14 hours are on the board: **39 hours**. Day 15 buffer is **0**. Actual **114** / planned **114**. Remaining **0**. Sprint 1 board is Done for US1a, US1b, US6, US2a, US2b, US5a, US3a if every Definition of Done tick is true. Today's date is the Sprint 1 end date we committed to.
+**Accomplished:** Days 9–14 hours are on the board: **39 hours**. Day 15 buffer on Friday 23 is **0**. Actual **114** / planned **114**. Remaining **0**. Sprint 1 board is Done for US1a, US1b, US6, US2a, US2b, US5a, US3a if every Definition of Done tick is true. This Thursday meeting is the Sprint 1 close. Friday 23 is the last calendar day and has no Daily Scrum.
 
 **Next:** Sprint Review demo after this standup. Then Sprint 2 planning from the product backlog: US3b, US4a, US4b, US5b, US7, US8.
 

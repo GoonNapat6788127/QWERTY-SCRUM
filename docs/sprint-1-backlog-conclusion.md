@@ -1,10 +1,10 @@
 # Sprint 1 Backlog — Conclusion
 
-W02 sprint-backlog template for the **end of Sprint 1, Friday 23 October 2026**, after Meeting 6. Same columns as `docs/sprint-1-backlog.pdf`. Printable copies: `sprint-1-backlog-conclusion.xlsx` and `sprint-1-backlog-conclusion.pdf`.
+W02 sprint-backlog template for the **end of Sprint 1, presented at Meeting 6 on Thursday 22 October 2026**. Friday 23 has no standup. Same columns as `docs/sprint-1-backlog.pdf`. Printable copies: `sprint-1-backlog-conclusion.xlsx` and `sprint-1-backlog-conclusion.pdf`.
 
-**Do not use this Done column on Friday 16 October.** That day is Meeting 3. The live board is Day 2 only: form 8/8 In Review, ingestion 4/8 In Progress, every other Sprint 1 card To-Do. Fill or present this sheet on Friday 23, and only if Definition of Done passed with no critical bugs.
+**Do not use this Done column on Friday 16 October.** That day is Meeting 3. The live board is Day 2 only: form 8/8 In Review, ingestion 4/8 In Progress, every other Sprint 1 card To-Do. Fill or present this sheet on Thursday 22, and only if Definition of Done passed with no critical bugs.
 
-Day 1–15 cells are the hours each Daily Scrum reports. Status **Done** is the Friday 23 outcome.
+Day 1–15 cells are the hours each Daily Scrum reports. Status **Done** is the Thursday 22 outcome.
 
 Sprint 1 stories: US1a, US1b, US6, US2a, US2b, US5a, US3a. Sprint 2 stays on the product backlog: US3b, US4a, US4b, US5b, US7, US8.
 
@@ -31,7 +31,7 @@ Three Daily Scrums per week. The 15 hour-days are packed into those meetings. Sp
 | 3 | Fri 16 Oct | `sprint-1-scrum-meeting-3.md` | Day 2 | 8 | Form **8/8** In Review. Ingestion **4/8** In Progress. Sirapassorn and Sakkaraj: 0h yesterday. |
 | 4 | Mon 19 Oct | `sprint-1-scrum-meeting-4.md` | Days 3–4 | 22 | Ingestion **8/8**. US1a QA **4/4** In Review (not Done until UI pass). Proximity **7/12**. Capacity **3/8**. Integrate **4/12**. US6 still To-Do. |
 | 5 | Wed 21 Oct | `sprint-1-scrum-meeting-5.md` | Days 5–8 | 41 | US1a **Done**. US1b **40/40**. US6 **13/13**. US2a pickup **2/4** In Progress. Incoming view, US2b, US5a, US3a still To-Do. |
-| 6 | Fri 23 Oct | `sprint-1-scrum-meeting-6.md` | Days 9–14 (Day 15 = 0) | 39 | Finish US2a, US2b, US5a, US3a. Board **Done**. Remaining **0**. |
+| 6 | Thu 22 Oct | `sprint-1-scrum-meeting-6.md` | Days 9–14 (Day 15 on Fri 23 = 0) | 39 | Finish US2a, US2b, US5a, US3a. Board **Done**. Remaining **0**. Friday 23 has no standup. |
 
 Window check: 4 + 8 + 22 + 41 + 39 + 0 = **114**.
 

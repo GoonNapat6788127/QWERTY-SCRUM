@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   return json({
     sprint: "Sprint 1",
-    messageFormatAgreed: "Meeting 3, Friday 16 October 2026 (Day 2). Sprint 1 closes Friday 23 October.",
+    messageFormatAgreed: "Meeting 3, Friday 16 October 2026 (Day 2). Sprint 1 closes at Meeting 6 on Thursday 22 October.",
     messageFormat: {
       donationId: "DON-uuid",
       foodType: "string",

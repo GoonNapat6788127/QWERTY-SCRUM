@@ -197,7 +197,7 @@ def write_xlsx() -> Path:
         "Estimated effort, Day 1–15). Day cells are actual hours logged and match the Daily Scrum scripts: "
         "Meeting 3 = Day 2 (8h); Meeting 4 = Days 3–4 (22h); Meeting 5 = Days 5–8 (41h); Meeting 6 = Days 9–14 (39h); "
         "Day 1 (4h) is Meeting 2; Day 15 buffer is 0. Status is Done after Meeting 6 DoD. Remaining effort is 0. "
-        "See sheet Standup map. This Done column is the Friday 23 October result after Meeting 6. "
+        "See sheet Standup map. This Done column is the Thursday 22 October result after Meeting 6. "
         "On Friday 16 October (Meeting 3) the live board is Day 2 only. "
         "Sprint 2 stories (US3b, US4a, US4b, US5b, US7, US8) stay on the product backlog.",
     )
@@ -268,7 +268,7 @@ STANDUP_ROWS = [
     ),
     (
         "6",
-        "Fri 23 Oct 2026",
+        "Thu 22 Oct 2026",
         "sprint-1-scrum-meeting-6.md",
         "Days 9–14 (Day 15 = 0)",
         39,
@@ -343,7 +343,7 @@ def write_standup_sheet(wb: Workbook) -> None:
         "Today is Friday 16 October (Meeting 3): live board is Day 2 only. "
         "Meeting 4 must not say US6 is built (Days 6-8, Meeting 5). "
         "Meeting 5 must not say US2a incoming or US2b are finished (Days 9-11, Meeting 6). "
-        "US1a moves to Done at Meeting 5. Remaining 0 only after Meeting 6 on Friday 23 October. "
+        "US1a moves to Done at Meeting 5. Remaining 0 only after Meeting 6 on Thursday 22 October. Friday 23 has no standup. "
         "Sprint 2 (US3b, US4a, US4b, US5b, US7, US8) is not Sprint 1 Done.",
     )
     ws.cell(note, 1).alignment = LEFT
@@ -466,7 +466,7 @@ def write_pdf() -> Path:
         "Day 1-15 cells are actual hours and match the Daily Scrum scripts: Meeting 2 = Day 1 (4h); Meeting 3 = Day 2 (8h); "
         "Meeting 4 = Days 3-4 (22h); Meeting 5 = Days 5-8 (41h); Meeting 6 = Days 9-14 (39h); Day 15 buffer = 0. "
         "4+8+22+41+39+0 = 114. Meeting 4 does not close US6. Meeting 5 does not close US2a incoming or US2b. "
-        "Remaining effort is 0 after Meeting 6 DoD on Friday 23 October. "
+        "Remaining effort is 0 after Meeting 6 DoD on Thursday 22 October. Friday 23 has no standup. "
         "On Friday 16 October (Meeting 3) the live board is Day 2 only: do not present this Done column that day. "
         "Sprint 1 stories are US1a, US1b, US6, US2a, US2b, US5a, US3a. "
         "Sprint 2 stories (US3b, US4a, US4b, US5b, US7, US8) stay on the product backlog.",
@@ -488,7 +488,7 @@ def write_pdf() -> Path:
         ["3", "Fri 16 Oct", "Day 2", "8", "Form 8/8 In Review. Ingestion 4/8 In Progress. Sirapassorn 0. Sakkaraj 0."],
         ["4", "Mon 19 Oct", "Days 3-4", "22", "Ingestion 8/8. US1a QA 4/4 In Review. Proximity 7/12. Capacity 3/8. Integrate 4/12. US6 To-Do."],
         ["5", "Wed 21 Oct", "Days 5-8", "41", "US1a Done. US1b 40/40. US6 13/13. US2a pickup 2/4 In Progress. Incoming, US2b, US5a, US3a To-Do."],
-        ["6", "Fri 23 Oct", "Days 9-14 (Day 15=0)", "39", "Finish US2a, US2b, US5a, US3a. 7 of 7 Done. Actual 114 / planned 114. Remaining 0."],
+        ["6", "Thu 22 Oct", "Days 9-14 (Fri 23 = 0)", "39", "Finish US2a, US2b, US5a, US3a. 7 of 7 Done. Actual 114 / planned 114. Remaining 0. No Friday standup."],
     ]
 
     def paint_map(values, fills, fonts, colors, min_h=8.0):

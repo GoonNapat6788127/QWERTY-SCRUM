@@ -3,7 +3,7 @@
 Product backlog: Given a logged donation, when its expiry is within 24 hours,
 then it is flagged urgent in the matching queue.
 
-Standup: Meeting 6 (Fri 23 Oct) reports this QA card done (Days 13–14, 3 hours).
+Standup: Meeting 6 (Thu 22 Oct) reports this QA card done (Days 13–14, 3 hours).
 Owners: Jirathiwat (expiry monitor), Sakkaraj (QA).
 """
 

@@ -8,28 +8,28 @@ Living file. The daily-sprint agent reads and updates this every run.
 |---|---|
 | Sprint | 1 of 2 |
 | Calendar today | Friday 16 October 2026 |
-| Sprint 1 end | Friday 23 October 2026 |
+| Sprint 1 end | Calendar through Friday 23 October 2026. Last standup is Thursday 22 October (Meeting 6). |
 | Standup cadence | Three Daily Scrums per week (Monday, Wednesday, Friday) |
 | Live standup | **Meeting 3 today, Friday 16 October 2026** (reports Day 2) |
 | Spoken board | Day 2 finished. Day 3 starts after Meeting 3. US1a is not Done. |
 | last_completed_day | 2 on the spoken board. Days 3–15 are reported at Meetings 4–6. |
-| next_day_to_run | 16 for implementation (code for the Friday 23 demo is already in `web/`; do not rebuild or move spoken cards early) |
-| Next three standups | Meeting 4 Mon 19 Oct (Days 3–4) · Meeting 5 Wed 21 Oct (Days 5–8) · Meeting 6 Fri 23 Oct (Days 9–14, close) |
+| next_day_to_run | 16 for implementation (code for the Thursday 22 demo is already in `web/`; do not rebuild or move spoken cards early) |
+| Next three standups | Meeting 4 Mon 19 Oct (Days 3–4) · Meeting 5 Wed 21 Oct (Days 5–8) · Meeting 6 Thu 22 Oct (Days 9–14, close) |
 | last_meeting_script | 3 today (`docs/sprint-1-scrum-meeting-3.md`). Scripts 4–6 are next week. |
-| Conclusion sheet | Friday 23 result only. Do not present it as today's board. |
+| Conclusion sheet | Thursday 22 result only, after Meeting 6. Do not present it before that meeting. |
 | App | `web/` → http://localhost:3000 |
 
 ## Clock
 
-Meeting 1 was Wednesday 14 October (kickoff). **Meeting 3 is the live standup today, Friday 16 October.** It reports Day 2. Three Daily Scrums remain next week, and Sprint 1 closes on Friday 23 October:
+Meeting 1 was Wednesday 14 October (kickoff). **Meeting 3 is the live standup today, Friday 16 October.** It reports Day 2. Three Daily Scrums remain, and Sprint 1 closes at Meeting 6 on Thursday 22 October. Friday 23 has no standup:
 
 | Meeting | When | Reports | Script |
 |---|---|---|---|
 | 4 | Monday 19 October 2026 | Days 3–4 (22h): finish US1a ingestion + QA hours; start US1b | `docs/sprint-1-scrum-meeting-4.md` / `.pdf` |
 | 5 | Wednesday 21 October 2026 | Days 5–8 (41h): finish US1b + US6; start US2a pickup (2 of 4h) | `docs/sprint-1-scrum-meeting-5.md` / `.pdf` |
-| 6 | Friday 23 October 2026 | Days 9–14 (39h): finish US2a, US2b, US5a, US3a; Sprint 1 close | `docs/sprint-1-scrum-meeting-6.md` / `.pdf` |
+| 6 | Thursday 22 October 2026 | Days 9–14 (39h): finish US2a, US2b, US5a, US3a; Sprint 1 close | `docs/sprint-1-scrum-meeting-6.md` / `.pdf` |
 
-Code for the later Sprint 1 stories is already in `web/` so the Friday 23 demo can run. **The spoken board today does not move those cards.** A card is Done only when that meeting's Definition of Done is ticked. The W02 conclusion (7 of 7, 114/114, remaining 0) is the Friday 23 outcome, and only if QA has no critical bugs.
+Code for the later Sprint 1 stories is already in `web/` so the Thursday 22 demo can run. **The spoken board today does not move those cards.** A card is Done only when that meeting's Definition of Done is ticked. The W02 conclusion (7 of 7, 114/114, remaining 0) is the Thursday 22 outcome, and only if QA has no critical bugs.
 
 ## Team
 
@@ -54,7 +54,7 @@ This is the board to share in the room today.
 | US1b capacity, integrate, QA; US6; US2a; US2b; US5a; US3a | Various | To-Do | 0 |
 | US3b, US4a, US4b, US5b, US7, US8 | — | Product backlog (Sprint 2) | not this sprint |
 
-## Board on Friday 23 October if every DoD tick passes
+## Board on Thursday 22 October if every DoD tick passes
 
 Meetings 4–6 move these cards. The conclusion sheet uses this end state. If a critical bug is still open, leave that card out of Done.
 
@@ -118,9 +118,9 @@ Same mapping as `docs/sprint-1-backlog-conclusion.md`. Speak only the cards whos
 | 3 | Fri 16 Oct | Day 2 | 8 | Form 8/8 In Review. Ingestion 4/8 In Progress |
 | 4 | Mon 19 Oct | Days 3–4 | 22 | Ingestion 8/8. US1a QA 4/4 In Review. Proximity 7/12. Capacity 3/8. Integrate 4/12 |
 | 5 | Wed 21 Oct | Days 5–8 | 41 | US1a Done. US1b 40/40. US6 13/13. US2a pickup 2/4 In Progress |
-| 6 | Fri 23 Oct | Days 9–14 (Day 15 = 0) | 39 | US2a, US2b, US5a, US3a Done. Actual 114 / planned 114. Remaining 0 |
+| 6 | Thu 22 Oct | Days 9–14 (Day 15 on Fri 23 = 0) | 39 | US2a, US2b, US5a, US3a Done. Actual 114 / planned 114. Remaining 0 |
 
-## Code already in the repo (demo on Friday 23, not Done in Meeting 3)
+## Code already in the repo (demo on Thursday 22, not Done in Meeting 3)
 
 - US1a: donor form, `POST /api/donations`, queue `/queue` and `GET /api/queue`, QA inject `POST /api/test/queue`, 1-minute ingest, duplicate protection.
 - US1b: auto-match on ingest by proximity and remaining capacity; `GET /api/matches?donationId=`; no match when quantity exceeds remaining capacity.

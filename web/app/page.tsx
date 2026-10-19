@@ -38,7 +38,7 @@ export default function LoginPage() {
     <div className="erp-grid min-h-screen">
       <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 py-12 lg:grid-cols-2">
         <section>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-leaf">Team QWERTY · Sprint 1 · closes 23 October 2026</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-leaf">Team QWERTY · Sprint 1 · closes 22 October 2026</p>
           <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-tight text-forest">
             Rescue ERP for surplus food logistics
           </h1>

@@ -23,7 +23,7 @@ Source PDFs in `docs/`:
 - `sprint-1-scrum-meeting-3.md` / `sprint-1-scrum-meeting-3.pdf` — Meeting 3, Friday 16 Oct 2026 (Day 2)
 - `sprint-1-scrum-meeting-4.md` / `.pdf` — Monday 19 Oct 2026 (Days 3–4)
 - `sprint-1-scrum-meeting-5.md` / `.pdf` — Wednesday 21 Oct 2026 (Days 5–8)
-- `sprint-1-scrum-meeting-6.md` / `.pdf` — Friday 23 Oct 2026 (Days 9–14, Sprint 1 close)
+- `sprint-1-scrum-meeting-6.md` / `.pdf` — Thursday 22 Oct 2026 (Days 9–14, Sprint 1 close). Friday 23 has no standup.
 - `sprint-1-backlog-conclusion.xlsx` / `.pdf` / `.md` — W02 conclusion; hours match each standup window
 
 ## Team

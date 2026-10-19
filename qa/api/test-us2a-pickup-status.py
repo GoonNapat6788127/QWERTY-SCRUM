@@ -4,7 +4,7 @@ Product backlog: Given a matched donation, when a driver marks it Picked Up,
 then the timestamp and driver ID are recorded and visible to the food bank.
 
 Standup: Meeting 5 starts the pickup endpoint (Day 8, 2 of 4 hours).
-Meeting 6 (Fri 23 Oct) reports this QA card done (Day 10, 2 hours).
+Meeting 6 (Thu 22 Oct) reports this QA card done (Day 10, 2 hours).
 Owners: Sirapassorn (pickup endpoint), Pratanin (incoming view), Sakkaraj (QA).
 """
 
