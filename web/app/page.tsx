@@ -47,11 +47,11 @@ export default function LoginPage() {
             food banks are scored by distance and capacity, drivers capture proof, and a digital
             receipt goes back to the donor.
           </p>
-          <ul className="mt-8 grid gap-3 text-sm text-ink sm:grid-cols-2">
+          <ul className="mt-8 grid gap-3 text-base leading-6 text-ink sm:grid-cols-2">
             <li className="rounded-xl border border-line bg-panel p-4">US1a Log a donation into the queue</li>
-            <li className="rounded-xl border border-line bg-panel p-4">US1b Auto-match by proximity + capacity</li>
-            <li className="rounded-xl border border-line bg-panel p-4">US6 Pickup window on dispatch feeds</li>
-            <li className="rounded-xl border border-line bg-panel p-4">US2a, US2b, US5a, US3a Pickup, proof, receipt, urgent flag</li>
+            <li className="rounded-xl border border-line bg-panel p-4">US1b Auto-match by proximity and capacity</li>
+            <li className="rounded-xl border border-line bg-panel p-4">US6 Pickup window on the dispatch feed</li>
+            <li className="rounded-xl border border-line bg-panel p-4">US2a pickup, US2b proof, US5a receipt, US3a urgent flag</li>
           </ul>
         </section>
         <form
@@ -87,7 +87,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={pending}
-            className="mt-6 w-full rounded-lg bg-forest px-4 py-2.5 text-sm font-semibold text-paper disabled:opacity-60"
+            className="btn-solid mt-6 w-full rounded-lg px-4 py-2.5 text-base disabled:opacity-60"
           >
             {pending ? "Signing in…" : "Enter workspace"}
           </button>
@@ -96,7 +96,7 @@ export default function LoginPage() {
               <button
                 key={account.email}
                 type="button"
-                className="flex items-center justify-between rounded-lg border border-line px-3 py-2 text-left text-sm hover:bg-paper"
+                className="flex items-center justify-between gap-3 rounded-lg border border-line px-3 py-3 text-left text-base hover:bg-paper"
                 onClick={() => {
                   setEmail(account.email);
                   setPassword(account.password);
@@ -106,7 +106,7 @@ export default function LoginPage() {
                   <span className="font-medium">{account.role}</span>
                   <span className="text-muted"> · {account.org}</span>
                 </span>
-                <span className="font-mono text-xs text-muted">{account.email}</span>
+                <span className="font-mono text-sm text-muted">{account.email}</span>
               </button>
             ))}
           </div>

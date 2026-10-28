@@ -68,7 +68,7 @@ export default function DashboardPage() {
         description="Open, matched, and delivered donations update as the queue and matching service run."
         actions={
           role === "donor" ? (
-            <Link href="/donations/new" className="rounded-lg bg-forest px-4 py-2 text-sm font-semibold text-paper">
+            <Link href="/donations/new" className="btn-solid rounded-lg px-4 py-2.5 text-base">
               Log a donation
             </Link>
           ) : null
@@ -83,7 +83,7 @@ export default function DashboardPage() {
           ["Urgent", summary?.urgent ?? "—"],
         ].map(([label, value]) => (
           <div key={label} className="rounded-2xl border border-line bg-panel p-4">
-            <p className="text-xs uppercase tracking-wider text-muted">{label}</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted">{label}</p>
             <p className="mt-2 font-[family-name:var(--font-display)] text-3xl">{value}</p>
           </div>
         ))}
@@ -114,8 +114,8 @@ export default function DashboardPage() {
         </select>
       </div>
       <div className="mt-4 overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
+        <table className="data-table">
+          <thead>
             <tr>
               <th className="px-4 py-3">Donation</th>
               <th className="px-4 py-3">Donor</th>

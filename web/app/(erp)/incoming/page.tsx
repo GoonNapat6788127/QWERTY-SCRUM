@@ -40,62 +40,62 @@ export default function IncomingPage() {
         title="Incoming pickups"
         description="Pickup shows driver ID and timestamp. After delivery, proof (photo or signature) and the delivery timestamp appear here."
       />
-      {error ? <p className="text-sm text-urgent">{error}</p> : null}
-      <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
-            <tr>
-              <th className="px-4 py-3">Donation</th>
-              <th className="px-4 py-3">Food</th>
-              <th className="px-4 py-3">Food bank</th>
-              <th className="px-4 py-3">Pickup window</th>
-              <th className="px-4 py-3">Driver ID</th>
-              <th className="px-4 py-3">Picked up</th>
-              <th className="px-4 py-3">Delivered</th>
-              <th className="px-4 py-3">Proof</th>
-              <th className="px-4 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.donationId} className="border-t border-line">
-                <td className="px-4 py-3 font-mono text-xs">{item.donationId}</td>
-                <td className="px-4 py-3">
+      {error ? <p className="text-base text-urgent">{error}</p> : null}
+      <div className="grid gap-4">
+        {items.map((item) => (
+          <article key={item.donationId} className="rounded-2xl border border-line bg-panel p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-semibold">
                   {item.foodType} · {item.quantity} {item.quantityUnit}
-                </td>
-                <td className="px-4 py-3">{item.foodBank?.name ?? "—"}</td>
-                <td className="px-4 py-3">
+                </h2>
+                <p className="mono-id mt-1 text-muted">{item.donationId}</p>
+                <p className="mt-1 text-base">{item.foodBank?.name ?? "Food bank not assigned"}</p>
+              </div>
+              <div>
+                <StatusBadge value={item.status} />
+                {item.urgent ? <StatusBadge value="urgent" /> : null}
+              </div>
+            </div>
+            <dl className="mt-4 grid gap-3 text-base sm:grid-cols-2 lg:grid-cols-3">
+              <div>
+                <dt className="text-sm font-semibold text-muted">Pickup window</dt>
+                <dd>
                   {item.pickupWindow
                     ? `${formatBangkok(item.pickupWindow.start)} – ${formatBangkok(item.pickupWindow.end)}`
                     : "—"}
-                </td>
-                <td className="px-4 py-3 font-mono text-xs">{item.driverId ?? "Not picked up"}</td>
-                <td className="px-4 py-3">{formatBangkok(item.pickedUpAt)}</td>
-                <td className="px-4 py-3">{formatBangkok(item.deliveredAt)}</td>
-                <td className="px-4 py-3">
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-semibold text-muted">Driver ID</dt>
+                <dd className="mono-id">{item.driverId ?? "Not picked up"}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-semibold text-muted">Picked up</dt>
+                <dd>{formatBangkok(item.pickedUpAt)}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-semibold text-muted">Delivered</dt>
+                <dd>{formatBangkok(item.deliveredAt)}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-semibold text-muted">Proof</dt>
+                <dd>
                   {item.proofDataUrl ? (
-                    <a className="text-forest underline" href={item.proofDataUrl} target="_blank" rel="noreferrer">
-                      {item.proofKind ?? "proof"}
+                    <a className="font-semibold text-forest underline" href={item.proofDataUrl} target="_blank" rel="noreferrer">
+                      Open {item.proofKind ?? "proof"}
                     </a>
                   ) : (
                     "—"
                   )}
-                </td>
-                <td className="px-4 py-3">
-                  <StatusBadge value={item.status} />
-                  {item.urgent ? <StatusBadge value="urgent" /> : null}
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && !error ? (
-              <tr>
-                <td className="px-4 py-8 text-muted" colSpan={9}>
-                  No matched donations yet.
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
+                </dd>
+              </div>
+            </dl>
+          </article>
+        ))}
+        {items.length === 0 && !error ? (
+          <p className="rounded-2xl border border-line bg-panel p-8 text-base text-muted">No matched donations yet.</p>
+        ) : null}
       </div>
     </div>
   );

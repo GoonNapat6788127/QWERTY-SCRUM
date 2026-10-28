@@ -42,7 +42,7 @@ export default function NotificationsPage() {
         <div className="mt-3 flex flex-wrap gap-2">
           <input className="rounded-lg border border-line px-3 py-2 text-sm" value={lat} onChange={(event) => setLat(event.target.value)} />
           <input className="rounded-lg border border-line px-3 py-2 text-sm" value={lng} onChange={(event) => setLng(event.target.value)} />
-          <button type="button" className="rounded-lg bg-forest px-3 py-2 text-sm text-paper" onClick={() => void sendGps()}>
+          <button type="button" className="btn-solid rounded-lg px-4 py-2.5 text-base" onClick={() => void sendGps()}>
             Send location
           </button>
         </div>
@@ -51,7 +51,7 @@ export default function NotificationsPage() {
       <div className="grid gap-3">
         {items.map((item) => (
           <article key={item.id} className="rounded-2xl border border-line bg-panel p-4">
-            <p className="text-xs uppercase tracking-wider text-urgent">{item.thresholdHours}h threshold · {item.audience}</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-urgent">{item.thresholdHours}h threshold · {item.audience}</p>
             <p className="mt-1 text-sm">{item.message}</p>
             <p className="mt-1 text-xs text-muted">{formatBangkok(item.createdAt)}</p>
           </article>

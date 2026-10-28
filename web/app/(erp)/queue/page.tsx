@@ -27,10 +27,14 @@ export default function QueuePage() {
   useEffect(() => {
     let active = true;
     async function load() {
-      const data = await api<{ items: QueueItem[]; elapsedMs: number }>("/api/queue");
-      if (active) {
-        setItems(data.items);
-        setElapsedMs(data.elapsedMs);
+      try {
+        const data = await api<{ items: QueueItem[]; elapsedMs: number }>("/api/queue");
+        if (active) {
+          setItems(data.items);
+          setElapsedMs(data.elapsedMs);
+        }
+      } catch {
+        /* keep the last good queue if a refresh fails */
       }
     }
     void load();
@@ -52,8 +56,8 @@ export default function QueuePage() {
         Queue endpoint `/api/queue` · last fetch {elapsedMs ?? "—"} ms
       </p>
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
+        <table className="data-table">
+          <thead>
             <tr>
               <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Food type</th>
@@ -66,7 +70,7 @@ export default function QueuePage() {
           <tbody>
             {items.map((item) => (
               <tr key={item.donationId} className="border-t border-line">
-                <td className="px-4 py-3 font-mono text-xs">{item.donationId}</td>
+                <td className="mono-id">{item.donationId}</td>
                 <td className="px-4 py-3">{item.foodType}</td>
                 <td className="px-4 py-3">
                   {item.quantity} {item.quantityUnit}

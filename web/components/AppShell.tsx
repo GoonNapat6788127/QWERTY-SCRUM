@@ -56,15 +56,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[260px_1fr]">
-      <aside className="bg-forest text-paper">
+    <div className="min-h-screen lg:grid lg:grid-cols-[280px_1fr]">
+      <aside className="bg-forest text-paper lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
         <div className="flex h-full flex-col px-5 py-6">
           <Link href="/queue" className="block">
-            <p className="font-[family-name:var(--font-display)] text-2xl leading-none">QWERTY</p>
-            <p className="mt-1 text-xs uppercase tracking-[0.22em] text-leaf">Rescue ERP</p>
+            <p className="font-[family-name:var(--font-display)] text-3xl leading-none">QWERTY</p>
+            <p className="mt-2 text-sm uppercase tracking-[0.18em] text-leaf">Rescue ERP</p>
           </Link>
-          <nav className="mt-6 flex flex-col gap-1">
-            <p className="px-3 text-[11px] uppercase tracking-[0.16em] text-white/50">Sprint 1</p>
+          <nav className="mt-8 flex flex-col gap-1">
+            <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/70">Sprint 1</p>
             {items
               .filter((item) => item.sprint === 1)
               .map((item) => {
@@ -73,13 +73,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-lg px-3 py-2 text-sm ${active ? "bg-white/10 text-white" : "text-white/75 hover:bg-white/5 hover:text-white"}`}
+                    className={`rounded-lg px-3 py-2.5 text-base ${active ? "bg-white/15 font-semibold text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
                   >
                     {item.label}
                   </Link>
                 );
               })}
-            <p className="mt-4 px-3 text-[11px] uppercase tracking-[0.16em] text-white/50">Sprint 2 backlog</p>
+            <p className="mt-6 px-3 pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/70">Sprint 2 backlog</p>
             {items
               .filter((item) => item.sprint === 2)
               .map((item) => {
@@ -88,21 +88,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-lg px-3 py-2 text-sm ${active ? "bg-white/10 text-white" : "text-white/75 hover:bg-white/5 hover:text-white"}`}
+                    className={`rounded-lg px-3 py-2.5 text-base ${active ? "bg-white/15 font-semibold text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
                   >
                     {item.label}
                   </Link>
                 );
               })}
           </nav>
-          <div className="mt-auto rounded-xl bg-forest-2 p-3 text-sm">
-            <p className="font-medium">{user.name}</p>
-            <p className="text-xs text-white/60">{user.organization}</p>
-            <p className="mt-1 text-[11px] uppercase tracking-wider text-leaf">{user.role}</p>
+          <div className="mt-8 rounded-xl bg-forest-2 p-4 text-base">
+            <p className="font-semibold">{user.name}</p>
+            <p className="text-sm text-white/75">{user.organization}</p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-leaf">{user.role}</p>
             <button
               type="button"
               onClick={() => void logout()}
-              className="mt-3 text-xs text-white/70 underline-offset-2 hover:underline"
+              className="mt-3 text-sm text-white underline-offset-2 hover:underline"
             >
               Sign out
             </button>
@@ -111,11 +111,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
       <div className="min-h-screen">
-        <header className="flex items-center justify-between border-b border-line bg-panel px-6 py-3">
-          <p className="text-sm text-muted">Surplus food logistics · Asia/Bangkok</p>
-          <p className="font-mono text-xs text-muted">US1a queue &lt; 1 min · US1b match &lt; 2 min</p>
+        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-panel px-8 py-4">
+          <p className="text-base text-ink">Surplus food logistics · Asia/Bangkok</p>
+          <p className="font-mono text-sm text-muted">Queue under 1 min · Match under 2 min</p>
         </header>
-        <main className="px-6 py-6">{children}</main>
+        <main className="px-8 py-8">{children}</main>
       </div>
     </div>
   );

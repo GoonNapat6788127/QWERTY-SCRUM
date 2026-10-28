@@ -56,17 +56,17 @@ export default function DriversPage() {
                 {driver.accepted} accepted · {driver.pickedUp} picked up · {driver.delivered} delivered
               </p>
             </div>
-            <p className="font-mono text-xs text-muted">
+            <p className="mono-id text-muted">
               {driver.location
                 ? `${driver.location.lat.toFixed(4)}, ${driver.location.lng.toFixed(4)} @ ${formatBangkok(driver.location.recordedAt)}`
                 : "No GPS ping yet"}
             </p>
           </div>
-          <table className="mt-4 min-w-full text-left text-sm">
+          <table className="data-table mt-4">
             <tbody>
               {driver.runs.map((run) => (
                 <tr key={run.donationId} className="border-t border-line">
-                  <td className="py-2 font-mono text-xs">{run.donationId}</td>
+                  <td className="mono-id">{run.donationId}</td>
                   <td className="py-2">{run.foodType}</td>
                   <td className="py-2">
                     <StatusBadge value={run.status} />

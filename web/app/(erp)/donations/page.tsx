@@ -24,14 +24,14 @@ export default function DonationsPage() {
         title="All logged donations"
         description="Every ingested donation, including queue, match, pickup, and delivery state."
         actions={
-          <Link href="/donations/new" className="rounded-lg bg-forest px-4 py-2 text-sm font-semibold text-paper">
+          <Link href="/donations/new" className="btn-solid rounded-lg px-4 py-2.5 text-base">
             New donation
           </Link>
         }
       />
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
+        <table className="data-table">
+          <thead>
             <tr>
               <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Food</th>
@@ -43,7 +43,7 @@ export default function DonationsPage() {
           <tbody>
             {donations.map((item) => (
               <tr key={item.donationId} className="border-t border-line">
-                <td className="px-4 py-3 font-mono text-xs">{item.donationId}</td>
+                <td className="mono-id">{item.donationId}</td>
                 <td className="px-4 py-3">{item.foodType}</td>
                 <td className="px-4 py-3">{item.quantity} kg</td>
                 <td className="px-4 py-3">{formatBangkok(item.queuedAt)}</td>

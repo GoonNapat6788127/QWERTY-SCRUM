@@ -24,8 +24,8 @@ export default function ReceiptsPage() {
         description="A delivered donation generates a receipt with weight, food type, and timestamp, then records it as emailed to the donor."
       />
       <section className="mb-4 rounded-2xl border border-dashed border-line bg-panel p-4">
-        <p className="text-xs uppercase tracking-wider text-muted">Sprint 2 · US5b · not part of Sprint 1 Done</p>
-        <p className="mt-1 text-sm">Monthly tax export stays on the product backlog.</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-muted">Sprint 2 · US5b · not part of Sprint 1 Done</p>
+        <p className="mt-1 text-base">Monthly tax export stays on the product backlog.</p>
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm">
           Month
@@ -36,17 +36,17 @@ export default function ReceiptsPage() {
             onChange={(event) => setMonth(event.target.value)}
           />
         </label>
-        <a className="rounded-lg bg-forest px-3 py-2 text-sm text-paper" href={`/api/reports/tax?month=${month}&format=csv`}>
+        <a className="btn-solid inline-flex items-center rounded-lg px-4 py-2.5 text-base" href={`/api/reports/tax?month=${month}&format=csv`}>
           Export CSV
         </a>
-        <a className="rounded-lg border border-line px-3 py-2 text-sm" href={`/api/reports/tax?month=${month}&format=pdf`}>
+        <a className="btn-line inline-flex items-center rounded-lg px-4 py-2.5 text-base" href={`/api/reports/tax?month=${month}&format=pdf`}>
           Export PDF
         </a>
       </div>
       </section>
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
-        <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wider text-muted">
+        <table className="data-table">
+          <thead>
             <tr>
               <th className="px-4 py-3">Receipt</th>
               <th className="px-4 py-3">Food type</th>

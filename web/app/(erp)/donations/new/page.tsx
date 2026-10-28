@@ -147,7 +147,7 @@ export default function NewDonationPage() {
         <button
           type="submit"
           disabled={pending}
-          className="mt-6 rounded-lg bg-forest px-4 py-2.5 text-sm font-semibold text-paper disabled:opacity-60"
+          className="btn-solid mt-6 rounded-lg px-4 py-2.5 text-base disabled:opacity-60"
         >
           {pending ? "Submitting…" : "Submit donation"}
         </button>

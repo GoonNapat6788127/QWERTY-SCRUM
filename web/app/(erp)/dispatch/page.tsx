@@ -110,7 +110,7 @@ export default function DispatchPage() {
               {item.status === "matched" ? (
                 <button
                   type="button"
-                  className="rounded-lg bg-forest px-3 py-2 text-sm text-paper"
+                  className="btn-solid rounded-lg px-4 py-2.5 text-base"
                   onClick={() => void pickup(item.donationId)}
                 >
                   Mark picked up
@@ -119,7 +119,7 @@ export default function DispatchPage() {
               {item.status === "picked_up" ? (
                 <button
                   type="button"
-                  className="rounded-lg border border-line px-3 py-2 text-sm"
+                  className="btn-line rounded-lg px-4 py-2.5 text-base"
                   onClick={() => setActiveId(item.donationId)}
                 >
                   Confirm delivery with proof
@@ -129,10 +129,10 @@ export default function DispatchPage() {
             {activeId === item.donationId ? (
               <div className="mt-4 rounded-xl border border-line p-4">
                 <div className="flex gap-2 text-sm">
-                  <button type="button" onClick={() => setProofKind("signature")}>
+                  <button type="button" className="btn-line rounded-lg px-3 py-2 text-base" onClick={() => setProofKind("signature")}>
                     Signature
                   </button>
-                  <button type="button" onClick={() => setProofKind("photo")}>
+                  <button type="button" className="btn-line rounded-lg px-3 py-2 text-base" onClick={() => setProofKind("photo")}>
                     Photo
                   </button>
                 </div>
@@ -160,7 +160,7 @@ export default function DispatchPage() {
                 )}
                 <button
                   type="button"
-                  className="mt-3 rounded-lg bg-forest px-3 py-2 text-sm text-paper"
+                  className="btn-solid mt-3 rounded-lg px-4 py-2.5 text-base"
                   onClick={() => void deliver(item.donationId)}
                 >
                   Attach proof and mark delivered

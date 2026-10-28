@@ -15,7 +15,7 @@ export function StatusBadge({ value }: { value: string }) {
   const label = value.replaceAll("_", " ");
   return (
     <span
-      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${STYLES[value] ?? "bg-stone-100 text-stone-700"}`}
+      className={`me-1.5 inline-flex rounded-full px-3 py-1 text-sm font-semibold capitalize ${STYLES[value] ?? "bg-stone-100 text-stone-800"}`}
     >
       {label}
     </span>

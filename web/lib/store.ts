@@ -68,7 +68,20 @@ function loadDb(): Database {
 
 function persist() {
   mkdirSync(path.dirname(DB_PATH), { recursive: true });
-  writeFileSync(DB_PATH, JSON.stringify(loadDb(), null, 2), "utf8");
+  const body = JSON.stringify(loadDb(), null, 2);
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    try {
+      writeFileSync(DB_PATH, body, "utf8");
+      return;
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException).code;
+      if ((code !== "EBUSY" && code !== "EPERM") || attempt === 5) throw error;
+      const until = Date.now() + 25 * (attempt + 1);
+      while (Date.now() < until) {
+        /* wait for Windows to release db.json */
+      }
+    }
+  }
 }
 
 function db(): Database {

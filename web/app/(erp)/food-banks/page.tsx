@@ -26,10 +26,10 @@ export default function FoodBanksPage() {
           <article key={bank.id} className="rounded-2xl border border-line bg-panel p-5">
             <h2 className="text-lg font-semibold">{bank.name}</h2>
             <p className="text-sm text-muted">{bank.address}</p>
-            <dl className="mt-4 grid grid-cols-2 gap-2 text-sm">
+            <dl className="mt-4 grid grid-cols-2 gap-3 text-base">
               <div>
                 <dt className="text-muted">Coordinates</dt>
-                <dd className="font-mono text-xs">
+                <dd className="mono-id">
                   {bank.lat}, {bank.lng}
                 </dd>
               </div>
