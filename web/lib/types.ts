@@ -27,6 +27,12 @@ export type PickupWindow = {
   end: string;
 };
 
+export type DonationLine = {
+  foodType: string;
+  quantity: number;
+  expiryDateTime: string;
+};
+
 /** Agreed Sprint 1 Day 2 queue message (US1a / US6). */
 export type DonationMessage = {
   donationId: string;
@@ -70,6 +76,8 @@ export type Donation = DonationMessage & {
   donorName: string;
   pickupLat: number;
   pickupLng: number;
+  lines: DonationLine[];
+  splitAcrossBanks: boolean;
   matchId: string | null;
   foodBankId: string | null;
   driverId: string | null;
@@ -93,6 +101,7 @@ export type Match = {
   totalScore: number;
   withinRange: boolean;
   hasCapacity: boolean;
+  quantityKg: number;
 };
 
 export type Receipt = {

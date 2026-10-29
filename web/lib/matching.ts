@@ -64,5 +64,47 @@ export function proposeMatch(donation: Donation, foodBanks: FoodBank[]): Match |
     totalScore: eligible.totalScore,
     withinRange: eligible.withinRange,
     hasCapacity: eligible.hasCapacity,
+    quantityKg: donation.quantity,
   };
+}
+
+function matchFromCandidate(
+  donation: Donation,
+  candidate: MatchCandidate,
+  quantityKg: number,
+): Match {
+  return {
+    id: createId("MAT"),
+    donationId: donation.donationId,
+    foodBankId: candidate.foodBank.id,
+    foodBankName: candidate.foodBank.name,
+    proposedAt: nowIso(),
+    distanceKm: candidate.distanceKm,
+    proximityScore: candidate.proximityScore,
+    capacityScore: candidate.capacityScore,
+    totalScore: candidate.totalScore,
+    withinRange: true,
+    hasCapacity: true,
+    quantityKg,
+  };
+}
+
+/** One log can stay with the best bank, or be split across every bank that has room. */
+export function proposeMatches(donation: Donation, foodBanks: FoodBank[]): Match[] {
+  if (!donation.splitAcrossBanks) {
+    const match = proposeMatch(donation, foodBanks);
+    return match ? [match] : [];
+  }
+
+  let leftover = donation.quantity;
+  const planned: Match[] = [];
+  for (const candidate of rankFoodBanks(donation, foodBanks)) {
+    if (leftover <= 0) break;
+    if (!candidate.withinRange || candidate.foodBank.remainingCapacityKg <= 0) continue;
+    const take = Math.round(Math.min(candidate.foodBank.remainingCapacityKg, leftover) * 100) / 100;
+    if (take <= 0) continue;
+    planned.push(matchFromCandidate(donation, candidate, take));
+    leftover = Math.round((leftover - take) * 100) / 100;
+  }
+  return leftover > 0 ? [] : planned;
 }

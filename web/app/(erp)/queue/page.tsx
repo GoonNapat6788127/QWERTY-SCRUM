@@ -18,6 +18,8 @@ type QueueItem = {
   queuedAt: string;
   donorName: string;
   foodBankId: string | null;
+  lines?: { foodType: string; quantity: number }[];
+  splitAcrossBanks?: boolean;
 };
 
 export default function QueuePage() {
@@ -71,7 +73,12 @@ export default function QueuePage() {
             {items.map((item) => (
               <tr key={item.donationId} className="border-t border-line">
                 <td className="mono-id">{item.donationId}</td>
-                <td className="px-4 py-3">{item.foodType}</td>
+                <td className="px-4 py-3">
+                  {item.lines && item.lines.length > 1
+                    ? item.lines.map((line) => `${line.foodType} ${line.quantity} kg`).join(", ")
+                    : item.foodType}
+                  {item.splitAcrossBanks ? <span className="mt-1 block text-sm text-muted">Sent to several banks</span> : null}
+                </td>
                 <td className="px-4 py-3">
                   {item.quantity} {item.quantityUnit}
                 </td>

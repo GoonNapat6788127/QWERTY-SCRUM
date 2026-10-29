@@ -7,7 +7,7 @@ import { ApiError, api } from "@/lib/client";
 import { formatBangkok } from "@/lib/time";
 import type { Donation, FoodBank, Match } from "@/lib/types";
 
-type FeedItem = Donation & { match: Match | null; foodBank: FoodBank | null };
+type FeedItem = Donation & { match: Match | null; matches?: Match[]; foodBank: FoodBank | null };
 
 export default function DispatchPage() {
   const [feed, setFeed] = useState<FeedItem[]>([]);
@@ -97,12 +97,24 @@ export default function DispatchPage() {
               <div>
                 <p className="font-mono text-xs text-muted">{item.donationId}</p>
                 <h2 className="mt-1 text-lg font-semibold">
-                  {item.foodType} · {item.quantity} kg
+                  {item.lines?.length
+                    ? item.lines.map((line) => `${line.foodType} ${line.quantity} kg`).join(", ")
+                    : `${item.foodType} · ${item.quantity} kg`}
                 </h2>
-                <p className="text-sm text-muted">
-                  Pickup {item.pickupWindow ? formatBangkok(item.pickupWindow.start) : "window TBC"} · To{" "}
-                  {item.foodBank?.name ?? "unassigned food bank"}
+                <p className="text-base text-muted">
+                  Pickup {item.pickupWindow ? formatBangkok(item.pickupWindow.start) : "window TBC"}
                 </p>
+                {item.matches && item.matches.length > 0 ? (
+                  <ul className="mt-2 text-base">
+                    {item.matches.map((match) => (
+                      <li key={match.id}>
+                        {match.foodBankName}: {match.quantityKg} kg
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-base text-muted">{item.foodBank?.name ?? "Unassigned food bank"}</p>
+                )}
               </div>
               <StatusBadge value={item.status} />
             </div>

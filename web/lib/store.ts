@@ -1,11 +1,13 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { proposeMatch, rankFoodBanks } from "./matching";
+import { proposeMatches, rankFoodBanks } from "./matching";
 import { createDonationId, createId } from "./ids";
 import { DEMO_FOOD_BANKS, DEMO_USERS } from "./seed";
 import { hoursUntil, nowIso } from "./time";
+import type { DonationLog } from "./validation";
 import type {
   Donation,
+  DonationLine,
   DriverPing,
   FoodBank,
   Match,
@@ -136,7 +138,26 @@ export function listFoodBanks(): FoodBank[] {
   return db().foodBanks;
 }
 
+function normalizeDonation(donation: Donation): Donation {
+  if (!Array.isArray(donation.lines) || donation.lines.length === 0) {
+    donation.lines = [
+      {
+        foodType: donation.foodType,
+        quantity: donation.quantity,
+        expiryDateTime: donation.expiryDateTime,
+      },
+    ];
+  }
+  if (typeof donation.splitAcrossBanks !== "boolean") donation.splitAcrossBanks = false;
+  for (const match of db().matches) {
+    if (match.donationId !== donation.donationId || typeof match.quantityKg === "number") continue;
+    match.quantityKg = match.id === donation.matchId ? donation.quantity : 0;
+  }
+  return donation;
+}
+
 function refreshDonationFlags(donation: Donation): Donation {
+  normalizeDonation(donation);
   const remaining = hoursUntil(donation.expiryDateTime);
   if (remaining <= 0 && donation.status !== "delivered") {
     donation.status = "expired";
@@ -186,30 +207,95 @@ function refreshAll() {
   }
 }
 
+function matchesFor(donationId: string): Match[] {
+  const donation = db().donations.find((item) => item.donationId === donationId);
+  const rows = db().matches.filter((item) => item.donationId === donationId);
+  if (!donation?.matchId) return rows;
+  return [...rows].sort((a, b) => Number(b.id === donation.matchId) - Number(a.id === donation.matchId));
+}
+
+function duplicateResult(donation: Donation) {
+  const refreshed = refreshDonationFlags(donation);
+  const matches = matchesFor(refreshed.donationId);
+  return {
+    donation: refreshed,
+    duplicate: true as const,
+    match: matches[0] ?? getMatch(refreshed.matchId),
+    matches,
+  };
+}
+
+function releaseMatches(donation: Donation) {
+  for (const match of db().matches.filter((item) => item.donationId === donation.donationId)) {
+    const foodBank = db().foodBanks.find((item) => item.id === match.foodBankId);
+    if (!foodBank) continue;
+    const kg = typeof match.quantityKg === "number" ? match.quantityKg : donation.quantity;
+    foodBank.remainingCapacityKg = Number((foodBank.remainingCapacityKg + kg).toFixed(2));
+  }
+  db().matches = db().matches.filter((item) => item.donationId !== donation.donationId);
+  donation.matchId = null;
+  donation.foodBankId = null;
+}
+
+function placeMatches(donation: Donation): Match[] {
+  const matches = proposeMatches(donation, db().foodBanks);
+  donation.matchId = null;
+  donation.foodBankId = null;
+  if (!matches.length) {
+    if (donation.status !== "expired") donation.status = "queued";
+    return [];
+  }
+  db().matches.unshift(...matches);
+  for (const match of matches) {
+    const foodBank = db().foodBanks.find((item) => item.id === match.foodBankId);
+    if (!foodBank) continue;
+    foodBank.remainingCapacityKg = Number(
+      Math.max(0, foodBank.remainingCapacityKg - match.quantityKg).toFixed(2),
+    );
+  }
+  donation.matchId = matches[0].id;
+  donation.foodBankId = matches[0].foodBankId;
+  donation.status = "matched";
+  return matches;
+}
+
 export function ingestDonation(input: {
-  message: Omit<import("./types").DonationMessage, "donorId"> & { donorId?: string };
+  message: DonationLog | (Omit<import("./types").DonationMessage, "donorId"> & { donorId?: string });
   donor: PublicUser;
   idempotencyKey?: string | null;
-}): { donation: Donation; duplicate: boolean; match: Match | null } {
+  lines?: DonationLine[];
+  splitAcrossBanks?: boolean;
+}): { donation: Donation; duplicate: boolean; match: Match | null; matches: Match[] } {
   refreshAll();
   const data = db();
 
-  if (input.idempotencyKey && data.idempotency[input.idempotencyKey]) {
-    const existing = data.donations.find(
-      (item) => item.donationId === data.idempotency[input.idempotencyKey],
-    );
-    if (existing) {
-      return { donation: refreshDonationFlags(existing), duplicate: true, match: getMatch(existing.matchId) };
-    }
+  const idempotencyKey = input.idempotencyKey;
+  if (idempotencyKey && data.idempotency[idempotencyKey]) {
+    const existingId = data.idempotency[idempotencyKey];
+    const existing = data.donations.find((item) => item.donationId === existingId);
+    if (existing) return duplicateResult(existing);
   }
 
   const requestedId = input.message.donationId;
   if (requestedId) {
     const existing = data.donations.find((item) => item.donationId === requestedId);
-    if (existing) {
-      return { donation: refreshDonationFlags(existing), duplicate: true, match: getMatch(existing.matchId) };
-    }
+    if (existing) return duplicateResult(existing);
   }
+
+  const lines =
+    input.lines ??
+    ("lines" in input.message && input.message.lines?.length
+      ? input.message.lines
+      : [
+          {
+            foodType: input.message.foodType,
+            quantity: input.message.quantity,
+            expiryDateTime: input.message.expiryDateTime,
+          },
+        ]);
+  const splitAcrossBanks =
+    input.splitAcrossBanks ??
+    ("splitAcrossBanks" in input.message ? input.message.splitAcrossBanks === true : false);
 
   const donationId = requestedId || createDonationId();
   const queuedAt = nowIso();
@@ -229,6 +315,8 @@ export function ingestDonation(input: {
     donorName: input.donor.organization,
     pickupLat: input.donor.lat,
     pickupLng: input.donor.lng,
+    lines,
+    splitAcrossBanks,
     matchId: null,
     foodBankId: null,
     driverId: null,
@@ -245,22 +333,41 @@ export function ingestDonation(input: {
     data.idempotency[input.idempotencyKey] = donationId;
   }
 
-  const match = proposeMatch(donation, data.foodBanks);
-  if (match) {
-    data.matches.unshift(match);
-    donation.status = "matched";
-    donation.matchId = match.id;
-    donation.foodBankId = match.foodBankId;
-    const foodBank = data.foodBanks.find((item) => item.id === match.foodBankId);
-    if (foodBank) {
-      foodBank.remainingCapacityKg = Number(
-        Math.max(0, foodBank.remainingCapacityKg - donation.quantity).toFixed(2),
-      );
-    }
+  const matches = placeMatches(donation);
+  persist();
+  return { donation, duplicate: false, match: matches[0] ?? null, matches };
+}
+
+export function updateDonation(
+  donationId: string,
+  donor: PublicUser,
+  log: DonationLog,
+):
+  | { donation: Donation; match: Match | null; matches: Match[] }
+  | { error: string; status: 403 | 404 | 409 } {
+  refreshAll();
+  const donation = db().donations.find((item) => item.donationId === donationId);
+  if (!donation) return { error: "Donation not found.", status: 404 };
+  if (donation.donorId !== donor.id) {
+    return { error: "You can edit only your own donation.", status: 403 };
+  }
+  if (donation.status === "picked_up" || donation.status === "delivered") {
+    return { error: "This donation can be edited only before it is picked up.", status: 409 };
   }
 
+  releaseMatches(donation);
+  donation.foodType = log.foodType;
+  donation.quantity = log.quantity;
+  donation.expiryDateTime = log.expiryDateTime;
+  donation.pickupWindow = log.pickupWindow;
+  donation.lines = log.lines;
+  donation.splitAcrossBanks = log.splitAcrossBanks;
+  donation.weightKg = log.quantity;
+  donation.status = "queued";
+  refreshDonationFlags(donation);
+  const matches = placeMatches(donation);
   persist();
-  return { donation, duplicate: false, match };
+  return { donation, match: matches[0] ?? null, matches };
 }
 
 export function listDonations(): Donation[] {
@@ -293,7 +400,13 @@ export function matchingQueue() {
       matchId: donation.matchId,
       foodBankId: donation.foodBankId,
       timezone: donation.timezone,
+      lines: donation.lines,
+      splitAcrossBanks: donation.splitAcrossBanks,
     }));
+}
+
+export function matchesForDonation(donationId: string): Match[] {
+  return matchesFor(donationId);
 }
 
 export function getMatch(matchId: string | null): Match | null {

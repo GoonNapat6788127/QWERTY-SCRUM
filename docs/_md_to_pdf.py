@@ -13,15 +13,23 @@ FILES = [
     "sprint-1-scrum-meeting-5.md",
     "sprint-1-scrum-meeting-6.md",
     "sprint-1-demo-script.md",
+    "sprint-2-scrum-meeting-1.md",
+    "sprint-2-scrum-meeting-2.md",
+    "sprint-2-scrum-meeting-3.md",
+    "sprint-2-scrum-meeting-4.md",
+    "sprint-2-scrum-meeting-5.md",
+    "sprint-2-scrum-meeting-6.md",
 ]
 
 
 class ScriptPdf(FPDF):
+    sprint = "Sprint 1"
+
     def footer(self) -> None:
         self.set_y(-12)
         self.set_font("Helvetica", size=8)
         self.set_text_color(90, 90, 90)
-        self.cell(0, 8, f"Team QWERTY Sprint 1  |  page {self.page_no()}", align="C")
+        self.cell(0, 8, f"Team QWERTY {self.sprint}  |  page {self.page_no()}", align="C")
 
 
 def clean(text: str) -> str:
@@ -49,6 +57,7 @@ def wrap_table(line: str) -> str:
 def render(md_name: str) -> None:
     source = ROOT / md_name
     pdf = ScriptPdf(format="A4")
+    pdf.sprint = "Sprint 2" if "sprint-2" in md_name else "Sprint 1"
     pdf.set_margins(16, 16, 16)
     pdf.set_auto_page_break(auto=True, margin=16)
     pdf.add_page()

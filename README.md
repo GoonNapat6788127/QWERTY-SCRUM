@@ -64,10 +64,12 @@ Sprint 1 (must be Done at Meeting 6 on Thursday 22 October, only after that meet
 | US5a | Digital receipt (weight, food type, timestamp) emailed to the donor |
 | US3a | Urgent flag when expiry is within 24 hours |
 
-Sprint 2 (product backlog, not Sprint 1 Done):
+Sprint 2 (Monday 2 November 2026 through Friday 13 November 2026. The sprint ends Friday 13. Standups every Monday, Wednesday, and Friday. The hour sheet has 15 day columns; Day 15 is 0 at the Friday close). Plan and scripts: [docs/sprint-2-backlog.md](docs/sprint-2-backlog.md). Not Sprint 1 Done.
 
-| Story | What a later sprint would cover |
+| Story | What this sprint covers |
 |---|---|
+| US9a | Donor edits a logged donation until pickup (`PATCH /api/donations/:id`) |
+| US9b | One log holds many foods and can be sent to many food banks (`lines`, `splitAcrossBanks`, `quantityKg`) |
 | US3b | 24 / 12 / 2 hour alerts |
 | US4a | Central operations dashboard with filters |
 | US4b | Driver activity log |
@@ -84,7 +86,7 @@ Start the site first (`cd web` then `npm run dev`). Then, from the repo root, in
 .\.venv\Scripts\python.exe -m pytest qa\api -q
 ```
 
-A pass is `24 passed`. `qa/api/helpers.py` is the shared library (login and payloads). `qa/api/conftest.py` resets demo capacity before the suite. Do not run those two files by themselves. Full steps: [qa/README.md](qa/README.md). The site must be on `http://localhost:3000`, or set `BASE_URL`.
+A pass is `26 passed`. `qa/api/helpers.py` is the shared library (login and payloads). `qa/api/conftest.py` resets demo capacity before the suite. Do not run those two files by themselves. Full steps: [qa/README.md](qa/README.md). The site must be on `http://localhost:3000`, or set `BASE_URL`.
 
 ## Daily sprint agent
 

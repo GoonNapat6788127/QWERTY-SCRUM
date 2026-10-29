@@ -1,5 +1,5 @@
 import { json, requireUser } from "@/lib/http";
-import { getMatch, listDonations, listFoodBanks } from "@/lib/store";
+import { getMatch, listDonations, listFoodBanks, matchesForDonation } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +25,7 @@ export async function GET() {
       proofDataUrl: donation.proofDataUrl,
       foodBank: banks.find((bank) => bank.id === donation.foodBankId) ?? null,
       match: getMatch(donation.matchId),
+      matches: matchesForDonation(donation.donationId),
     }));
   return json({ incoming });
 }

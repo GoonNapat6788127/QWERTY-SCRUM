@@ -44,3 +44,10 @@ export function futureDateTimeLocal(minutesAhead = 180): string {
 export function toIsoFromLocal(value: string): string {
   return new Date(value).toISOString();
 }
+
+export function toLocalInput(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
+}

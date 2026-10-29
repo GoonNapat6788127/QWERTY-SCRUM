@@ -21,6 +21,7 @@ type IncomingItem = {
   proofKind: "photo" | "signature" | null;
   proofDataUrl: string | null;
   foodBank: { name: string } | null;
+  matches?: { id: string; foodBankName: string; quantityKg: number }[];
 };
 
 export default function IncomingPage() {
@@ -50,7 +51,17 @@ export default function IncomingPage() {
                   {item.foodType} · {item.quantity} {item.quantityUnit}
                 </h2>
                 <p className="mono-id mt-1 text-muted">{item.donationId}</p>
-                <p className="mt-1 text-base">{item.foodBank?.name ?? "Food bank not assigned"}</p>
+                {item.matches && item.matches.length > 0 ? (
+                  <ul className="mt-2 text-base">
+                    {item.matches.map((match) => (
+                      <li key={match.id}>
+                        {match.foodBankName}: {match.quantityKg} kg
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-1 text-base">{item.foodBank?.name ?? "Food bank not assigned"}</p>
+                )}
               </div>
               <div>
                 <StatusBadge value={item.status} />
