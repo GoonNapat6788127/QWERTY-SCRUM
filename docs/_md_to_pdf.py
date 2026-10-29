@@ -12,6 +12,7 @@ FILES = [
     "sprint-1-scrum-meeting-4.md",
     "sprint-1-scrum-meeting-5.md",
     "sprint-1-scrum-meeting-6.md",
+    "sprint-1-demo-script.md",
 ]
 
 

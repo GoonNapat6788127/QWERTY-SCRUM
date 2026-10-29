@@ -157,3 +157,18 @@ Day 9 **6h**. Day 10 **9h**. Day 11 **9h**. Day 12 **6h**. Day 13 **7h**. Day 14
 4. Sign in as the driver. `POST /api/pickup`. Sign in as the food bank. `/incoming` shows `driverId` and `pickedUpAt`.
 5. Driver `POST /api/delivery` with `proofKind` `signature` or `photo` and `proofDataUrl`.
 6. Donor opens `/receipts`: `weightKg`, `foodType`, `timestamp`, `emailStatus: "sent"`. PDF from `GET /api/receipts/{id}`.
+
+## Who presents which part
+
+One pass, about 8 minutes. Use an expiry inside 24 hours so the queue shows **urgent**. Each person clicks their own screen, then hands the laptop to the next speaker.
+
+| Order | Presenter | Screen | Story they own | What to say and do |
+|---|---|---|---|---|
+| 1 | Napat Tayommai, Scrum Master | Board, then login | Sprint goal | Open: seven Sprint 1 stories, queue under 1 minute, match under 2 minutes. Sprint 2 stays off this demo. Hand the laptop to Pratanin. |
+| 2 | Pratanin Kahtepmud, Dev 1 | Sign in `donor@qwerty.test` / `donor123`. `/donations/new` | US1a form, US6 pickup window, US1b integrate | Choose food type, quantity in kg, expiry, and `pickupWindow`. Submit. Point at "queued in N ms" and the proposed match. |
+| 3 | Jirathiwat Suntipreedatham, Dev 3 | `/queue` | US1a ingestion, US1b capacity, US3a urgent | Show the row within 1 minute: `donationId`, `foodType`, `quantity`, `expiryDateTime`, `pickupWindow`, `timezone: Asia/Bangkok`. If expiry is inside 24 hours, the badge is **urgent**. A match exists only when `hasCapacity` is true. |
+| 4 | Sirapassorn Pokasermsong, Dev 2 | Match line, then sign in `driver@qwerty.test` / `driver123`. `/dispatch` | US1b proximity, US2a pickup API, US2b delivery API | Say why SOS Food Bank Bangkok won: haversine `distanceKm` inside `deliveryRangeKm`. **Mark picked up.** Then **Confirm delivery with proof** and attach a signature. Missing proof must not deliver. |
+| 5 | Pratanin Kahtepmud, Dev 1 | Sign in `foodbank@qwerty.test` / `foodbank123`. `/incoming` | US2a food-bank view, US2b proof UI | Show `driverId` `usr-driver-1`, `pickedUpAt`, `deliveredAt`, and the signature proof. |
+| 6 | Jirathiwat Suntipreedatham, Dev 3 | Sign in as the donor again. `/receipts` | US5a receipt | Open the row: `weightKg`, `foodType`, timestamp, `emailStatus: sent`. Open the PDF. |
+| 7 | Sakkaraj Tuvajit, QA 1 | Terminal or the test file list | All Sprint 1 QA cards | Say `pytest qa/api` is 24 passed, no critical bugs. Name the file for the step just shown if the Product Owner asks: `test-us1a-log-donation.py`, `test-us1b-auto-match.py`, `test-us6-pickup-window.py`, `test-us2a-pickup-status.py`, `test-us2b-delivery-proof.py`, `test-us5a-receipt.py`, `test-us3a-urgent-flag.py`. |
+| 8 | Napat Tayommai, Scrum Master | Board and conclusion | Definition of Done | Close: 7 of 7 Done only if that list is true. Remaining 0. US3b, US4a, US4b, US5b, US7, and US8 stay on the Sprint 2 backlog. |
