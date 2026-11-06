@@ -154,3 +154,25 @@ Thank you. That is the last Daily Scrum of Sprint 2. The sprint ends today, Frid
 | Sirapassorn | 3 | 0 | 3 | 3 | 0 | 9 |
 | Sakkaraj | 3 | 3 | 0 | 2 | 4 | 12 |
 | **TOTAL** | **8** | **7** | **9** | **10** | **6** | **40** |
+
+## Terminal evidence
+
+Run on Friday 6 November 2026 against http://localhost:3000. Each picture is that person's cases from the Next section above. The title bar lists the same TC numbers.
+
+### Pratanin
+
+![Pratanin close cases](screenshots/m6-pratanin.png)
+
+### Jirathiwat
+
+![Jirathiwat close cases](screenshots/m6-jirathiwat.png)
+
+### Sirapassorn
+
+![Sirapassorn close cases](screenshots/m6-sirapassorn.png)
+
+### Sakkaraj
+
+![Sakkaraj close cases](screenshots/m6-sakkaraj.png)
+
+Full suite on the same day: `pytest qa/api -q` finished with **60 passed**.

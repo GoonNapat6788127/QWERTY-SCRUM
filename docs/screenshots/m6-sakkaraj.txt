@@ -1,0 +1,17 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 8 items
+
+qa\api\test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter PASSED [ 12%]
+qa\api\test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery PASSED [ 25%]
+qa\api\test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats PASSED [ 37%]
+qa\api\test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields PASSED     [ 50%]
+qa\api\test-us8-decay.py::test_tc_us8_03_qa_decay_shape PASSED           [ 62%]
+qa\api\test-us1a-log-donation.py::test_tc01_valid_donation_is_queued PASSED [ 75%]
+qa\api\test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity PASSED [ 87%]
+qa\api\test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity PASSED [100%]
+
+============================== 8 passed in 0.96s ==============================

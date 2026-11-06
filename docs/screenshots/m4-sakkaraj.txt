@@ -1,0 +1,12 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 3 items
+
+qa\api\test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours PASSED [ 33%]
+qa\api\test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold PASSED [ 66%]
+qa\api\test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert PASSED [100%]
+
+============================== 3 passed in 0.51s ==============================

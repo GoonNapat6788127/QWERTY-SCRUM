@@ -1,0 +1,15 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 6 items
+
+qa\api\test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role PASSED [ 16%]
+qa\api\test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg PASSED [ 33%]
+qa\api\test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields PASSED [ 50%]
+qa\api\test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf PASSED   [ 66%]
+qa\api\test-us8-decay.py::test_tc_us8_01_decay_fields PASSED             [ 83%]
+qa\api\test-us8-decay.py::test_tc_us8_02_label_the_spike PASSED          [100%]
+
+============================== 6 passed in 1.04s ==============================

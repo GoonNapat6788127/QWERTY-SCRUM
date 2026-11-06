@@ -1,0 +1,11 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields qa/api/test-us4a-dashboard.py::test_tc_us4a_04_urgent_count_matches_the_flag
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 2 items
+
+qa\api\test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields PASSED [ 50%]
+qa\api\test-us4a-dashboard.py::test_tc_us4a_04_urgent_count_matches_the_flag PASSED [100%]
+
+============================== 2 passed in 0.34s ==============================

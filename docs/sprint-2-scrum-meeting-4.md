@@ -42,7 +42,7 @@ Pratanin, please start.
 - **TC-US4a-01** Filter status `delivered`. Expected: queued rows disappear.
 - **TC-US4a-02** Filter the donor name. Expected: only that donor’s rows remain.
 
-All three are **Red** this morning. US4a is not Done. QA has not started.
+The terminal picture shows PASSED for TC-US3b-04, TC-US4a-01, and TC-US4a-02. US4a is not Done. Its QA case is still later.
 
 **Blockers:** None.
 
@@ -59,7 +59,7 @@ Thanks, Pratanin. Jirathiwat.
 - **TC-US4a-03** `GET /api/dashboard`. Expected: `summary` has `open`, `matched`, `pickedUp`, `delivered`, `urgent`, `foodBanks`, `notifications`.
 - **TC-US4a-04** A donation inside 24 hours. Expected: `urgent` count includes it and a delivered donation does not.
 
-Both are **Red** until the handler exists.
+The terminal picture shows PASSED for TC-US4a-03 and TC-US4a-04.
 
 **Blockers:** None.
 
@@ -76,7 +76,7 @@ Thanks, Jirathiwat. Sirapassorn.
 - **TC-US4b-01** `GET /api/drivers/activity`. Expected: each driver has `accepted`, `pickedUp`, `delivered`.
 - **TC-US4b-02** After a pickup, that driver’s `runs` include the `donationId`.
 
-Both are **Red** this morning. I will not call the card finished on Wednesday.
+The terminal picture shows PASSED for TC-US4b-01 and TC-US4b-02. The last 3 hours of this card are still Day 10.
 
 **Blockers:** None.
 
@@ -94,7 +94,7 @@ Thank you. Sakkaraj.
 - **TC-US3b-02** The same donation. Expected: one driver notification at the same threshold.
 - **TC-US3b-03** Refresh again. Expected: no second pair.
 
-All three are **Red** until `qa/api/test-us3b-expiry-alerts.py` exists.
+The terminal picture shows PASSED for TC-US3b-01, TC-US3b-02, and TC-US3b-03 in `qa/api/test-us3b-expiry-alerts.py`.
 
 **Blockers:** None.
 
@@ -136,3 +136,100 @@ Next standup is **Wednesday 11 November, 09:00**, Meeting 5. Thank you.
 | US3b QA (0/3) | Sakkaraj | To-Do |
 | US4a filters (2/6) | Pratanin | In Progress |
 | US4b, US5b, US7, US8 | — | To-Do |
+
+## Terminal evidence
+
+Run on Friday 6 November 2026 against http://localhost:3000. The picture is the terminal. The code under it is the test that produced that result.
+
+### Pratanin
+
+![Terminal output for Pratanin](screenshots/m4-pratanin.png)
+
+```python
+def test_tc_us3b_04_alerts_page_renders_the_row():
+    donation_id = _urgent_donation()["donation"]["donationId"]
+    notes = donor().get(f"{BASE_URL}/api/notifications", timeout=10).json()["notifications"]
+    row = next(item for item in notes if item["donationId"] == donation_id and item["audience"] == "staff")
+    assert row["thresholdHours"] == 24
+    assert donation_id in row["message"]
+
+def test_tc_us4a_01_filter_by_status():
+    donation_id = create_donation(donor(), quantity=4)["donation"]["donationId"]
+    driver_session = driver()
+    assert driver_session.post(f"{BASE_URL}/api/pickup", json={"donationId": donation_id}, timeout=10).status_code == 200
+    assert driver_session.post(
+        f"{BASE_URL}/api/delivery",
+        json={"donationId": donation_id, "proofKind": "signature", "proofDataUrl": PROOF},
+        timeout=10,
+    ).status_code == 200
+    donations = _board()["donations"]
+    delivered = [item for item in donations if item["status"] == "delivered"]
+    assert any(item["donationId"] == donation_id for item in delivered)
+    assert all(item["status"] == "delivered" for item in delivered)
+
+def test_tc_us4a_02_filter_by_donor():
+    create_donation(donor(), quantity=3)
+    donations = _board()["donations"]
+    matched = [item for item in donations if "Bangkok Fresh Market" in item["donorName"]]
+    assert matched
+    assert all("Bangkok Fresh Market" in item["donorName"] for item in matched)
+```
+
+### Jirathiwat
+
+![Terminal output for Jirathiwat](screenshots/m4-jirathiwat.png)
+
+```python
+def test_tc_us4a_03_dashboard_summary_fields():
+    summary = _board()["summary"]
+    for key in ("open", "matched", "pickedUp", "delivered", "urgent", "foodBanks", "notifications"):
+        assert key in summary
+
+def test_tc_us4a_04_urgent_count_matches_the_flag():
+    create_donation(donor(), expiryDateTime=future_expiry(60))
+    summary = _board()["summary"]
+    assert summary["urgent"] >= 1
+```
+
+### Sirapassorn
+
+![Terminal output for Sirapassorn](screenshots/m4-sirapassorn.png)
+
+```python
+def test_tc_us4b_01_activity_counts():
+    row = next(item for item in _activity() if item["driverId"] == "usr-driver-1")
+    for key in ("accepted", "pickedUp", "delivered"):
+        assert key in row
+
+def test_tc_us4b_02_run_row_has_the_donation():
+    donation_id = create_donation(donor(), quantity=4)["donation"]["donationId"]
+    assert driver().post(f"{BASE_URL}/api/pickup", json={"donationId": donation_id}, timeout=10).status_code == 200
+    row = next(item for item in _activity() if item["driverId"] == "usr-driver-1")
+    assert any(run["donationId"] == donation_id for run in row["runs"])
+```
+
+### Sakkaraj
+
+![Terminal output for Sakkaraj](screenshots/m4-sakkaraj.png)
+
+```python
+def test_tc_us3b_01_staff_alert_at_24_hours():
+    donation_id = _urgent_donation()["donation"]["donationId"]
+    notes = donor().get(f"{BASE_URL}/api/notifications", timeout=10).json()["notifications"]
+    staff = [item for item in notes if item["donationId"] == donation_id and item["thresholdHours"] == 24 and item["audience"] == "staff"]
+    assert len(staff) == 1
+
+def test_tc_us3b_02_driver_alert_at_the_same_threshold():
+    donation_id = _urgent_donation()["donation"]["donationId"]
+    notes = donor().get(f"{BASE_URL}/api/notifications", timeout=10).json()["notifications"]
+    drivers = [item for item in notes if item["donationId"] == donation_id and item["thresholdHours"] == 24 and item["audience"] == "driver"]
+    assert len(drivers) == 1
+
+def test_tc_us3b_03_no_duplicate_alert():
+    donation_id = _urgent_donation()["donation"]["donationId"]
+    session = donor()
+    session.get(f"{BASE_URL}/api/donations/{donation_id}", timeout=10)
+    notes = session.get(f"{BASE_URL}/api/notifications", timeout=10).json()["notifications"]
+    rows = [item for item in notes if item["donationId"] == donation_id and item["thresholdHours"] == 24]
+    assert len(rows) == 2
+```

@@ -1,0 +1,12 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg qa/api/test-us9b-one-to-many.py::test_tc_us9b_07_edit_gives_capacity_back
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 3 items
+
+qa\api\test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role PASSED [ 33%]
+qa\api\test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg PASSED [ 66%]
+qa\api\test-us9b-one-to-many.py::test_tc_us9b_07_edit_gives_capacity_back PASSED [100%]
+
+============================== 3 passed in 0.77s ==============================

@@ -1,0 +1,14 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_01_edit_before_pickup qa/api/test-us9a-edit-donation.py::test_tc_us9a_02_reject_edit_after_pickup qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 5 items
+
+qa\api\test-us9a-edit-donation.py::test_tc_us9a_01_edit_before_pickup PASSED [ 20%]
+qa\api\test-us9a-edit-donation.py::test_tc_us9a_02_reject_edit_after_pickup PASSED [ 40%]
+qa\api\test-us1a-log-donation.py::test_tc01_valid_donation_is_queued PASSED [ 60%]
+qa\api\test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity PASSED [ 80%]
+qa\api\test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity PASSED [100%]
+
+============================== 5 passed in 0.61s ==============================

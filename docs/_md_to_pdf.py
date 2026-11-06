@@ -83,6 +83,17 @@ def render(md_name: str) -> None:
             pdf.set_font("Helvetica", "B", 11)
             pdf.ln(1)
             pdf.multi_cell(0, 6, line[4:])
+        elif raw.lstrip().startswith("!["):
+            start = raw.find("(")
+            end = raw.rfind(")")
+            image = source.parent / raw[start + 1 : end] if start != -1 and end != -1 else None
+            if image and image.exists():
+                pdf.ln(2)
+                if pdf.get_y() > pdf.h - 80:
+                    pdf.add_page()
+                pdf.image(str(image), w=pdf.w - 32)
+                pdf.ln(2)
+            continue
         elif line.startswith("|"):
             table = wrap_table(line)
             if not table:

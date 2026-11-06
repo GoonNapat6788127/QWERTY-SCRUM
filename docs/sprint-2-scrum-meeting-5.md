@@ -41,7 +41,7 @@ Pratanin, please start.
 - **TC-US5b-02** On `/receipts`, choose a month and Export CSV. Expected: a file download, not the Sprint 1 receipt PDF.
 - **TC-US7-02** After a ping, `/drivers` shows latitude, longitude, and `recordedAt` in Asia/Bangkok.
 
-All three are **Red** this morning.
+The terminal picture shows PASSED for TC-US4b-03, TC-US5b-02, and TC-US7-02.
 
 **Blockers:** None.
 
@@ -59,7 +59,7 @@ Thanks, Pratanin. Jirathiwat.
 - **TC-US8-01** `GET /api/decay?donationId=`. Expected: `hoursRemaining` and `riskScore`.
 - **TC-US8-02** The same response. Expected: `method` is `heuristic-spike`.
 
-All three are **Red** until the handlers exist.
+The terminal picture shows PASSED for TC-US5b-01, TC-US8-01, and TC-US8-02.
 
 **Blockers:** None.
 
@@ -76,7 +76,7 @@ Thanks, Jirathiwat. Sirapassorn.
 - **TC-US4b-04** After delivery, `delivered` for `usr-driver-1` is at least 1.
 - **TC-US7-01** `POST /api/drivers/location` with `lat` and `lng`. Expected: one ping for that driver, with `recordedAt`.
 
-Both are **Red** this morning.
+The terminal picture shows PASSED for TC-US4b-04 and TC-US7-01.
 
 **Blockers:** None.
 
@@ -96,7 +96,7 @@ Thank you. Sakkaraj.
 - **TC-US7-03** The ping on the activity log has `lat`, `lng`, and `recordedAt`.
 - **TC-US8-03** Decay returns `hoursRemaining`, `riskScore`, and `method`.
 
-All five are **Red** this morning.
+The terminal picture shows PASSED for TC-US4a-05, TC-US4b-05, TC-US5b-03, TC-US7-03, and TC-US8-03.
 
 **Blockers:** None.
 
@@ -132,3 +132,129 @@ Next standup is **Friday 13 November, 09:00**, Meeting 6, the Sprint 2 close. Th
 | US4a QA (0/3) | Sakkaraj | To-Do |
 | US4b activity API (3/6) | Sirapassorn | In Progress |
 | US5b, US7, US8 | — | To-Do |
+
+## Terminal evidence
+
+Run on Friday 6 November 2026 against http://localhost:3000. The picture is the terminal. The code under it is the test that produced that result.
+
+### Pratanin
+
+![Terminal output for Pratanin](screenshots/m5-pratanin.png)
+
+```python
+def test_tc_us4b_03_activity_page_fields():
+    row = next(item for item in _activity() if item["driverId"] == "usr-driver-1")
+    assert row["name"]
+    assert isinstance(row["accepted"], int)
+    assert isinstance(row["pickedUp"], int)
+    assert isinstance(row["delivered"], int)
+
+def test_tc_us5b_02_export_button_downloads_csv():
+    month = datetime.now(timezone.utc).strftime("%Y-%m")
+    response = donor().get(f"{BASE_URL}/api/reports/tax?format=csv&month={month}", timeout=10)
+    assert response.status_code == 200
+    assert "attachment" in response.headers.get("content-disposition", "")
+    assert response.text.splitlines()[0].startswith("receiptId,donationId,foodType")
+
+def test_tc_us7_02_show_the_ping():
+    assert driver().post(f"{BASE_URL}/api/drivers/location", json={"lat": 13.76, "lng": 100.52}, timeout=10).status_code == 200
+    row = next(item for item in foodbank().get(f"{BASE_URL}/api/drivers/activity", timeout=10).json()["drivers"] if item["driverId"] == "usr-driver-1")
+    assert row["location"]["lat"] == 13.76
+    assert row["location"]["lng"] == 100.52
+    assert row["location"]["recordedAt"]
+```
+
+### Jirathiwat
+
+![Terminal output for Jirathiwat](screenshots/m5-jirathiwat.png)
+
+```python
+def test_tc_us5b_01_tax_csv_and_pdf():
+    session = donor()
+    month = datetime.now(timezone.utc).strftime("%Y-%m")
+    csv_file = session.get(f"{BASE_URL}/api/reports/tax?format=csv&month={month}", timeout=10)
+    pdf_file = session.get(f"{BASE_URL}/api/reports/tax?format=pdf&month={month}", timeout=10)
+    assert csv_file.status_code == 200, csv_file.text
+    assert pdf_file.status_code == 200
+    assert "text/csv" in csv_file.headers["content-type"]
+    assert "application/pdf" in pdf_file.headers["content-type"]
+
+def test_tc_us8_01_decay_fields():
+    donation_id = create_donation(donor(), quantity=2)["donation"]["donationId"]
+    estimate = donor().get(f"{BASE_URL}/api/decay", params={"donationId": donation_id}, timeout=10).json()["estimate"]
+    assert "hoursRemaining" in estimate
+    assert "riskScore" in estimate
+
+def test_tc_us8_02_label_the_spike():
+    donation_id = create_donation(donor(), quantity=2)["donation"]["donationId"]
+    estimate = donor().get(f"{BASE_URL}/api/decay", params={"donationId": donation_id}, timeout=10).json()["estimate"]
+    assert estimate["method"] == "heuristic-spike"
+```
+
+### Sirapassorn
+
+![Terminal output for Sirapassorn](screenshots/m5-sirapassorn.png)
+
+```python
+def test_tc_us4b_04_delivered_count():
+    donation_id = create_donation(donor(), quantity=4)["donation"]["donationId"]
+    driver_session = driver()
+    assert driver_session.post(f"{BASE_URL}/api/pickup", json={"donationId": donation_id}, timeout=10).status_code == 200
+    assert driver_session.post(
+        f"{BASE_URL}/api/delivery",
+        json={"donationId": donation_id, "proofKind": "signature", "proofDataUrl": PROOF},
+        timeout=10,
+    ).status_code == 200
+    row = next(item for item in _activity() if item["driverId"] == "usr-driver-1")
+    assert row["delivered"] >= 1
+
+def test_tc_us7_01_store_a_ping():
+    response = driver().post(f"{BASE_URL}/api/drivers/location", json={"lat": 13.75, "lng": 100.51}, timeout=10)
+    assert response.status_code == 200, response.text
+    ping = response.json()["location"]
+    assert ping["driverId"] == "usr-driver-1"
+    assert ping["lat"] == 13.75
+    assert ping["lng"] == 100.51
+    assert ping["recordedAt"]
+```
+
+### Sakkaraj
+
+![Terminal output for Sakkaraj](screenshots/m5-sakkaraj.png)
+
+```python
+def test_tc_us4a_05_counts_match_the_filter():
+    board = _board()
+    delivered_rows = [item for item in board["donations"] if item["status"] == "delivered"]
+    assert board["summary"]["delivered"] == len(delivered_rows)
+
+def test_tc_us4b_05_qa_after_pickup_and_delivery():
+    donation_id = create_donation(donor(), quantity=3)["donation"]["donationId"]
+    driver_session = driver()
+    assert driver_session.post(f"{BASE_URL}/api/pickup", json={"donationId": donation_id}, timeout=10).status_code == 200
+    assert driver_session.post(
+        f"{BASE_URL}/api/delivery",
+        json={"donationId": donation_id, "proofKind": "signature", "proofDataUrl": PROOF},
+        timeout=10,
+    ).status_code == 200
+    row = next(item for item in _activity() if item["driverId"] == "usr-driver-1")
+    assert any(run["donationId"] == donation_id and run["status"] == "delivered" for run in row["runs"])
+
+def test_tc_us5b_03_donor_receives_both_formats():
+    session = donor()
+    month = datetime.now(timezone.utc).strftime("%Y-%m")
+    assert session.get(f"{BASE_URL}/api/reports/tax?format=csv&month={month}", timeout=10).status_code == 200
+    assert session.get(f"{BASE_URL}/api/reports/tax?format=pdf&month={month}", timeout=10).status_code == 200
+
+def test_tc_us7_03_qa_ping_fields():
+    assert driver().post(f"{BASE_URL}/api/drivers/location", json={"lat": 13.77, "lng": 100.53}, timeout=10).status_code == 200
+    locations = foodbank().get(f"{BASE_URL}/api/drivers/location", timeout=10).json()["locations"]
+    ping = next(item for item in locations if item["driverId"] == "usr-driver-1")
+    assert {"lat", "lng", "recordedAt"} <= set(ping)
+
+def test_tc_us8_03_qa_decay_shape():
+    donation_id = create_donation(donor(), quantity=2)["donation"]["donationId"]
+    estimate = donor().get(f"{BASE_URL}/api/decay", params={"donationId": donation_id}, timeout=10).json()["estimate"]
+    assert estimate["donationId"] == donation_id
+    assert {"hoursRemaining", "riskScore", "method"} <= set(estimate)
+```

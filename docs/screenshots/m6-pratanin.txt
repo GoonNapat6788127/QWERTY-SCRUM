@@ -1,0 +1,15 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 6 items
+
+qa\api\test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log PASSED [ 16%]
+qa\api\test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted PASSED [ 33%]
+qa\api\test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked PASSED [ 50%]
+qa\api\test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields PASSED [ 66%]
+qa\api\test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv PASSED [ 83%]
+qa\api\test-us7-driver-ping.py::test_tc_us7_02_show_the_ping PASSED      [100%]
+
+============================== 6 passed in 0.72s ==============================

@@ -1,0 +1,12 @@
+PS C:\Users\jirat\Downloads\QWERTY-SCRUM> .\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\jirat\Downloads\QWERTY-SCRUM\.venv\Scripts\python.exe
+rootdir: C:\Users\jirat\Downloads\QWERTY-SCRUM\qa
+configfile: pytest.ini
+collecting ... collected 3 items
+
+qa\api\test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf PASSED   [ 33%]
+qa\api\test-us8-decay.py::test_tc_us8_01_decay_fields PASSED             [ 66%]
+qa\api\test-us8-decay.py::test_tc_us8_02_label_the_spike PASSED          [100%]
+
+============================== 3 passed in 0.40s ==============================
