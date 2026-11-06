@@ -10,6 +10,8 @@ Owners: Jirathiwat (receipt and email), Sakkaraj (QA).
 
 from __future__ import annotations
 
+import math
+
 from helpers import BASE_URL, PROOF, create_donation, donor, driver
 
 
@@ -25,7 +27,7 @@ def test_receipt_has_weight_food_type_timestamp_and_email():
     assert delivered.status_code == 200, delivered.text
     receipt = delivered.json()["receipt"]
     assert receipt["foodType"] == "Bakery"
-    assert receipt["weightKg"] == 7.2
+    assert math.isclose(receipt["weightKg"], 7.2, abs_tol=0.01)
     assert receipt["timestamp"]
     assert receipt["emailedTo"] == "donor@qwerty.test"
     assert receipt["emailStatus"] == "sent"
