@@ -13,11 +13,11 @@ Meeting 5 reports **Days 8–9** (Monday 9 and Tuesday 10 November), **17 hours*
 | Facilitator | Napat Tayommai (Scrum Master) |
 | Reports | Days 8–9, **17 hours** (Pratanin 6, Jirathiwat 5, Sirapassorn 3, Sakkaraj 3) |
 | Next | Friday 13 November, Meeting 6, the close (**Days 10–14**, 40 hours, Day 15 = 0) |
-| Three questions | Accomplished since Monday, focus until Friday, blockers |
+| Three questions | 1. Accomplished since Monday. 2. What will I do next? (test case number, name, expected output). 3. Blockers. |
 
 ## Before the meeting
 
-1. Log Days 8–9 before anyone speaks.
+1. Open `docs/sprint-2-tdd-report.docx`. Log Days 8–9 before anyone speaks.
 2. US9a and US9b stay Done. Do not re-estimate them.
 3. Demo: http://localhost:3000/dashboard and `/notifications`
 
@@ -35,7 +35,13 @@ Pratanin, please start.
 
 **Accomplished:** Day 8 was **4 hours** and Day 9 was **2 hours**, **6 hours** in this window. **US3b alerts page** is now **4 of 4** and **In Review**. `/notifications` shows staff and driver rows. **US4a filters** moved from **2 of 6** to **6 of 6** (2 hours Monday, 2 hours Tuesday) and are **In Review**. The board filters by donor name, `foodBankId`, and `status`.
 
-**Next:** Until Friday I build **US4b the driver activity page**, **4 hours** (Day 10 is 2, Day 11 is 2), then **US5b Export CSV and Export PDF**, **3 hours** on Day 12, and **US7 show the latest ping**, **3 hours** on Day 13. Day 14 is **0**. Friday is the close, so those three cards must be ready that morning.
+**Next:** Tests before the screens. Friday is the close.
+
+- **TC-US4b-03** Open `/drivers`. Expected: the driver name and the three counts are visible.
+- **TC-US5b-02** On `/receipts`, choose a month and Export CSV. Expected: a file download, not the Sprint 1 receipt PDF.
+- **TC-US7-02** After a ping, `/drivers` shows latitude, longitude, and `recordedAt` in Asia/Bangkok.
+
+All three are **Red** this morning.
 
 **Blockers:** None.
 
@@ -47,7 +53,13 @@ Thanks, Pratanin. Jirathiwat.
 
 **Accomplished:** **US4a GET /api/dashboard** is **5 of 5 hours** (Day 8 was 2, Day 9 was 3) and **In Review**. The JSON `summary` has `open`, `matched`, `pickedUp`, `delivered`, `urgent`, `foodBanks`, and `notifications`. Donors on the list are already limited to their own rows by the existing donations query.
 
-**Next:** Until Friday I finish **US5b monthly tax CSV and PDF** (**2 hours** on Day 11 and **3 hours** on Day 12, **5 of 5**) and **US8 GET /api/decay** (**2 hours** on Day 13 and **2 hours** on Day 14). Friday is the close, so both cards must be ready for the Definition of Done that morning. Day 10 is **0** for me.
+**Next:** Day 10 is **0**. Then tax and decay. Tests first.
+
+- **TC-US5b-01** `GET /api/reports/tax?format=csv` and `format=pdf` for a month. Expected: **200**. This is not the US5a receipt.
+- **TC-US8-01** `GET /api/decay?donationId=`. Expected: `hoursRemaining` and `riskScore`.
+- **TC-US8-02** The same response. Expected: `method` is `heuristic-spike`.
+
+All three are **Red** until the handlers exist.
 
 **Blockers:** None.
 
@@ -59,7 +71,12 @@ Thanks, Jirathiwat. Sirapassorn.
 
 **Accomplished:** Day 8 was **0**. Day 9 was **3 hours** on **US4b GET /api/drivers/activity**, so the card is **3 of 6** and **In Progress**. The handler returns one object per driver user: counts, `location` from the latest ping, and `runs` sorted by delivered or picked-up time.
 
-**Next:** Until Friday I finish the last **3 hours** of the activity API on Day 10, then **US7 POST /api/drivers/location**, **6 hours** (Day 12 is 3, Day 13 is 3). Day 11 and Day 14 are **0**. Friday is the close, so the ping must be on the activity log before that standup.
+**Next:** Day 10 finishes the activity API. Days 12–13 are GPS. Tests first.
+
+- **TC-US4b-04** After delivery, `delivered` for `usr-driver-1` is at least 1.
+- **TC-US7-01** `POST /api/drivers/location` with `lat` and `lng`. Expected: one ping for that driver, with `recordedAt`.
+
+Both are **Red** this morning.
 
 **Blockers:** None.
 
@@ -71,7 +88,15 @@ Thank you. Sakkaraj.
 
 **Accomplished:** **US3b QA** is **3 of 3 hours** on Day 8 and **In Review**. A donation inside 24 hours creates one staff notification and one driver notification at threshold 24. Refresh does not insert a second pair. Day 9 was **0 hours**. I have not tested the dashboard filters yet.
 
-**Next:** Until Friday I run **US4a QA** (Day 10, **3 hours**), **US4b QA** (Day 11, **3 hours**), **US5b QA** (Day 13, **2 hours**), and **US7** plus **US8 QA** (Day 14, **2 + 2 hours**). Day 12 is **0** while the export buttons and the GPS endpoint are still being built. Friday is the close, so those five QA cards must be ready that morning.
+**Next:** These are the cases I run before Friday’s close. Day 12 is **0**.
+
+- **TC-US4a-05** Dashboard counts match the filtered rows. Expected: delivered count equals the delivered rows.
+- **TC-US4b-05** After pickup and delivery, the activity row shows that `donationId`.
+- **TC-US5b-03** CSV and PDF for the month both return **200** for the donor.
+- **TC-US7-03** The ping on the activity log has `lat`, `lng`, and `recordedAt`.
+- **TC-US8-03** Decay returns `hoursRemaining`, `riskScore`, and `method`.
+
+All five are **Red** this morning.
 
 **Blockers:** None.
 
@@ -79,7 +104,7 @@ Thank you. Sakkaraj.
 
 **Accomplished:** Days 8–9 are **17 hours**. Running total **73 of 113**.
 
-**Next:** US3b can move to Done in this meeting if the list below is true. US4a cannot: QA is still To-Do. Friday 13 is the Sprint 2 close. It reports Days 10–14, **40 hours**, and Day 15 is 0. That window must finish US4a, US4b, US5b, US7, and US8. There is no standup after Friday.
+**Next:** I only move US3b to Done if TC-US3b-01, TC-US3b-02, and TC-US3b-03 are Green in the TDD report. US4a stays open: TC-US4a-05 is still Red. Friday 13 is the close. There is no standup after that.
 
 **Blockers:** None.
 

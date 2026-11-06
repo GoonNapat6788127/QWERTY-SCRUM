@@ -1,25 +1,27 @@
 # Sprint 2 – Scrum Meeting 3 Script (QWERTY)
 
-Friday 6 November 2026. Three-question format.
+Friday 6 November 2026. Sprint Day 3. Three-question format.
 
 ## Meeting at a glance
 
-Meeting 3 reports **Days 3–4** (Wednesday 4 and Thursday 5 November), **18 hours**. US9a QA hours are finished and the card is **In Review**, not Done. US9b capacity and US9b QA have not started.
+Today is **Sprint Day 3**. This standup does **not** report Days 3–4 as finished. Days 1–2 are finished (14 hours). Day 3 starts after this meeting.
+
+The instructor asked that, from this meeting on, **each person answers “What will I do next?” with test cases**: number, name, and expected output. Those rows live in `docs/sprint-2-tdd-report.md` and `docs/sprint-2-tdd-report.docx`. Write the test first (Red). Code comes after (Green).
 
 | Item | Detail |
 |---|---|
-| Date | Friday 6 November 2026 |
-| Length | About 10 minutes |
+| Date | Friday 6 November 2026 (Sprint Day 3) |
+| Length | About 15 minutes |
 | Facilitator | Napat Tayommai (Scrum Master) |
-| Reports | Days 3–4, **18 hours** (Pratanin 6, Jirathiwat 0, Sirapassorn 8, Sakkaraj 4) |
-| Next | Monday 9 November, Meeting 4 (**Days 5–7**, 24 hours) |
-| Three questions | Accomplished since Wednesday, focus until Monday, blockers |
+| Reports | Days 1–2, **14 hours**. US9a form and PATCH are In Review. US9a QA and all of US9b are still To-Do. |
+| Next | Days 3–4, **18 hours**, spoken as test cases. Monday 9 November is Meeting 4. |
+| Three questions | 1. What did I accomplish since Wednesday? 2. What will I do next? (test cases) 3. Blockers? |
 
 ## Before the meeting
 
-1. Log Days 3–4 before anyone speaks.
-2. Do not say US9b is Done. `quantityKg` is not subtracted from each bank yet.
-3. Demo: http://localhost:3000
+1. Open `docs/sprint-2-tdd-report.docx` on the screen.
+2. Do not say the multi-food form, `proposeMatches`, or US9a QA are finished. Those hours are today and Saturday (Days 3–4).
+3. Demo base only: http://localhost:3000
 
 ---
 
@@ -27,83 +29,119 @@ Meeting 3 reports **Days 3–4** (Wednesday 4 and Thursday 5 November), **18 hou
 
 ### 1. Opening (Napat, about 1 minute)
 
-Good morning. This is Scrum meeting **three**, **Friday 6 November**. Wednesday we had US9a in review and US9b still To-Do. Days 3 and 4 were **18 hours**: the multi-food form, `proposeMatches`, and the US9a QA file. Jirathiwat logged **0** in this window, which matches the sheet. Capacity subtraction is Days 5 and 6.
+Good morning. This is Scrum meeting **three**, **Friday 6 November**, Sprint **Day 3**. Wednesday we finished Days 1 and 2: the edit form and `PATCH /api/donations/:id`, both In Review. We have not started Day 3.
+
+From today, “What will I do next?” is not a task name. It is the **test cases** you will write or run before you code. Number, name, expected output. The sheet we hand in with the final presentation is the TDD report. Red means the test is not passing yet. Green means it passed. Yellow means it is specified and waiting for today’s run.
 
 Pratanin, please start.
 
-### 2. Pratanin, Dev 1 (about 1.5 minutes)
+### 2. Pratanin, Dev 1 (about 2 minutes)
 
-**Accomplished:** **US9b Add multi-food lines and the split checkbox** is **6 of 6 hours** (3 + 3) and **In Review**. The donor form has "Add another food", a quantity and expiry on each line, and the checkbox "Send this log to more than one food bank when one bank cannot take the full weight." Submit posts `lines` and `splitAcrossBanks`. The result list prints each `foodBankName` and `quantityKg`.
+**Accomplished:** **US9a Build donor edit form** is **6 of 6 hours** from Days 1–2 and **In Review**. Edit shows only while the donation is queued or matched.
 
-**Next:** Until Monday I have **0 hours** on Days 5 and 6. Day 7 I start **US3b Render expiry alerts on /notifications** (**2 of 4 hours**) and **US4a Build operations board filters** (**2 of 6 hours**).
+**Next:** I will not code the multi-food form until these cases are written. They are Days 3–4, **6 hours**.
+
+- **TC-US9b-01** Add a second food. Expected: one `donationId`, `lines` length 2, `quantity` equals the sum of the lines.
+- **TC-US9b-02** Tick “send this log to more than one food bank.” Expected: the POST body has `splitAcrossBanks: true`.
+- **TC-US9a-04** Open a delivered donation. Expected: the list says Locked and there is no Edit link.
+
+All three are **Red** this morning. I will turn TC-US9b-01 and TC-US9b-02 Green before Monday.
 
 **Blockers:** None.
 
 ### 3. Napat to Jirathiwat
 
-Thanks, Pratanin. Jirathiwat.
+Thanks, Pratanin. Jirathiwat, you're next.
 
-### 4. Jirathiwat, Dev 3 (about 1.5 minutes)
+### 4. Jirathiwat, Dev 3 (about 2 minutes)
 
-**Accomplished:** **0 hours** since Wednesday. The PATCH from Days 1–2 is still In Review. I did not start capacity split.
+**Accomplished:** **US9a PATCH /api/donations/:id** is **8 of 8 hours** from Days 1–2 and **In Review**. I have **0 hours** on Day 3. I do not start capacity until Day 5.
 
-**Next:** Until Monday I finish two cards. **US9b Subtract quantityKg**, **6 hours** (Day 5 is 3, Day 6 is 3): `placeMatches` reduces `remainingCapacityKg` by `match.quantityKg`, and `releaseMatches` adds it back before an edit. **US3b Build the 24/12/2 hour notification job**, **6 hours** on the same days (3 + 3). Thresholds are 24, 12, and 2. A row is written once per donation per threshold.
+**Next:** I write the failing tests before Day 5, so the code has something to pass.
 
-**Blockers:** None. I need Sirapassorn's `proposeMatches` array, which she says is In Review.
+- **TC-US9a-03** A food bank calls PATCH. Expected: **403**.
+- **TC-US9b-06** A 190 kg split is saved. Expected: SOS `remainingCapacityKg` falls by **164**, not by 190.
+- **TC-US9b-07** The donor edits that log. Expected: the old kilograms are restored, then the new match subtracts only the new `quantityKg`.
+
+All three are **Red**. I will not mark the capacity card started until TC-US9b-06 fails for the right reason, then passes.
+
+**Blockers:** None.
 
 ### 5. Napat to Sirapassorn
 
-Thanks, Jirathiwat. Sirapassorn, name the card.
+Thanks, Jirathiwat. Sirapassorn, name the card and the tests.
 
-### 6. Sirapassorn, Dev 2 (about 1.5 minutes)
+### 6. Sirapassorn, Dev 2 (about 2 minutes)
 
-**Accomplished:** **US9b Implement proposeMatches** is **8 of 8 hours** (4 + 4) and **In Review**. `web/lib/matching.ts` ranks by `totalScore`. With the split flag, SOS at about 3.66 km takes up to its remaining kilograms, then Thonburi at about 5.13 km takes the rest. A 190 kg log becomes 164 kg plus 26 kg. `withinRange` and `hasCapacity` on each row are true. The old `proposeMatch` path still serves US1b when the flag is false.
+**Accomplished:** **0 hours** since Wednesday, as planned. `proposeMatch` is still the Sprint 1 one-bank path.
 
-**Next:** Until Monday I emit the **driver audience** on the same 24/12/2 thresholds, **4 hours** (Day 5 is 2, Day 6 is 2), card **US3b Emit driver-audience notifications**.
+**Next:** Days 3–4 are **US9b proposeMatches**, **8 hours**. I write these tests first.
 
-**Blockers:** None. Mahidol is about 23 km and outside its 22 km range, so I do not expect a third bank on the donor seed.
+- **TC-US9b-03** `splitAcrossBanks` false, quantity 10. Expected: one match, `status` matched.
+- **TC-US9b-04** Two lines, 100 kg and 90 kg, split true. Expected: at least two matches, sum of `quantityKg` is **190**.
+- **TC-US9b-05** Quantity 4000. Expected: `match` is null, `status` queued.
+
+TC-US9b-03 and TC-US9b-05 are **Yellow**: Sprint 1 already covers them inside `test-us1b-auto-match.py`, and I will re-run them today. TC-US9b-04 is **Yellow** in `test-zz-donor-edit-split.py` until I re-run it on Day 3 and mark it Green.
+
+**Blockers:** None.
 
 ### 7. Napat to Sakkaraj
 
-Thank you. Sakkaraj.
+Thank you, Sirapassorn. Sakkaraj.
 
-### 8. Sakkaraj, QA 1 (about 1.5 minutes)
+### 8. Sakkaraj, QA 1 (about 2 minutes)
 
-**Accomplished:** **US9a QA** is **4 of 4 hours** (2 + 2) and **In Review**. `test_donor_can_edit_a_donation_before_pickup` passed: PATCH body with one Dairy line of 6 kg returns `foodType` Dairy, `quantity` 6, and `lines[0].foodType` Dairy. The Sprint 1 files still pass. I have not ticked Done. I still want the Edit screen clicked once with Pratanin.
+**Accomplished:** **0 hours** on Days 1–2. US9a is not Done. I have not ticked the QA card.
 
-**Next:** Until Monday I run **US9b QA**, **4 hours** (Day 6 is 2, Day 7 is 2). `test_one_log_can_hold_many_foods_and_split_across_banks` posts two lines, 100 kg and 90 kg, `splitAcrossBanks: true`, and expects `quantity` 190, two lines, at least two matches, and the sum of `quantityKg` equal to 190.
+**Next:** Days 3–4 are **US9a QA**, **4 hours**. These are the cases I run.
 
-**Blockers:** None, if the module fixture keeps calling `POST /api/test/reset` so SOS starts at 164 kg.
+- **TC-US9a-01** Donor PATCH, Bakery 4 kg to Dairy 6 kg. Expected: **200**, `foodType` Dairy, `quantity` 6, `lines[0].foodType` Dairy. The test is already in `qa/api/test-zz-donor-edit-split.py`. It is **Yellow** until I run it today.
+- **TC-US9a-02** Same donation after pickup. Expected: **409**. This test is **Red**. I will add it before I call the card reviewed.
+- **TC-S1-01** and **TC-S1-02** Sprint 1 regression. Expected: queue under 60 seconds, match under 120 seconds, quantity 4000 stays queued.
+
+**Blockers:** None, if `POST /api/test/reset` still restores SOS to 164 kg.
 
 ### 9. Napat's own update (about 1 minute)
 
-**Accomplished:** Days 3–4 are **18 hours**. Running total **32 of 113**. US9a is fully hour-logged and In Review. US9b UI and matcher are In Review. Capacity is To-Do.
+**Accomplished:** Days 1–2 are **14 of 113**. The board is still the Wednesday board. Day 3 hours are not logged.
 
-**Next:** Monday reports Days 5–7, **24 hours**. That window can move US9a and US9b to Done only if this Definition of Done list is true. US3b starts. US4a filters start on Day 7 only, **2 of 6**, not finished.
+**Next:** I own the TDD report. Before Monday I will set today’s rows:
+
+- **TC-RPT-01** Every new case has a number, a name, an owner, and an expected output. Expected: no blank row in the report.
+- **TC-RPT-02** A card does not move to Done while its cases are Red. Expected: US9a and US9b stay In Review or To-Do on Monday if any case is still Red.
 
 **Blockers:** None.
 
 ### 10. Blocker and risk review (Napat, about 1 minute)
 
-Sakkaraj's five-minute UI pass with Pratanin is the only open item on US9a. US9b must not be called Done while `placeMatches` still subtracts the full quantity from one bank. Anyone else?
+We do not code Day 3 against a missing test. Sakkaraj’s TC-US9a-02 and Jirathiwat’s TC-US9b-06 are the two Red cases I will ask about on Monday. Does anyone want to add a case?
 
-### 11. Definition of Done check (Napat, about 1.5 minutes)
+### 11. Definition of Done check (Napat, about 1 minute)
 
-US9a, before Done on Monday: PATCH 200 for the owner, 403 for another donor, 409 after pickup, pytest green, Edit link hidden after pickup, hours on the sheet. US9b, before Done: `matches.length >= 2` for 190 kg, sum of `quantityKg` is 190, and US1b still matches a 10 kg donation to one bank in under 120 seconds.
+Nothing new is Done today. US9a stays In Review until TC-US9a-01 is Green and TC-US9a-02 exists. US9b stays To-Do.
 
 ### 12. Closing (Napat, about 30 seconds)
 
-Next standup is **Monday 9 November, 09:00**, Meeting 4. Thank you.
+Day 3 starts now. Next standup is **Monday 9 November, 09:00**, Meeting 4. Bring the TDD report. Thank you.
 
 ---
 
-## Example card positions
+## Test cases this meeting calls “next”
+
+| Who | Cases | Cycle this morning |
+|---|---|---|
+| Pratanin | TC-US9b-01, TC-US9b-02, TC-US9a-04 | Red |
+| Jirathiwat | TC-US9a-03, TC-US9b-06, TC-US9b-07 | Red |
+| Sirapassorn | TC-US9b-03, TC-US9b-04, TC-US9b-05 | Yellow until today’s run |
+| Sakkaraj | TC-US9a-01, TC-US9a-02, TC-S1-01, TC-S1-02 | 01 Yellow, 02 Red |
+| Napat | TC-RPT-01, TC-RPT-02 | Red |
+
+## Card positions after this meeting
 
 | Card | Owner | Column |
 |---|---|---|
-| US9a form, PATCH, QA | Pratanin, Jirathiwat, Sakkaraj | In Review |
-| US9b lines UI (6/6) | Pratanin | In Review |
-| US9b proposeMatches (8/8) | Sirapassorn | In Review |
-| US9b capacity (0/6) | Jirathiwat | To-Do |
-| US9b QA (0/4) | Sakkaraj | To-Do |
+| US9a edit form (6/6) | Pratanin | In Review |
+| US9a PATCH (8/8) | Jirathiwat | In Review |
+| US9a QA (0/4) | Sakkaraj | To-Do |
+| US9b lines, proposeMatches, capacity, QA | team | To-Do |
 | US3b and later | — | To-Do |

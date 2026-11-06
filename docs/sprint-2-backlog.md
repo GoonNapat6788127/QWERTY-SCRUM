@@ -27,7 +27,7 @@ Three Daily Scrums a week. Speak only the hours in that window. Do not call a la
 |---|---|---|---|---:|---|
 | 1 | Mon 2 Nov 2026 | `sprint-2-scrum-meeting-1.md` | Kickoff. Day 1 starts after. | 0 | Plans and risks. Every card To-Do. No build hours in the meeting. |
 | 2 | Wed 4 Nov 2026 | `sprint-2-scrum-meeting-2.md` | Days 1-2 | 14 | US9a form 6/6 In Review. PATCH 8/8 In Review. QA not started. US9b still To-Do. |
-| 3 | Fri 6 Nov 2026 | `sprint-2-scrum-meeting-3.md` | Days 3-4 | 18 | US9a QA 4/4 In Review. US9b form 6/6 and proposeMatches 8/8 In Review. Capacity and US9b QA still To-Do. |
+| 3 | Fri 6 Nov 2026 | `sprint-2-scrum-meeting-3.md` | Day 3 standup. Reports Days 1-2. Days 3-4 are Next. | 18 | Board stays at Days 1-2 (14h). US9a form and PATCH In Review. Day 3 test cases are Next, not Done. |
 | 4 | Mon 9 Nov 2026 | `sprint-2-scrum-meeting-4.md` | Days 5-7 | 24 | US9a and US9b can move to Done if DoD passes. US3b job 6/6 and driver alerts 4/4. Alerts page 2/4. Dashboard filters 2/6. |
 | 5 | Wed 11 Nov 2026 | `sprint-2-scrum-meeting-5.md` | Days 8-9 | 17 | US3b QA 3/3 In Review. Dashboard API 5/5. Filters 6/6. Activity API 3/6. US5b, US7, US8 still To-Do. |
 | 6 | Fri 13 Nov 2026 | `sprint-2-scrum-meeting-6.md` | Days 10-14 (Day 15 = 0) | 40 | Close. Finish US4a, US4b, US5b, US7, US8. 8 of 8 Done only if DoD passes. Planned 113. Day 15 buffer is 0. No standup after Friday 13. |

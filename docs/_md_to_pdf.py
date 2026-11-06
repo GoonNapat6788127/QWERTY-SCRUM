@@ -13,12 +13,14 @@ FILES = [
     "sprint-1-scrum-meeting-5.md",
     "sprint-1-scrum-meeting-6.md",
     "sprint-1-demo-script.md",
+    "sprint-1-retrospective.md",
     "sprint-2-scrum-meeting-1.md",
     "sprint-2-scrum-meeting-2.md",
     "sprint-2-scrum-meeting-3.md",
     "sprint-2-scrum-meeting-4.md",
     "sprint-2-scrum-meeting-5.md",
     "sprint-2-scrum-meeting-6.md",
+    "sprint-2-tdd-report.md",
 ]
 
 

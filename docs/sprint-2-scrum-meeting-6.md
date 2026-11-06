@@ -13,11 +13,11 @@ Meeting 6 is the **last Daily Scrum of Sprint 2**. The sprint ends today, **Frid
 | Facilitator | Napat Tayommai (Scrum Master) |
 | Reports | Days 10–14, **40 hours** (Pratanin 10, Jirathiwat 9, Sirapassorn 9, Sakkaraj 12). Day 15 = 0 |
 | Next | Sprint Review after this standup. No further Daily Scrum in Sprint 2. |
-| Three questions | Accomplished since Wednesday, focus for the Review, blockers |
+| Three questions | 1. Accomplished since Wednesday. 2. What will I do next? (the test cases I will run in the Review). 3. Blockers. |
 
 ## Before the meeting
 
-1. Log Days 10–14. Leave the Day 15 column at 0.
+1. Open `docs/sprint-2-tdd-report.docx`. Log Days 10–14. Leave the Day 15 column at 0.
 2. Share the board and `docs/sprint-2-backlog.xlsx`.
 3. Have pytest output for `qa/api`, including `test-zz-donor-edit-split.py`.
 4. Demo: http://localhost:3000
@@ -38,7 +38,11 @@ Pratanin, please start.
 
 **Accomplished:** **10 hours** since Wednesday. **US4b the driver activity page** is **4 of 4** (Day 10 was 2, Day 11 was 2) and **In Review**. `/drivers` shows accepted, picked up, and delivered counts. **US5b Export CSV and Export PDF** is **3 of 3** on Day 12 and **In Review**. The receipts page calls `GET /api/reports/tax` for the selected month. **US7 show the latest ping** is **3 of 3** on Day 13 and **In Review**. The page prints latitude, longitude, and `recordedAt` in Asia/Bangkok. Day 14 was **0**.
 
-**Next:** Sprint Review. I will open the donor form, add a second food, tick the split checkbox, then show Edit on a queued log and Locked after delivery. I have no Sprint 2 hours left.
+**Next:** In the Review I will execute these cases, then stop.
+
+- **TC-US9b-01** and **TC-US9b-02**. Expected: two foods, one log, `splitAcrossBanks` true.
+- **TC-US9a-04**. Expected: a delivered log shows Locked.
+- **TC-US4b-03**, **TC-US5b-02**, **TC-US7-02**. Expected: activity counts, a tax CSV, and a ping on `/drivers`.
 
 **Blockers:** None.
 
@@ -50,7 +54,11 @@ Thanks, Pratanin. Jirathiwat.
 
 **Accomplished:** **9 hours**. Day 10 was **0**. Day 11 was **2 hours** and Day 12 was **3 hours** on **US5b tax CSV and PDF**, so that card is **5 of 5** and **In Review**. `GET /api/reports/tax` accepts `format=csv` or `format=pdf`. It is not the US5a per-donation receipt. Day 13 was **2 hours** and Day 14 was **2 hours** on **US8 GET /api/decay**, **4 of 4** and **In Review**. `hoursRemaining` comes from `expiryDateTime`. `riskScore` is the heuristic. `method` is `heuristic-spike`. The note says this is not a trained model.
 
-**Next:** Sprint Review. I will show the PATCH body and the dashboard summary if the board asks. No hours left on the sheet.
+**Next:** In the Review I will run these and show the result in the TDD report.
+
+- **TC-US9a-03**. Expected: **403** for a food bank PATCH.
+- **TC-US9b-06**. Expected: SOS drops by 164 kg, not 190.
+- **TC-US4a-03**, **TC-US5b-01**, **TC-US8-01**, **TC-US8-02**. Expected: dashboard summary, tax **200**, decay fields, `heuristic-spike`.
 
 **Blockers:** None.
 
@@ -62,7 +70,10 @@ Thanks, Jirathiwat. Sirapassorn.
 
 **Accomplished:** **9 hours**. **US4b activity API** is now **6 of 6**. Day 10 was the last **3 hours**. Day 11 was **0**. **US7 POST /api/drivers/location** is **6 of 6** (Day 12 was 3, Day 13 was 3) and **In Review**. A driver posts `lat` and `lng`. We keep one ping per driver. `recordedAt` is ISO time. The activity endpoint returns that ping, so the page can show it inside a minute. Day 14 was **0**.
 
-**Next:** Sprint Review. If we need the matcher, I will explain `proposeMatches`: in-range banks only, each `quantityKg` limited by `remainingCapacityKg`, sum equal to the donation quantity. No hours left.
+**Next:** In the Review I will run these.
+
+- **TC-US9b-03**, **TC-US9b-04**, **TC-US9b-05**. Expected: one match at 10 kg, two or more at 190 kg, no match at 4000 kg.
+- **TC-US4b-04** and **TC-US7-01**. Expected: delivered count at least 1, one ping stored.
 
 **Blockers:** None.
 
@@ -74,7 +85,12 @@ Thank you. Sakkaraj.
 
 **Accomplished:** **12 hours**. Day 10 was **US4a QA, 3 of 3**: summary counts change when status is `delivered`, and the donor filter hides other organizations. Day 11 was **US4b QA, 3 of 3**: after pickup and delivery, `delivered` is at least 1 for `usr-driver-1`. Day 12 was **0**. Day 13 was **US5b QA, 2 of 2**: CSV and PDF for the month return 200. Day 14 was **4 hours**: **US7 QA, 2 of 2**, the ping shows `lat`, `lng`, and `recordedAt`, and **US8 QA, 2 of 2**, `GET /api/decay?donationId=` returns `hoursRemaining` and `riskScore`. I re-ran `qa/api`. The edit test, the one-to-many test, and the Sprint 1 files are still green.
 
-**Next:** I sit the Sprint Review and log any Product Owner defects. I will not open a new card after this meeting.
+**Next:** I will run the full `qa/api` set and mark the report.
+
+- **TC-US4a-05**, **TC-US4b-05**, **TC-US5b-03**, **TC-US7-03**, **TC-US8-03**. Expected: each one Green.
+- **TC-S1-01** and **TC-S1-02**. Expected: queue under 60 seconds, match under 120 seconds.
+
+I will not open a new card after this meeting.
 
 **Blockers:** None.
 
@@ -82,7 +98,10 @@ Thank you. Sakkaraj.
 
 **Accomplished:** Days 10–14 are **40 hours**. Day 15 is 0. If every DoD line below is true, actual hours are **113 of 113** and remaining is **0**.
 
-**Next:** Sprint Review immediately after this standup. Order: edit a queued log, add two foods, split across SOS and Thonburi, then the alerts, the dashboard, driver activity with a ping, the tax export, and the decay spike.
+**Next:** I submit `docs/sprint-2-tdd-report.docx` with the final presentation.
+
+- **TC-RPT-05**. Expected: every Sprint 2 case is Green, or the story stays In Review.
+- **TC-RPT-06**. Expected: the Review follows the Green cases only. No case that is still Red is called Done.
 
 **Blockers:** None.
 
