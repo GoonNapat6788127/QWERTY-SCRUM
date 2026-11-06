@@ -4,7 +4,7 @@ Wednesday 11 November 2026. Three-question format.
 
 ## Meeting at a glance
 
-Meeting 5 reports **Days 8–9** (Monday 9 and Tuesday 10 November), **17 hours**. US3b hours are complete and the story is **In Review** until this meeting's Definition of Done. US4a filters are **4 of 6** at the end of Day 8 and **6 of 6** at the end of Day 9, so this window closes the filter hours. The dashboard API is **5 of 5**. Dashboard QA has not started. Activity API is **3 of 6**.
+Meeting 5 reports **Days 8–9** (Monday 9 and Tuesday 10 November), **17 hours**. US3b hours are complete and the story is **In Review** until this meeting's Definition of Done. US4a filters are **4 of 6** at the end of Day 8 and **6 of 6** at the end of Day 9, so this window closes the filter hours. The dashboard API is **5 of 5**. Dashboard QA has not started. Activity API is **3 of 6**. Each case below includes the command. Start the site (`cd web`, then `npm run dev`) and run the command from the repo root.
 
 | Item | Detail |
 |---|---|
@@ -38,8 +38,16 @@ Pratanin, please start.
 **Next:** Tests before the screens. Friday is the close.
 
 - **TC-US4b-03** Open `/drivers`. Expected: the driver name and the three counts are visible.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields -q`
+
 - **TC-US5b-02** On `/receipts`, choose a month and Export CSV. Expected: a file download, not the Sprint 1 receipt PDF.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv -q`
+
 - **TC-US7-02** After a ping, `/drivers` shows latitude, longitude, and `recordedAt` in Asia/Bangkok.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping -q`
 
 The terminal picture shows PASSED for TC-US4b-03, TC-US5b-02, and TC-US7-02.
 
@@ -56,8 +64,16 @@ Thanks, Pratanin. Jirathiwat.
 **Next:** Day 10 is **0**. Then tax and decay. Tests first.
 
 - **TC-US5b-01** `GET /api/reports/tax?format=csv` and `format=pdf` for a month. Expected: **200**. This is not the US5a receipt.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf -q`
+
 - **TC-US8-01** `GET /api/decay?donationId=`. Expected: `hoursRemaining` and `riskScore`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields -q`
+
 - **TC-US8-02** The same response. Expected: `method` is `heuristic-spike`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike -q`
 
 The terminal picture shows PASSED for TC-US5b-01, TC-US8-01, and TC-US8-02.
 
@@ -74,7 +90,12 @@ Thanks, Jirathiwat. Sirapassorn.
 **Next:** Day 10 finishes the activity API. Days 12–13 are GPS. Tests first.
 
 - **TC-US4b-04** After delivery, `delivered` for `usr-driver-1` is at least 1.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count -q`
+
 - **TC-US7-01** `POST /api/drivers/location` with `lat` and `lng`. Expected: one ping for that driver, with `recordedAt`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping -q`
 
 The terminal picture shows PASSED for TC-US4b-04 and TC-US7-01.
 
@@ -91,10 +112,24 @@ Thank you. Sakkaraj.
 **Next:** These are the cases I run before Friday’s close. Day 12 is **0**.
 
 - **TC-US4a-05** Dashboard counts match the filtered rows. Expected: delivered count equals the delivered rows.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter -q`
+
 - **TC-US4b-05** After pickup and delivery, the activity row shows that `donationId`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery -q`
+
 - **TC-US5b-03** CSV and PDF for the month both return **200** for the donor.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats -q`
+
 - **TC-US7-03** The ping on the activity log has `lat`, `lng`, and `recordedAt`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields -q`
+
 - **TC-US8-03** Decay returns `hoursRemaining`, `riskScore`, and `method`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape -q`
 
 The terminal picture shows PASSED for TC-US4a-05, TC-US4b-05, TC-US5b-03, TC-US7-03, and TC-US8-03.
 
@@ -105,6 +140,14 @@ The terminal picture shows PASSED for TC-US4a-05, TC-US4b-05, TC-US5b-03, TC-US7
 **Accomplished:** Days 8–9 are **17 hours**. Running total **73 of 113**.
 
 **Next:** I only move US3b to Done if TC-US3b-01, TC-US3b-02, and TC-US3b-03 are Green in the TDD report. US4a stays open: TC-US4a-05 is still Red. Friday 13 is the close. There is no standup after that.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours -q`
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold -q`
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert -q`
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter -q`
 
 **Blockers:** None.
 
@@ -139,6 +182,17 @@ Run on Friday 6 November 2026 against http://localhost:3000. The picture is the 
 
 ### Pratanin
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping`
 ![Terminal output for Pratanin](screenshots/m5-pratanin.png)
 
 ```python
@@ -166,6 +220,17 @@ def test_tc_us7_02_show_the_ping():
 
 ### Jirathiwat
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike`
 ![Terminal output for Jirathiwat](screenshots/m5-jirathiwat.png)
 
 ```python
@@ -193,6 +258,15 @@ def test_tc_us8_02_label_the_spike():
 
 ### Sirapassorn
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping`
 ![Terminal output for Sirapassorn](screenshots/m5-sirapassorn.png)
 
 ```python
@@ -220,6 +294,21 @@ def test_tc_us7_01_store_a_ping():
 
 ### Sakkaraj
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape`
 ![Terminal output for Sakkaraj](screenshots/m5-sakkaraj.png)
 
 ```python

@@ -4,7 +4,7 @@ Friday 13 November 2026. Sprint close. Three-question format.
 
 ## Meeting at a glance
 
-Meeting 6 is the **last Daily Scrum of Sprint 2**. The sprint ends today, **Friday 13 November**. It reports **Days 10–14** (work since Wednesday 11 November), **40 hours**. **Day 15's build cell is 0.** There is no standup on Monday 16. The sprint is 8 stories and **113** planned hours. Move a card to Done only if the Definition of Done in this meeting is true.
+Meeting 6 is the **last Daily Scrum of Sprint 2**. The sprint ends today, **Friday 13 November**. It reports **Days 10–14** (work since Wednesday 11 November), **40 hours**. **Day 15's build cell is 0.** There is no standup on Monday 16. The sprint is 8 stories and **113** planned hours. Move a card to Done only if the Definition of Done in this meeting is true. Each case below includes the command. Start the site (`cd web`, then `npm run dev`) and run the command from the repo root.
 
 | Item | Detail |
 |---|---|
@@ -40,9 +40,29 @@ Pratanin, please start.
 
 **Next:** In the Review I will execute these cases, then stop.
 
-- **TC-US9b-01** and **TC-US9b-02**. Expected: two foods, one log, `splitAcrossBanks` true.
+- **TC-US9b-01**. Expected: two foods on one log, `quantity` equals the sum of the lines.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log -q`
+
+- **TC-US9b-02**. Expected: `splitAcrossBanks` true.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted -q`
+
 - **TC-US9a-04**. Expected: a delivered log shows Locked.
-- **TC-US4b-03**, **TC-US5b-02**, **TC-US7-02**. Expected: activity counts, a tax CSV, and a ping on `/drivers`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked -q`
+
+- **TC-US4b-03**. Expected: activity counts are visible.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields -q`
+
+- **TC-US5b-02**. Expected: a tax CSV download.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv -q`
+
+- **TC-US7-02**. Expected: a ping on `/drivers`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping -q`
 
 **Blockers:** None.
 
@@ -57,8 +77,28 @@ Thanks, Pratanin. Jirathiwat.
 **Next:** In the Review I will run these and show the result in the TDD report.
 
 - **TC-US9a-03**. Expected: **403** for a food bank PATCH.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role -q`
+
 - **TC-US9b-06**. Expected: SOS drops by 164 kg, not 190.
-- **TC-US4a-03**, **TC-US5b-01**, **TC-US8-01**, **TC-US8-02**. Expected: dashboard summary, tax **200**, decay fields, `heuristic-spike`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg -q`
+
+- **TC-US4a-03**. Expected: dashboard summary fields.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields -q`
+
+- **TC-US5b-01**. Expected: tax CSV and PDF return **200**.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf -q`
+
+- **TC-US8-01**. Expected: decay fields `hoursRemaining` and `riskScore`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields -q`
+
+- **TC-US8-02**. Expected: `method` is `heuristic-spike`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike -q`
 
 **Blockers:** None.
 
@@ -72,8 +112,25 @@ Thanks, Jirathiwat. Sirapassorn.
 
 **Next:** In the Review I will run these.
 
-- **TC-US9b-03**, **TC-US9b-04**, **TC-US9b-05**. Expected: one match at 10 kg, two or more at 190 kg, no match at 4000 kg.
-- **TC-US4b-04** and **TC-US7-01**. Expected: delivered count at least 1, one ping stored.
+- **TC-US9b-03**. Expected: one match at 10 kg.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off -q`
+
+- **TC-US9b-04**. Expected: two or more matches at 190 kg.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks -q`
+
+- **TC-US9b-05**. Expected: no match at 4000 kg.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued -q`
+
+- **TC-US4b-04**. Expected: delivered count at least 1.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count -q`
+
+- **TC-US7-01**. Expected: one ping stored.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping -q`
 
 **Blockers:** None.
 
@@ -87,8 +144,35 @@ Thank you. Sakkaraj.
 
 **Next:** I will run the full `qa/api` set and mark the report.
 
-- **TC-US4a-05**, **TC-US4b-05**, **TC-US5b-03**, **TC-US7-03**, **TC-US8-03**. Expected: each one Green.
-- **TC-S1-01** and **TC-S1-02**. Expected: queue under 60 seconds, match under 120 seconds.
+- **TC-US4a-05**. Expected: Green. Dashboard counts match the filtered rows.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter -q`
+
+- **TC-US4b-05**. Expected: Green. The activity row shows the `donationId`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery -q`
+
+- **TC-US5b-03**. Expected: Green. CSV and PDF both return **200**.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats -q`
+
+- **TC-US7-03**. Expected: Green. The ping has `lat`, `lng`, and `recordedAt`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields -q`
+
+- **TC-US8-03**. Expected: Green. Decay returns `hoursRemaining`, `riskScore`, and `method`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape -q`
+
+- **TC-S1-01**. Expected: queue under 60 seconds.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued -q`
+
+- **TC-S1-02**. Expected: match under 120 seconds, and quantity 4000 stays queued.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity -q`
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity -q`
 
 I will not open a new card after this meeting.
 
@@ -100,8 +184,8 @@ I will not open a new card after this meeting.
 
 **Next:** I submit `docs/sprint-2-tdd-report.docx` with the final presentation.
 
-- **TC-RPT-05**. Expected: every Sprint 2 case is Green, or the story stays In Review.
-- **TC-RPT-06**. Expected: the Review follows the Green cases only. No case that is still Red is called Done.
+- **TC-RPT-05**. Expected: every Sprint 2 case is Green, or the story stays In Review. No pytest command. This is a report check.
+- **TC-RPT-06**. Expected: the Review follows the Green cases only. No case that is still Red is called Done. No pytest command. This is a report check.
 
 **Blockers:** None.
 
@@ -161,18 +245,88 @@ Run on Friday 6 November 2026 against http://localhost:3000. Each picture is tha
 
 ### Pratanin
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked qa/api/test-us4b-driver-activity.py::test_tc_us4b_03_activity_page_fields qa/api/test-us5b-tax-export.py::test_tc_us5b_02_export_button_downloads_csv qa/api/test-us7-driver-ping.py::test_tc_us7_02_show_the_ping`
 ![Pratanin close cases](screenshots/m6-pratanin.png)
 
 ### Jirathiwat
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields qa/api/test-us5b-tax-export.py::test_tc_us5b_01_tax_csv_and_pdf qa/api/test-us8-decay.py::test_tc_us8_01_decay_fields qa/api/test-us8-decay.py::test_tc_us8_02_label_the_spike`
 ![Jirathiwat close cases](screenshots/m6-jirathiwat.png)
 
 ### Sirapassorn
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued qa/api/test-us4b-driver-activity.py::test_tc_us4b_04_delivered_count qa/api/test-us7-driver-ping.py::test_tc_us7_01_store_a_ping`
 ![Sirapassorn close cases](screenshots/m6-sirapassorn.png)
 
 ### Sakkaraj
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4a-dashboard.py::test_tc_us4a_05_counts_match_the_filter qa/api/test-us4b-driver-activity.py::test_tc_us4b_05_qa_after_pickup_and_delivery qa/api/test-us5b-tax-export.py::test_tc_us5b_03_donor_receives_both_formats qa/api/test-us7-driver-ping.py::test_tc_us7_03_qa_ping_fields qa/api/test-us8-decay.py::test_tc_us8_03_qa_decay_shape qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity`
 ![Sakkaraj close cases](screenshots/m6-sakkaraj.png)
 
 Full suite on the same day: `pytest qa/api -q` finished with **60 passed**.

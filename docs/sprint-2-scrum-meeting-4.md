@@ -4,7 +4,7 @@ Monday 9 November 2026. Three-question format.
 
 ## Meeting at a glance
 
-Friday 6 November was Sprint Day 3. That standup reported only Days 1–2. This meeting reports the work since then: **Days 3–4 (18 hours)** and **Days 5–7 (24 hours)**. US9a and US9b move to **Done** only if their test cases are Green. “What will I do next?” is the next test cases, not only a task name.
+Friday 6 November was Sprint Day 3. That standup reported only Days 1–2. This meeting reports the work since then: **Days 3–4 (18 hours)** and **Days 5–7 (24 hours)**. US9a and US9b move to **Done** only if their test cases are Green. “What will I do next?” is the next test cases, not only a task name. Each case below includes the command. Start the site (`cd web`, then `npm run dev`) and run the command from the repo root.
 
 | Item | Detail |
 |---|---|
@@ -39,8 +39,16 @@ Pratanin, please start.
 **Next:** I write these cases before I finish the screens. Days 8–9.
 
 - **TC-US3b-04** Open `/notifications`. Expected: each row shows `thresholdHours` and the message.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_04_alerts_page_renders_the_row -q`
+
 - **TC-US4a-01** Filter status `delivered`. Expected: queued rows disappear.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_01_filter_by_status -q`
+
 - **TC-US4a-02** Filter the donor name. Expected: only that donor’s rows remain.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_02_filter_by_donor -q`
 
 The terminal picture shows PASSED for TC-US3b-04, TC-US4a-01, and TC-US4a-02. US4a is not Done. Its QA case is still later.
 
@@ -57,7 +65,12 @@ Thanks, Pratanin. Jirathiwat.
 **Next:** Days 8–9 are the dashboard API, **5 hours**. Tests first.
 
 - **TC-US4a-03** `GET /api/dashboard`. Expected: `summary` has `open`, `matched`, `pickedUp`, `delivered`, `urgent`, `foodBanks`, `notifications`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields -q`
+
 - **TC-US4a-04** A donation inside 24 hours. Expected: `urgent` count includes it and a delivered donation does not.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_04_urgent_count_matches_the_flag -q`
 
 The terminal picture shows PASSED for TC-US4a-03 and TC-US4a-04.
 
@@ -74,7 +87,12 @@ Thanks, Jirathiwat. Sirapassorn.
 **Next:** Day 9 starts **US4b**, **3 of 6 hours**. The last 3 hours are Day 10. Tests first.
 
 - **TC-US4b-01** `GET /api/drivers/activity`. Expected: each driver has `accepted`, `pickedUp`, `delivered`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_01_activity_counts -q`
+
 - **TC-US4b-02** After a pickup, that driver’s `runs` include the `donationId`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_02_run_row_has_the_donation -q`
 
 The terminal picture shows PASSED for TC-US4b-01 and TC-US4b-02. The last 3 hours of this card are still Day 10.
 
@@ -91,8 +109,16 @@ Thank you. Sakkaraj.
 **Next:** Day 8 is **US3b QA**, **3 hours**. These are the cases.
 
 - **TC-US3b-01** Expiry inside 24 hours. Expected: one staff notification at threshold 24.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours -q`
+
 - **TC-US3b-02** The same donation. Expected: one driver notification at the same threshold.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold -q`
+
 - **TC-US3b-03** Refresh again. Expected: no second pair.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert -q`
 
 The terminal picture shows PASSED for TC-US3b-01, TC-US3b-02, and TC-US3b-03 in `qa/api/test-us3b-expiry-alerts.py`.
 
@@ -104,8 +130,8 @@ The terminal picture shows PASSED for TC-US3b-01, TC-US3b-02, and TC-US3b-03 in 
 
 **Next:** I update the TDD report before anyone says Done.
 
-- **TC-RPT-03** US9a rows TC-US9a-01 and TC-US9a-02 are Green. Expected: only then does US9a move to Done.
-- **TC-RPT-04** US9b rows TC-US9b-04 and TC-US9b-06 are Green. Expected: only then does US9b move to Done.
+- **TC-RPT-03** US9a rows TC-US9a-01 and TC-US9a-02 are Green. Expected: only then does US9a move to Done. No pytest command. This is a report check.
+- **TC-RPT-04** US9b rows TC-US9b-04 and TC-US9b-06 are Green. Expected: only then does US9b move to Done. No pytest command. This is a report check.
 
 US3b stays In Review. Meeting 5 must not say the dashboard or the activity log are finished.
 
@@ -143,6 +169,17 @@ Run on Friday 6 November 2026 against http://localhost:3000. The picture is the 
 
 ### Pratanin
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_04_alerts_page_renders_the_row -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_01_filter_by_status -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_02_filter_by_donor -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_04_alerts_page_renders_the_row qa/api/test-us4a-dashboard.py::test_tc_us4a_01_filter_by_status qa/api/test-us4a-dashboard.py::test_tc_us4a_02_filter_by_donor`
 ![Terminal output for Pratanin](screenshots/m4-pratanin.png)
 
 ```python
@@ -177,6 +214,15 @@ def test_tc_us4a_02_filter_by_donor():
 
 ### Jirathiwat
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4a-dashboard.py::test_tc_us4a_04_urgent_count_matches_the_flag -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4a-dashboard.py::test_tc_us4a_03_dashboard_summary_fields qa/api/test-us4a-dashboard.py::test_tc_us4a_04_urgent_count_matches_the_flag`
 ![Terminal output for Jirathiwat](screenshots/m4-jirathiwat.png)
 
 ```python
@@ -193,6 +239,15 @@ def test_tc_us4a_04_urgent_count_matches_the_flag():
 
 ### Sirapassorn
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_01_activity_counts -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us4b-driver-activity.py::test_tc_us4b_02_run_row_has_the_donation -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us4b-driver-activity.py::test_tc_us4b_01_activity_counts qa/api/test-us4b-driver-activity.py::test_tc_us4b_02_run_row_has_the_donation`
 ![Terminal output for Sirapassorn](screenshots/m4-sirapassorn.png)
 
 ```python
@@ -210,6 +265,17 @@ def test_tc_us4b_02_run_row_has_the_donation():
 
 ### Sakkaraj
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_01_staff_alert_at_24_hours qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_02_driver_alert_at_the_same_threshold qa/api/test-us3b-expiry-alerts.py::test_tc_us3b_03_no_duplicate_alert`
 ![Terminal output for Sakkaraj](screenshots/m4-sakkaraj.png)
 
 ```python

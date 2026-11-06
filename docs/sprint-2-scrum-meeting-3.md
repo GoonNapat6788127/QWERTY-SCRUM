@@ -6,7 +6,7 @@ Friday 6 November 2026. Sprint Day 3. Three-question format.
 
 Today is **Sprint Day 3**. This standup does **not** report Days 3–4 as finished. Days 1–2 are finished (14 hours). Day 3 starts after this meeting.
 
-The instructor asked that, from this meeting on, **each person answers “What will I do next?” with test cases**: number, name, and expected output. Those rows live in `docs/sprint-2-tdd-report.md` and `docs/sprint-2-tdd-report.docx`. Write the test first (Red). Code comes after (Green).
+The instructor asked that, from this meeting on, **each person answers “What will I do next?” with test cases**: number, name, and expected output. Those rows live in `docs/sprint-2-tdd-report.md` and `docs/sprint-2-tdd-report.docx`. Write the test first (Red). Code comes after (Green). Each case below includes the command. Start the site (`cd web`, then `npm run dev`) and run the command from the repo root.
 
 | Item | Detail |
 |---|---|
@@ -42,8 +42,16 @@ Pratanin, please start.
 **Next:** I will not code the multi-food form until these cases are written. They are Days 3–4, **6 hours**.
 
 - **TC-US9b-01** Add a second food. Expected: one `donationId`, `lines` length 2, `quantity` equals the sum of the lines.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log -q`
+
 - **TC-US9b-02** Tick “send this log to more than one food bank.” Expected: the POST body has `splitAcrossBanks: true`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted -q`
+
 - **TC-US9a-04** Open a delivered donation. Expected: the list says Locked and there is no Edit link.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked -q`
 
 All three passed. The terminal picture below shows PASSED for TC-US9b-01, TC-US9b-02, and TC-US9a-04.
 
@@ -60,8 +68,16 @@ Thanks, Pratanin. Jirathiwat, you're next.
 **Next:** I write the failing tests before Day 5, so the code has something to pass.
 
 - **TC-US9a-03** A food bank calls PATCH. Expected: **403**.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role -q`
+
 - **TC-US9b-06** A 190 kg split is saved. Expected: SOS `remainingCapacityKg` falls by **164**, not by 190.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg -q`
+
 - **TC-US9b-07** The donor edits that log. Expected: the old kilograms are restored, then the new match subtracts only the new `quantityKg`.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_07_edit_gives_capacity_back -q`
 
 All three passed. The terminal picture below shows PASSED for TC-US9a-03, TC-US9b-06, and TC-US9b-07.
 
@@ -78,8 +94,16 @@ Thanks, Jirathiwat. Sirapassorn, name the card and the tests.
 **Next:** Days 3–4 are **US9b proposeMatches**, **8 hours**. I write these tests first.
 
 - **TC-US9b-03** `splitAcrossBanks` false, quantity 10. Expected: one match, `status` matched.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off -q`
+
 - **TC-US9b-04** Two lines, 100 kg and 90 kg, split true. Expected: at least two matches, sum of `quantityKg` is **190**.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks -q`
+
 - **TC-US9b-05** Quantity 4000. Expected: `match` is null, `status` queued.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued -q`
 
 All three passed. The terminal picture below shows PASSED for TC-US9b-03, TC-US9b-04, and TC-US9b-05.
 
@@ -96,8 +120,22 @@ Thank you, Sirapassorn. Sakkaraj.
 **Next:** Days 3–4 are **US9a QA**, **4 hours**. These are the cases I run.
 
 - **TC-US9a-01** Donor PATCH, Bakery 4 kg to Dairy 6 kg. Expected: **200**, `foodType` Dairy, `quantity` 6, `lines[0].foodType` Dairy.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_01_edit_before_pickup -q`
+
 - **TC-US9a-02** Same donation after pickup. Expected: **409**.
-- **TC-S1-01** and **TC-S1-02** Sprint 1 regression. Expected: queue under 60 seconds, match under 120 seconds, quantity 4000 stays queued.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_02_reject_edit_after_pickup -q`
+
+- **TC-S1-01** Sprint 1 regression. Expected: queue under 60 seconds.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued -q`
+
+- **TC-S1-02** Sprint 1 regression. Expected: match under 120 seconds, and quantity 4000 stays queued.
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity -q`
+
+  `.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity -q`
 
 TC-US9a-01, TC-US9a-02, TC-S1-01, and TC-S1-02 passed. The terminal picture below shows those five PASSED lines. TC-S1-02 is the two match tests: in range under 120 seconds, and quantity 4000 stays queued.
 
@@ -109,8 +147,8 @@ TC-US9a-01, TC-US9a-02, TC-S1-01, and TC-S1-02 passed. The terminal picture belo
 
 **Next:** I own the TDD report. Before Monday I will set today’s rows:
 
-- **TC-RPT-01** Every new case has a number, a name, an owner, and an expected output. Expected: no blank row in the report.
-- **TC-RPT-02** A card does not move to Done while its cases are Red. Expected: US9a and US9b stay In Review or To-Do on Monday if any case is still Red.
+- **TC-RPT-01** Every new case has a number, a name, an owner, and an expected output. Expected: no blank row in the report. No pytest command. This is a report check.
+- **TC-RPT-02** A card does not move to Done while its cases are Red. Expected: US9a and US9b stay In Review or To-Do on Monday if any case is still Red. No pytest command. This is a report check.
 
 **Blockers:** None.
 
@@ -154,6 +192,17 @@ Run on Friday 6 November 2026 against http://localhost:3000. The picture is the 
 
 ### Pratanin
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9b-one-to-many.py::test_tc_us9b_01_second_food_on_the_same_log qa/api/test-us9b-one-to-many.py::test_tc_us9b_02_split_flag_is_submitted qa/api/test-us9a-edit-donation.py::test_tc_us9a_04_delivered_donation_is_locked`
 ![Terminal output for Pratanin](screenshots/m3-pratanin.png)
 
 ```python
@@ -187,6 +236,17 @@ def test_tc_us9a_04_delivered_donation_is_locked():
 
 ### Jirathiwat
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_07_edit_gives_capacity_back -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_03_reject_edit_by_another_role qa/api/test-us9b-one-to-many.py::test_tc_us9b_06_capacity_drops_by_each_quantity_kg qa/api/test-us9b-one-to-many.py::test_tc_us9b_07_edit_gives_capacity_back`
 ![Terminal output for Jirathiwat](screenshots/m3-jirathiwat.png)
 
 ```python
@@ -234,6 +294,17 @@ def test_tc_us9b_07_edit_gives_capacity_back():
 
 ### Sirapassorn
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9b-one-to-many.py::test_tc_us9b_03_one_bank_when_split_is_off qa/api/test-us9b-one-to-many.py::test_tc_us9b_04_split_190kg_across_banks qa/api/test-us9b-one-to-many.py::test_tc_us9b_05_over_capacity_stays_queued`
 ![Terminal output for Sirapassorn](screenshots/m3-sirapassorn.png)
 
 ```python
@@ -259,6 +330,21 @@ def test_tc_us9b_05_over_capacity_stays_queued():
 
 ### Sakkaraj
 
+Command for each case in this picture:
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_01_edit_before_pickup -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us9a-edit-donation.py::test_tc_us9a_02_reject_edit_after_pickup -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity -q`
+
+`.\.venv\Scripts\python.exe -m pytest qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity -q`
+
+The picture is one run of those same tests:
+
+`.\.venv\Scripts\python.exe -m pytest -v --tb=line qa/api/test-us9a-edit-donation.py::test_tc_us9a_01_edit_before_pickup qa/api/test-us9a-edit-donation.py::test_tc_us9a_02_reject_edit_after_pickup qa/api/test-us1a-log-donation.py::test_tc01_valid_donation_is_queued qa/api/test-us1b-auto-match.py::test_match_within_two_minutes_when_in_range_with_capacity qa/api/test-us1b-auto-match.py::test_no_match_when_quantity_exceeds_all_capacity`
 ![Terminal output for Sakkaraj](screenshots/m3-sakkaraj.png)
 
 ```python
