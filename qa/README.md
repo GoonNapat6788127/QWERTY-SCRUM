@@ -14,10 +14,11 @@ API tests for the Sprint 1 stories. They call the running website. They do not s
 | `api/test-us2b-delivery-proof.py` | US2b. Meeting 6 reports this QA card. |
 | `api/test-us5a-receipt.py` | US5a. Meeting 6 reports this QA card. |
 | `api/test-us3a-urgent-flag.py` | US3a. Meeting 6 reports this QA card. |
+| `api/test-zz-donor-edit-split.py` | US9a edit before pickup, and US9b one log split across food banks. |
 | `docs/test-cases-log-donation.md` | US1a cases in words. The automated copy is `test-us1a-log-donation.py`. |
 | `pytest.ini` | Puts `api/` on the Python path and collects every `test-*.py` story file |
 
-Do not run `helpers.py` or `conftest.py` by themselves. Pytest loads them. A passing run is **24 passed**.
+Do not run `helpers.py` or `conftest.py` by themselves. Pytest loads them. A passing run is **26 passed**.
 
 ## 1. Start the website
 
@@ -64,11 +65,28 @@ cd qa
 A full pass looks like:
 
 ```text
-........................                                                 [100%]
-24 passed
+..........................                                               [100%]
+26 passed
 ```
 
 The first thing the suite does is `POST /api/test/reset`, which restores the demo food banks so matching still has capacity.
+
+## 4. Run one file or one test
+
+From the repo root. Donor edit and the one-log split:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q
+```
+
+One case. `edit_before_pickup` is TC-US9a-01. `split_across_banks` is TC-US9b-04.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q -k edit_before_pickup
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q -k split_across_banks
+```
+
+Case numbers for Sprint 2 are in `docs/sprint-2-tdd-report.md`.
 
 ## Other address
 

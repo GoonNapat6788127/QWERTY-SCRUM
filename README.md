@@ -79,14 +79,48 @@ Sprint 2 (Monday 2 November 2026 through Friday 13 November 2026. The sprint end
 
 ## QA
 
-Start the site first (`cd web` then `npm run dev`). Then, from the repo root, install the QA library and run the suite with the project virtual environment:
+The tests call the running site. They do not start it. Use two terminals.
+
+**1. Start the site** and leave that window open.
+
+```powershell
+cd web
+npm install
+npm run dev
+```
+
+The site must be on `http://localhost:3000`. If it is on another port, set `$env:BASE_URL` before pytest.
+
+**2. Install the QA library once**, from the repo root.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r qa\requirements.txt
+```
+
+If `.venv` does not exist yet: `python -m venv .venv`, then run the install line again.
+
+**3. Run every test case.**
+
+```powershell
 .\.venv\Scripts\python.exe -m pytest qa\api -q
 ```
 
-A pass is `26 passed`. `qa/api/helpers.py` is the shared library (login and payloads). `qa/api/conftest.py` resets demo capacity before the suite. Do not run those two files by themselves. Full steps: [qa/README.md](qa/README.md). The site must be on `http://localhost:3000`, or set `BASE_URL`.
+A full pass is `26 passed`. The suite starts with `POST /api/test/reset`, which restores food-bank capacity. `qa/api/helpers.py` is the shared login library. `qa/api/conftest.py` is the reset. Do not run those two files by themselves. Pytest loads them. More detail: [qa/README.md](qa/README.md).
+
+**4. Run one file.** The donor edit and one-log-to-many cases are here.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q
+```
+
+**5. Run one test.** TC-US9a-01 is edit before pickup. TC-US9b-04 is the 190 kg split.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q -k edit_before_pickup
+.\.venv\Scripts\python.exe -m pytest qa\api\test-zz-donor-edit-split.py -q -k split_across_banks
+```
+
+Sprint 2 case numbers and Red / Green / Yellow status are in [docs/sprint-2-tdd-report.md](docs/sprint-2-tdd-report.md).
 
 ## Daily sprint agent
 
