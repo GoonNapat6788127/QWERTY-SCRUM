@@ -42,7 +42,7 @@ export default function DriversPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US4b · US7"
+        eyebrow="Drivers"
         title="Driver activity"
         description="Accepted, picked up, and delivered runs, sorted by most recent. GPS pings display within one minute of being sent."
       />

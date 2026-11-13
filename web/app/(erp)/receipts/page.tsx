@@ -19,13 +19,13 @@ export default function ReceiptsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US5a · Sprint 1"
+        eyebrow="Receipts"
         title="Digital receipts"
         description="A delivered donation generates a receipt with weight, food type, and timestamp, then records it as emailed to the donor."
       />
       <section className="mb-4 rounded-2xl border border-dashed border-line bg-panel p-4">
-        <p className="text-sm font-semibold uppercase tracking-wide text-muted">Sprint 2 · US5b · not part of Sprint 1 Done</p>
-        <p className="mt-1 text-base">Monthly tax export stays on the product backlog.</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-muted">Monthly tax file</p>
+        <p className="mt-1 text-base">Export the selected month as a spreadsheet or a PDF. A single delivery receipt is listed below.</p>
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm">
           Month

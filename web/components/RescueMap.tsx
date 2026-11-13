@@ -81,8 +81,8 @@ export default function RescueMap() {
       </div>
       <MapContainer key={pins.map((pin) => pin.id).join("-") || "bangkok"} center={center} zoom={11} scrollWheelZoom={false} className="rescue-map">
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CARTO'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {pins.map((pin) => (
           <Marker key={pin.id} position={[pin.lat, pin.lng]} icon={pin.kind === "you" ? youIcon : bankIcon}>

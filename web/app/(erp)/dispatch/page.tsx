@@ -89,7 +89,7 @@ export default function DispatchPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US2a · US2b · US6"
+        eyebrow="On the road"
         title="Driver dispatch"
         description="Drivers and logistics mark pickup, then attach photo or signature proof. A food bank watches this feed and acts on Incoming pickups."
       />

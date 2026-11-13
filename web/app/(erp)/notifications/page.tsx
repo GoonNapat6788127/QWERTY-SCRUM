@@ -43,7 +43,7 @@ export default function NotificationsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US3b · US7 · US8"
+        eyebrow="Alerts"
         title="Expiry alerts and live ops"
         description="Staff and drivers are notified at 24 / 12 / 2 hours before expiry. Drivers can ping GPS from here."
       />
@@ -75,7 +75,7 @@ export default function NotificationsPage() {
         ))}
         {items.length === 0 ? (
           <p className="rounded-2xl border border-line bg-panel p-8 text-sm text-muted">
-            No expiry notifications yet. Log a donation that expires within 24 hours to trigger US3a/US3b.
+            No expiry alerts yet. Log a donation that expires within 24 hours.
           </p>
         ) : null}
       </div>

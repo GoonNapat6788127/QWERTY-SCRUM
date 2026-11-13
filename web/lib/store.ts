@@ -675,7 +675,7 @@ export function decayEstimate(donationId: string) {
     hoursRemaining: Number(hours.toFixed(2)),
     riskScore: risk,
     method: "heuristic-spike",
-    note: "Sprint 2 US8 research spike: perishable types decay faster; this is not a trained model.",
+    note: "Perishable foods are scored higher. This is an estimate, not a trained model.",
   };
 }
 

@@ -37,7 +37,7 @@ export default function NewDonationPage() {
 
   return (
     <DonationForm
-      eyebrow="US1a · US6"
+      eyebrow="New log"
       title="Log a donation"
       description="Add one or more foods on the same log. Send the full weight to one food bank, or split it across every bank that still has room."
       submitLabel="Submit donation"

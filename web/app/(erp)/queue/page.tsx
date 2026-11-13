@@ -64,7 +64,7 @@ export default function QueuePage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US1a · US3a matching queue"
+        eyebrow="Live queue"
         title="Matching queue"
         description="Queued donations appear immediately after ingestion. Items expiring within 24 hours are flagged urgent."
       />

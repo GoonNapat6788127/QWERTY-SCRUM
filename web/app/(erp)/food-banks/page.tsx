@@ -49,7 +49,7 @@ export default function FoodBanksPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US1b sample data"
+        eyebrow="Capacity"
         title="Food banks"
         description="Location, reported capacity, remaining capacity, and delivery range used by the next match. Changing these numbers does not undo a match that is already made."
       />

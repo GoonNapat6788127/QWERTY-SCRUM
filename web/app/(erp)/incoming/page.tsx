@@ -55,7 +55,7 @@ export default function IncomingPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US2a · US2b · Food bank portal"
+        eyebrow="Arrivals"
         title="Incoming pickups"
         description="Decline a match before pickup, or confirm the food arrived after the driver delivers it. Pickup and the proof stay with the driver."
       />

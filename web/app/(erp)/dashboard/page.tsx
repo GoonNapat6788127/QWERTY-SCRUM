@@ -33,13 +33,17 @@ export default function DashboardPage() {
   useEffect(() => {
     let active = true;
     async function load() {
-      const [next, me] = await Promise.all([
-        api<DashboardResponse>("/api/dashboard"),
-        api<{ user: PublicUser }>("/api/auth/me"),
-      ]);
-      if (active) {
-        setData(next);
-        setRole(me.user.role);
+      try {
+        const [next, me] = await Promise.all([
+          api<DashboardResponse>("/api/dashboard"),
+          api<{ user: PublicUser }>("/api/auth/me"),
+        ]);
+        if (active) {
+          setData(next);
+          setRole(me.user.role);
+        }
+      } catch {
+        if (active) setData(null);
       }
     }
     void load();
@@ -83,7 +87,7 @@ export default function DashboardPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="US4a · Central dashboard"
+        eyebrow="Today"
         title="Today’s rescue activity"
         description="Open, matched, and delivered donations update as the queue and matching service run."
         actions={
