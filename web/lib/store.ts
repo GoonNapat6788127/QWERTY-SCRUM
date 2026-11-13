@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { proposeMatches, rankFoodBanks } from "./matching";
@@ -32,8 +33,14 @@ type Database = {
 };
 
 const DB_PATH = path.join(process.cwd(), "data", "db.json");
+const SHARED_PATH = "qwerty/db.json";
+const requestDb = new AsyncLocalStorage<Database>();
 
 const memory = globalThis as typeof globalThis & { __qwertyDb?: Database };
+
+function usesSharedStore(): boolean {
+  return process.env.VERCEL === "1" && Boolean(process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN);
+}
 
 function emptyDb(): Database {
   return {
@@ -56,8 +63,13 @@ function emptyDb(): Database {
   };
 }
 
+function activeDb(): Database | undefined {
+  return requestDb.getStore() ?? memory.__qwertyDb;
+}
+
 function loadDb(): Database {
-  if (memory.__qwertyDb) return memory.__qwertyDb;
+  const current = activeDb();
+  if (current) return current;
   try {
     const raw = readFileSync(DB_PATH, "utf8");
     memory.__qwertyDb = JSON.parse(raw) as Database;
@@ -69,15 +81,17 @@ function loadDb(): Database {
 }
 
 function persist() {
-  mkdirSync(path.dirname(DB_PATH), { recursive: true });
+  if (requestDb.getStore()) return;
   const body = JSON.stringify(loadDb(), null, 2);
   for (let attempt = 0; attempt < 6; attempt += 1) {
     try {
+      mkdirSync(path.dirname(DB_PATH), { recursive: true });
       writeFileSync(DB_PATH, body, "utf8");
       return;
     } catch (error) {
       const code = (error as NodeJS.ErrnoException).code;
-      if ((code !== "EBUSY" && code !== "EPERM") || attempt === 5) throw error;
+      if (code === "EROFS" || code === "EACCES" || code === "ENOENT") return;
+      if ((code !== "EBUSY" && code !== "EPERM") || attempt === 5) return;
       const until = Date.now() + 25 * (attempt + 1);
       while (Date.now() < until) {
         /* wait for Windows to release db.json */
@@ -90,9 +104,87 @@ function db(): Database {
   return loadDb();
 }
 
+async function readShared(): Promise<{ data: Database; etag: string | null }> {
+  const { get } = await import("@vercel/blob");
+  const result = await get(SHARED_PATH, { access: "private", useCache: false });
+  if (!result || result.statusCode !== 200) return { data: emptyDb(), etag: null };
+  const text = await new Response(result.stream).text();
+  if (!text) return { data: emptyDb(), etag: null };
+  return { data: JSON.parse(text) as Database, etag: result.blob.etag };
+}
+
+async function writeShared(data: Database, etag: string | null): Promise<void> {
+  const { put } = await import("@vercel/blob");
+  await put(SHARED_PATH, JSON.stringify(data), {
+    access: "private",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+    ...(etag ? { ifMatch: etag } : {}),
+  });
+}
+
+function byId<T>(items: T[], idOf: (item: T) => string, incoming: T[]): T[] {
+  const merged = new Map(items.map((item) => [idOf(item), item]));
+  for (const item of incoming) merged.set(idOf(item), item);
+  return [...merged.values()];
+}
+
+function mergeShared(current: Database, incoming: Database): Database {
+  return {
+    users: incoming.users.length ? incoming.users : current.users,
+    foodBanks: incoming.foodBanks,
+    donations: byId(current.donations, (item) => item.donationId, incoming.donations),
+    matches: byId(current.matches, (item) => item.id, incoming.matches),
+    receipts: byId(current.receipts, (item) => item.id, incoming.receipts),
+    notifications: byId(current.notifications, (item) => item.id, incoming.notifications),
+    sessions: byId(current.sessions, (item) => item.token, incoming.sessions),
+    driverPings: byId(current.driverPings, (item) => item.driverId, incoming.driverPings),
+    idempotency: { ...current.idempotency, ...incoming.idempotency },
+  };
+}
+
+/** One shared database for every role when the app is running on Vercel. */
+export async function usingStore<T>(fn: () => Promise<T> | T): Promise<T> {
+  if (!usesSharedStore()) return fn();
+  const loaded = await readShared();
+  const before = JSON.stringify(loaded.data);
+  const result = await requestDb.run(loaded.data, async () => fn());
+  if (JSON.stringify(loaded.data) === before) return result;
+
+  let pending = loaded.data;
+  let etag = loaded.etag;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      await writeShared(pending, etag);
+      return result;
+    } catch {
+      const latest = await readShared();
+      pending = mergeShared(latest.data, pending);
+      etag = latest.etag;
+    }
+  }
+  await writeShared(pending, null);
+  return result;
+}
+
 /** Restores the demo seed so Sprint 1 QA and the Friday demo start with capacity. */
 export function resetDemoData(): void {
-  memory.__qwertyDb = emptyDb();
+  const fresh = emptyDb();
+  const current = requestDb.getStore();
+  if (current) {
+    current.users = fresh.users;
+    current.foodBanks = fresh.foodBanks;
+    current.donations = fresh.donations;
+    current.matches = fresh.matches;
+    current.receipts = fresh.receipts;
+    current.notifications = fresh.notifications;
+    current.sessions = fresh.sessions;
+    current.driverPings = fresh.driverPings;
+    current.idempotency = fresh.idempotency;
+    return;
+  }
+  memory.__qwertyDb = fresh;
   persist();
 }
 
@@ -428,17 +520,20 @@ export function scoreDonation(donationId: string) {
   };
 }
 
-export function markPickedUp(donationId: string, driver: PublicUser) {
+export function markPickedUp(
+  donationId: string,
+  driver: PublicUser,
+): { ok: true; donation: Donation } | { ok: false; error: string; status: 404 | 409 } {
   const donation = getDonation(donationId);
-  if (!donation) return { error: "Donation not found.", status: 404 as const };
+  if (!donation) return { ok: false, error: "Donation not found.", status: 404 };
   if (donation.status !== "matched") {
-    return { error: "Only a matched donation can be marked picked up.", status: 409 as const };
+    return { ok: false, error: "Only a matched donation can be marked picked up.", status: 409 };
   }
   donation.status = "picked_up";
   donation.driverId = driver.id;
   donation.pickedUpAt = nowIso();
   persist();
-  return { donation };
+  return { ok: true, donation };
 }
 
 export function markDelivered(input: {
@@ -449,9 +544,13 @@ export function markDelivered(input: {
   weightKg?: number;
 }) {
   const donation = getDonation(input.donationId);
-  if (!donation) return { error: "Donation not found.", status: 404 as const };
+  if (!donation) return { ok: false as const, error: "Donation not found.", status: 404 as const };
   if (donation.status !== "picked_up") {
-    return { error: "Only a picked-up donation can be marked delivered.", status: 409 as const };
+    return {
+      ok: false as const,
+      error: "Only a picked-up donation can be marked delivered.",
+      status: 409 as const,
+    };
   }
   donation.status = "delivered";
   donation.driverId = input.driver.id;
@@ -463,7 +562,7 @@ export function markDelivered(input: {
   }
   const receipt = createReceipt(donation);
   persist();
-  return { donation, receipt };
+  return { ok: true as const, donation, receipt };
 }
 
 function createReceipt(donation: Donation): Receipt {

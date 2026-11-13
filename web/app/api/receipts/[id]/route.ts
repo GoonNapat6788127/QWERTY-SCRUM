@@ -1,6 +1,6 @@
 import { jsonError, requireUser } from "@/lib/http";
 import { buildSimplePdf } from "@/lib/pdf";
-import { getReceipt } from "@/lib/store";
+import { getReceipt, usingStore } from "@/lib/store";
 import { formatBangkok } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +9,7 @@ export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
+  return usingStore(async () => {
   const auth = await requireUser();
   if (auth.response) return auth.response;
   const { id } = await context.params;
@@ -39,10 +40,11 @@ export async function GET(
   }
 
   const pdf = buildSimplePdf("QWERTY Rescue donation receipt", lines);
-  return new Response(pdf, {
+  return new Response(new Uint8Array(pdf), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${receipt.id}.pdf"`,
     },
+  });
   });
 }

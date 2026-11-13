@@ -25,10 +25,13 @@ export async function getRequestUser(): Promise<PublicUser | null> {
   return getSessionUser(jar.get(SESSION_COOKIE)?.value);
 }
 
-export async function requireUser(roles?: Role[]) {
+type AuthOk = { user: PublicUser; response: null };
+type AuthDenied = { user: PublicUser | null; response: NextResponse };
+
+export async function requireUser(roles?: Role[]): Promise<AuthOk | AuthDenied> {
   const user = await getRequestUser();
   if (!user) {
-    return { user: null as PublicUser | null, response: jsonError("Authentication required.", 401) };
+    return { user: null, response: jsonError("Authentication required.", 401) };
   }
   if (roles && !roles.includes(user.role)) {
     return {
@@ -36,5 +39,5 @@ export async function requireUser(roles?: Role[]) {
       response: jsonError("You do not have permission to perform this action.", 403, { role: user.role }),
     };
   }
-  return { user, response: null as NextResponse | null };
+  return { user, response: null };
 }

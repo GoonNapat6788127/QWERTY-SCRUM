@@ -1,11 +1,12 @@
 import { jsonError, requireUser } from "@/lib/http";
 import { buildSimplePdf } from "@/lib/pdf";
-import { listReceipts } from "@/lib/store";
+import { listReceipts, usingStore } from "@/lib/store";
 import { formatBangkok } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
+  return usingStore(async () => {
   const auth = await requireUser(["donor", "logistics"]);
   if (auth.response) return auth.response;
   const url = new URL(request.url);
@@ -25,7 +26,7 @@ export async function GET(request: Request) {
       ),
     ];
     const pdf = buildSimplePdf("QWERTY Rescue monthly tax summary", lines);
-    return new Response(pdf, {
+    return new Response(new Uint8Array(pdf), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="tax-summary-${month}.pdf"`,
@@ -47,6 +48,7 @@ export async function GET(request: Request) {
       "Content-Type": "text/csv",
       "Content-Disposition": `attachment; filename="tax-summary-${month}.csv"`,
     },
+  });
   });
 }
 

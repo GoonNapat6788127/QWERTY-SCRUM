@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 import { SESSION_COOKIE, json, jsonError } from "@/lib/http";
-import { createSession, findUserByEmail } from "@/lib/store";
+import { createSession, findUserByEmail, usingStore } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
+  return usingStore(async () => {
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string };
   const email = body.email?.trim() ?? "";
   const password = body.password ?? "";
@@ -25,4 +26,5 @@ export async function POST(request: Request) {
   });
   const { password: _password, ...safe } = user;
   return json({ user: safe });
+  });
 }

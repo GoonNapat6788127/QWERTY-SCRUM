@@ -1,9 +1,10 @@
 import { json, jsonError, requireUser } from "@/lib/http";
-import { listDriverPings, recordDriverPing } from "@/lib/store";
+import { listDriverPings, recordDriverPing, usingStore } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  return usingStore(async () => {
   const auth = await requireUser();
   if (auth.response) return auth.response;
   const started = Date.now();
@@ -12,9 +13,11 @@ export async function GET() {
     generatedAt: new Date().toISOString(),
     elapsedMs: Date.now() - started,
   });
+  });
 }
 
 export async function POST(request: Request) {
+  return usingStore(async () => {
   const auth = await requireUser(["driver", "logistics"]);
   if (auth.response) return auth.response;
   const body = (await request.json().catch(() => ({}))) as { lat?: number; lng?: number };
@@ -23,4 +26,5 @@ export async function POST(request: Request) {
   }
   const ping = recordDriverPing(auth.user.role === "driver" ? auth.user.id : "usr-driver-1", body.lat, body.lng);
   return json({ location: ping });
+  });
 }

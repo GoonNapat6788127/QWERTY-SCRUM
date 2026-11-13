@@ -1,11 +1,12 @@
 import { json, requireUser, validationError } from "@/lib/http";
-import { ingestDonation } from "@/lib/store";
+import { ingestDonation, usingStore } from "@/lib/store";
 import { validateDonationInput } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
 /** QA injection endpoint promised in Sprint 1 Day 2 (US1a). */
 export async function POST(request: Request) {
+  return usingStore(async () => {
   const auth = await requireUser(["donor", "logistics"]);
   if (auth.response) return auth.response;
 
@@ -42,4 +43,5 @@ export async function POST(request: Request) {
     },
     result.duplicate ? 200 : 201,
   );
+  });
 }

@@ -1,10 +1,11 @@
 import { json, jsonError, requireUser, validationError } from "@/lib/http";
-import { ingestDonation, listDonations } from "@/lib/store";
+import { ingestDonation, listDonations, usingStore } from "@/lib/store";
 import { validateDonationLog } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  return usingStore(async () => {
   const auth = await requireUser();
   if (auth.response) return auth.response;
   const donations = listDonations();
@@ -13,9 +14,11 @@ export async function GET() {
       ? donations.filter((item) => item.donorId === auth.user.id)
       : donations;
   return json({ donations: visible });
+  });
 }
 
 export async function POST(request: Request) {
+  return usingStore(async () => {
   const auth = await requireUser(["donor"]);
   if (auth.response) return auth.response;
 
@@ -43,6 +46,7 @@ export async function POST(request: Request) {
     },
     result.duplicate ? 200 : 201,
   );
+  });
 }
 
 export async function PUT() {

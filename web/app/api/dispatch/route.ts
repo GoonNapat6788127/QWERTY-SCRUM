@@ -1,9 +1,10 @@
 import { json, requireUser } from "@/lib/http";
-import { getMatch, listDonations, listFoodBanks, matchesForDonation } from "@/lib/store";
+import { getMatch, listDonations, listFoodBanks, matchesForDonation, usingStore } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  return usingStore(async () => {
   const auth = await requireUser(["driver", "logistics", "foodbank"]);
   if (auth.response) return auth.response;
   const foodBanks = listFoodBanks();
@@ -16,4 +17,5 @@ export async function GET() {
       foodBank: foodBanks.find((item) => item.id === donation.foodBankId) ?? null,
     }));
   return json({ feed });
+  });
 }

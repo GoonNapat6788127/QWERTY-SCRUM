@@ -1,5 +1,5 @@
 import { json, jsonError, requireUser, validationError } from "@/lib/http";
-import { getDonation, getMatch, matchesForDonation, scoreDonation, updateDonation } from "@/lib/store";
+import { getDonation, getMatch, matchesForDonation, scoreDonation, updateDonation, usingStore } from "@/lib/store";
 import { validateDonationLog } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
@@ -8,6 +8,7 @@ export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
+  return usingStore(async () => {
   const auth = await requireUser();
   if (auth.response) return auth.response;
   const { id } = await context.params;
@@ -22,12 +23,14 @@ export async function GET(
     matches: matchesForDonation(id),
     rankings: scoreDonation(id)?.rankings ?? [],
   });
+  });
 }
 
 export async function PATCH(
   request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
+  return usingStore(async () => {
   const auth = await requireUser(["donor"]);
   if (auth.response) return auth.response;
   if (!auth.user) return jsonError("Authentication required.", 401);
@@ -41,5 +44,6 @@ export async function PATCH(
     donation: result.donation,
     match: result.match,
     matches: result.matches,
+  });
   });
 }

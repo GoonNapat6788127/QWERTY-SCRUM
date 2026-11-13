@@ -1,9 +1,10 @@
 import { json, requireUser } from "@/lib/http";
-import { listNotifications } from "@/lib/store";
+import { listNotifications, usingStore } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  return usingStore(async () => {
   const auth = await requireUser();
   if (auth.response) return auth.response;
   const items = listNotifications().filter((item) => {
@@ -11,4 +12,5 @@ export async function GET() {
     return true;
   });
   return json({ notifications: items });
+  });
 }

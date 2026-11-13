@@ -1,9 +1,10 @@
 import { json, jsonError, requireUser } from "@/lib/http";
-import { markDelivered } from "@/lib/store";
+import { markDelivered, usingStore } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
+  return usingStore(async () => {
   const auth = await requireUser(["driver", "logistics"]);
   if (auth.response) return auth.response;
   const body = (await request.json().catch(() => ({}))) as {
@@ -24,6 +25,7 @@ export async function POST(request: Request) {
     proofKind: body.proofKind,
     weightKg: body.weightKg,
   });
-  if ("error" in result) return jsonError(result.error, result.status);
+  if (!result.ok) return jsonError(result.error, result.status);
   return json({ donation: result.donation, receipt: result.receipt });
+  });
 }
