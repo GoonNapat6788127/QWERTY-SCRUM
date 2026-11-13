@@ -63,6 +63,245 @@ function emptyDb(): Database {
   };
 }
 
+function hoursFromNow(hours: number): string {
+  return new Date(Date.now() + hours * 3_600_000).toISOString();
+}
+
+function showcaseDb(): Database {
+  const base = emptyDb();
+  const now = nowIso();
+  const soon = hoursFromNow(8);
+  const later = hoursFromNow(72);
+  const window = { start: hoursFromNow(2), end: hoursFromNow(5) };
+  const proof =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+  const donor = {
+    donorId: "usr-donor-1",
+    donorName: "Bangkok Fresh Market",
+    pickupLat: 13.746,
+    pickupLng: 100.534,
+    timezone: "Asia/Bangkok" as const,
+    quantityUnit: "kg" as const,
+    declinedFoodBankIds: [] as string[],
+    foodBankReceivedBy: null,
+    idempotencyKey: null,
+    createdAt: now,
+    queuedAt: now,
+  };
+
+  const queued: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-QUEUE",
+    foodType: "Dry goods",
+    quantity: 4000,
+    expiryDateTime: later,
+    pickupWindow: window,
+    status: "queued",
+    urgent: false,
+    lines: [{ foodType: "Dry goods", quantity: 4000, expiryDateTime: later }],
+    splitAcrossBanks: false,
+    matchId: null,
+    foodBankId: null,
+    driverId: null,
+    pickedUpAt: null,
+    deliveredAt: null,
+    proofDataUrl: null,
+    proofKind: null,
+    weightKg: 4000,
+    foodBankReceivedAt: null,
+  };
+  const matched: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-MATCH",
+    foodType: "Bakery",
+    quantity: 10,
+    expiryDateTime: later,
+    pickupWindow: window,
+    status: "matched",
+    urgent: false,
+    lines: [{ foodType: "Bakery", quantity: 10, expiryDateTime: later }],
+    splitAcrossBanks: false,
+    matchId: "MAT-DEMO-MATCH",
+    foodBankId: "fb-sos-bkk",
+    driverId: null,
+    pickedUpAt: null,
+    deliveredAt: null,
+    proofDataUrl: null,
+    proofKind: null,
+    weightKg: 10,
+    foodBankReceivedAt: null,
+  };
+  const picked: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-PICKUP",
+    foodType: "Fresh produce",
+    quantity: 6,
+    expiryDateTime: later,
+    pickupWindow: window,
+    status: "picked_up",
+    urgent: false,
+    lines: [{ foodType: "Fresh produce", quantity: 6, expiryDateTime: later }],
+    splitAcrossBanks: false,
+    matchId: "MAT-DEMO-PICKUP",
+    foodBankId: "fb-thonburi",
+    driverId: "usr-driver-1",
+    pickedUpAt: now,
+    deliveredAt: null,
+    proofDataUrl: null,
+    proofKind: null,
+    weightKg: 6,
+    foodBankReceivedAt: null,
+  };
+  const delivered: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-DONE",
+    foodType: "Prepared meals",
+    quantity: 20,
+    expiryDateTime: later,
+    pickupWindow: window,
+    status: "delivered",
+    urgent: false,
+    lines: [{ foodType: "Prepared meals", quantity: 20, expiryDateTime: later }],
+    splitAcrossBanks: false,
+    matchId: "MAT-DEMO-DONE",
+    foodBankId: "fb-sos-bkk",
+    driverId: "usr-driver-1",
+    pickedUpAt: hoursFromNow(-3),
+    deliveredAt: hoursFromNow(-1),
+    proofDataUrl: proof,
+    proofKind: "signature",
+    weightKg: 20,
+    foodBankReceivedAt: now,
+    foodBankReceivedBy: "usr-foodbank-1",
+  };
+  const urgent: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-URGENT",
+    foodType: "Dairy",
+    quantity: 4,
+    expiryDateTime: soon,
+    pickupWindow: window,
+    status: "matched",
+    urgent: true,
+    lines: [{ foodType: "Dairy", quantity: 4, expiryDateTime: soon }],
+    splitAcrossBanks: false,
+    matchId: "MAT-DEMO-URGENT",
+    foodBankId: "fb-thonburi",
+    driverId: null,
+    pickedUpAt: null,
+    deliveredAt: null,
+    proofDataUrl: null,
+    proofKind: null,
+    weightKg: 4,
+    foodBankReceivedAt: null,
+  };
+  const split: Donation = {
+    ...donor,
+    donationId: "DON-DEMO-SPLIT",
+    foodType: "Bakery, Dairy",
+    quantity: 190,
+    expiryDateTime: later,
+    pickupWindow: window,
+    status: "matched",
+    urgent: false,
+    lines: [
+      { foodType: "Bakery", quantity: 100, expiryDateTime: later },
+      { foodType: "Dairy", quantity: 90, expiryDateTime: later },
+    ],
+    splitAcrossBanks: true,
+    matchId: "MAT-DEMO-SPLIT-SOS",
+    foodBankId: "fb-sos-bkk",
+    driverId: null,
+    pickedUpAt: null,
+    deliveredAt: null,
+    proofDataUrl: null,
+    proofKind: null,
+    weightKg: 190,
+    foodBankReceivedAt: null,
+  };
+
+  const banks = base.foodBanks.map((bank) => ({ ...bank }));
+  const sos = banks.find((bank) => bank.id === "fb-sos-bkk");
+  const thonburi = banks.find((bank) => bank.id === "fb-thonburi");
+  if (sos) sos.remainingCapacityKg = 0;
+  if (thonburi) thonburi.remainingCapacityKg = 31;
+
+  const match = (
+    id: string,
+    donationId: string,
+    foodBankId: string,
+    foodBankName: string,
+    quantityKg: number,
+    distanceKm: number,
+  ): Match => ({
+    id,
+    donationId,
+    foodBankId,
+    foodBankName,
+    proposedAt: now,
+    distanceKm,
+    proximityScore: 0.8,
+    capacityScore: 1,
+    totalScore: 0.86,
+    withinRange: true,
+    hasCapacity: true,
+    quantityKg,
+  });
+
+  return {
+    ...base,
+    foodBanks: banks,
+    donations: [split, urgent, delivered, picked, matched, queued],
+    matches: [
+      match("MAT-DEMO-MATCH", "DON-DEMO-MATCH", "fb-sos-bkk", "SOS Food Bank Bangkok", 10, 3.66),
+      match("MAT-DEMO-PICKUP", "DON-DEMO-PICKUP", "fb-thonburi", "Thonburi Shelter Pantry", 6, 5.13),
+      match("MAT-DEMO-DONE", "DON-DEMO-DONE", "fb-sos-bkk", "SOS Food Bank Bangkok", 20, 3.66),
+      match("MAT-DEMO-URGENT", "DON-DEMO-URGENT", "fb-thonburi", "Thonburi Shelter Pantry", 4, 5.13),
+      match("MAT-DEMO-SPLIT-SOS", "DON-DEMO-SPLIT", "fb-sos-bkk", "SOS Food Bank Bangkok", 134, 3.66),
+      match("MAT-DEMO-SPLIT-THB", "DON-DEMO-SPLIT", "fb-thonburi", "Thonburi Shelter Pantry", 56, 5.13),
+    ],
+    receipts: [
+      {
+        id: "RCP-DEMO-DONE",
+        donationId: "DON-DEMO-DONE",
+        donorId: "usr-donor-1",
+        donorEmail: "donor@qwerty.test",
+        foodType: "Prepared meals",
+        weightKg: 20,
+        timestamp: hoursFromNow(-1),
+        emailedTo: "donor@qwerty.test",
+        emailStatus: "sent",
+      },
+    ],
+    notifications: [
+      {
+        id: "NTF-DEMO-STAFF",
+        donationId: "DON-DEMO-URGENT",
+        audience: "staff",
+        thresholdHours: 24,
+        message: "Dairy (DON-DEMO-URGENT) is urgent — 24 hours or less remain before expiry.",
+        createdAt: now,
+        read: false,
+      },
+      {
+        id: "NTF-DEMO-DRIVER",
+        donationId: "DON-DEMO-URGENT",
+        audience: "driver",
+        thresholdHours: 24,
+        message: "Dairy (DON-DEMO-URGENT) is urgent — 24 hours or less remain before expiry.",
+        createdAt: now,
+        read: false,
+      },
+    ],
+  };
+}
+
+function withShowcase(data: Database): Database {
+  if (data.donations.some((item) => item.donationId.startsWith("DON-DEMO-"))) return data;
+  const demo = showcaseDb();
+  return { ...demo, sessions: data.sessions };
+}
+
 function activeDb(): Database | undefined {
   return requestDb.getStore() ?? memory.__qwertyDb;
 }
@@ -107,10 +346,10 @@ function db(): Database {
 async function readShared(): Promise<{ data: Database; etag: string | null }> {
   const { get } = await import("@vercel/blob");
   const result = await get(SHARED_PATH, { access: "private", useCache: false });
-  if (!result || result.statusCode !== 200) return { data: emptyDb(), etag: null };
+  if (!result || result.statusCode !== 200) return { data: showcaseDb(), etag: null };
   const text = await new Response(result.stream).text();
-  if (!text) return { data: emptyDb(), etag: null };
-  return { data: JSON.parse(text) as Database, etag: result.blob.etag };
+  if (!text) return { data: showcaseDb(), etag: null };
+  return { data: withShowcase(JSON.parse(text) as Database), etag: result.blob.etag };
 }
 
 async function writeShared(data: Database, etag: string | null): Promise<void> {
