@@ -57,11 +57,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[280px_1fr]">
-      <aside className="bg-forest text-paper lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+      <aside className="bg-forest text-paper shadow-[8px_0_30px_rgba(14,59,46,0.18)] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
         <div className="flex h-full flex-col px-5 py-6">
-          <Link href="/queue" className="block">
+          <Link href="/queue" className="block border-b border-white/15 pb-5">
             <p className="font-[family-name:var(--font-display)] text-3xl leading-none">QWERTY</p>
-            <p className="mt-2 text-sm uppercase tracking-[0.18em] text-leaf">Rescue ERP</p>
+            <p className="mt-2 text-sm uppercase tracking-[0.18em] text-gold">Rescue ERP</p>
           </Link>
           <nav className="mt-8 flex flex-col gap-1">
             <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/70">Sprint 1</p>
@@ -95,7 +95,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 );
               })}
           </nav>
-          <div className="mt-8 rounded-xl bg-forest-2 p-4 text-base">
+          <div className="mt-8 rounded-2xl border border-white/10 bg-forest-2 p-4 text-base">
             <p className="font-semibold">{user.name}</p>
             <p className="text-sm text-white/75">{user.organization}</p>
             <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-leaf">{user.role}</p>
@@ -111,7 +111,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
       <div className="min-h-screen">
-        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-panel px-8 py-4">
+        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-panel/90 px-8 py-4 backdrop-blur">
           <p className="text-base text-ink">Surplus food logistics · Asia/Bangkok</p>
           <p className="font-mono text-sm text-muted">Queue under 1 min · Match under 2 min</p>
         </header>

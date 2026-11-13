@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ApiError, api } from "@/lib/client";
 import { formatBangkok } from "@/lib/time";
-import type { Donation, FoodBank, Match } from "@/lib/types";
+import type { Donation, FoodBank, Match, PublicUser } from "@/lib/types";
 
 type FeedItem = Donation & { match: Match | null; matches?: Match[]; foodBank: FoodBank | null };
 
@@ -17,6 +17,8 @@ export default function DispatchPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [proofKind, setProofKind] = useState<"signature" | "photo">("signature");
   const [photo, setPhoto] = useState("");
+  const [role, setRole] = useState<PublicUser["role"] | null>(null);
+  const canMoveFood = role === "driver" || role === "logistics";
 
   async function load() {
     const data = await api<{ feed: FeedItem[] }>("/api/dispatch");
@@ -25,6 +27,9 @@ export default function DispatchPage() {
 
   useEffect(() => {
     void load().catch(() => setError("Driver, food bank, or logistics role required."));
+    api<{ user: PublicUser }>("/api/auth/me")
+      .then((data) => setRole(data.user.role))
+      .catch(() => undefined);
   }, []);
 
   function drawStart(event: React.MouseEvent<HTMLCanvasElement>) {
@@ -86,7 +91,7 @@ export default function DispatchPage() {
       <PageHeader
         eyebrow="US2a · US2b · US6"
         title="Driver dispatch"
-        description="Matched donations with pickup windows. Mark picked up, then attach photo or signature proof on delivery."
+        description="Drivers and logistics mark pickup, then attach photo or signature proof. A food bank watches this feed and acts on Incoming pickups."
       />
       {message ? <p className="mb-3 text-sm text-forest">{message}</p> : null}
       {error ? <p className="mb-3 text-sm text-urgent">{error}</p> : null}
@@ -118,6 +123,8 @@ export default function DispatchPage() {
               </div>
               <StatusBadge value={item.status} />
             </div>
+            {canMoveFood ? (
+            <>
             <div className="mt-4 flex flex-wrap gap-2">
               {item.status === "matched" ? (
                 <button
@@ -179,6 +186,12 @@ export default function DispatchPage() {
                 </button>
               </div>
             ) : null}
+            </>
+            ) : (
+              <p className="mt-4 text-sm text-muted">
+                Pickup and delivery stay with the driver. Use Incoming pickups to decline a match or confirm the food arrived.
+              </p>
+            )}
           </article>
         ))}
         {feed.length === 0 ? (

@@ -22,6 +22,7 @@ export async function GET() {
       driverId: donation.driverId,
       pickedUpAt: donation.pickedUpAt,
       deliveredAt: donation.deliveredAt,
+      foodBankReceivedAt: donation.foodBankReceivedAt,
       proofKind: donation.proofKind,
       proofDataUrl: donation.proofDataUrl,
       foodBank: banks.find((bank) => bank.id === donation.foodBankId) ?? null,

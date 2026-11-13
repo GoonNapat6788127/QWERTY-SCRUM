@@ -87,6 +87,9 @@ export type Donation = DonationMessage & {
   proofKind: "photo" | "signature" | null;
   weightKg: number;
   idempotencyKey: string | null;
+  declinedFoodBankIds: string[];
+  foodBankReceivedAt: string | null;
+  foodBankReceivedBy: string | null;
 };
 
 export type Match = {

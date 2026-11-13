@@ -28,9 +28,11 @@ export default function DonationsPage() {
         title="All logged donations"
         description="Every ingested donation. Donors can edit a log until a driver picks it up, including logs that hold more than one food."
         actions={
-          <Link href="/donations/new" className="btn-solid rounded-lg px-4 py-2.5 text-base">
-            New donation
-          </Link>
+          role === "donor" ? (
+            <Link href="/donations/new" className="btn-solid rounded-lg px-4 py-2.5 text-base">
+              New donation
+            </Link>
+          ) : null
         }
       />
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">

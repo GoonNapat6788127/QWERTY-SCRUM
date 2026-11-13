@@ -241,6 +241,9 @@ function normalizeDonation(donation: Donation): Donation {
     ];
   }
   if (typeof donation.splitAcrossBanks !== "boolean") donation.splitAcrossBanks = false;
+  if (!Array.isArray(donation.declinedFoodBankIds)) donation.declinedFoodBankIds = [];
+  if (typeof donation.foodBankReceivedAt !== "string") donation.foodBankReceivedAt = null;
+  if (typeof donation.foodBankReceivedBy !== "string") donation.foodBankReceivedBy = null;
   for (const match of db().matches) {
     if (match.donationId !== donation.donationId || typeof match.quantityKg === "number") continue;
     match.quantityKg = match.id === donation.matchId ? donation.quantity : 0;
@@ -329,8 +332,13 @@ function releaseMatches(donation: Donation) {
   donation.foodBankId = null;
 }
 
+function banksForMatching(donation: Donation): FoodBank[] {
+  const skipped = new Set(donation.declinedFoodBankIds ?? []);
+  return db().foodBanks.filter((bank) => !skipped.has(bank.id));
+}
+
 function placeMatches(donation: Donation): Match[] {
-  const matches = proposeMatches(donation, db().foodBanks);
+  const matches = proposeMatches(donation, banksForMatching(donation));
   donation.matchId = null;
   donation.foodBankId = null;
   if (!matches.length) {
@@ -418,6 +426,9 @@ export function ingestDonation(input: {
     proofKind: null,
     weightKg: input.message.quantity,
     idempotencyKey: input.idempotencyKey ?? null,
+    declinedFoodBankIds: [],
+    foodBankReceivedAt: null,
+    foodBankReceivedBy: null,
   };
   refreshDonationFlags(donation);
   data.donations.unshift(donation);
@@ -455,6 +466,9 @@ export function updateDonation(
   donation.lines = log.lines;
   donation.splitAcrossBanks = log.splitAcrossBanks;
   donation.weightKg = log.quantity;
+  donation.declinedFoodBankIds = [];
+  donation.foodBankReceivedAt = null;
+  donation.foodBankReceivedBy = null;
   donation.status = "queued";
   refreshDonationFlags(donation);
   const matches = placeMatches(donation);
@@ -663,4 +677,126 @@ export function decayEstimate(donationId: string) {
     method: "heuristic-spike",
     note: "Sprint 2 US8 research spike: perishable types decay faster; this is not a trained model.",
   };
+}
+
+function roundKg(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+export function updateFoodBankCapacity(
+  foodBankId: string,
+  user: PublicUser,
+  input: { reportedCapacityKg?: number; remainingCapacityKg?: number; deliveryRangeKm?: number },
+): { ok: true; foodBank: FoodBank } | { ok: false; error: string; status: 400 | 403 | 404 } {
+  if (user.role !== "foodbank" && user.role !== "logistics") {
+    return { ok: false, error: "Only a food bank or logistics can update capacity.", status: 403 };
+  }
+  const foodBank = db().foodBanks.find((item) => item.id === foodBankId);
+  if (!foodBank) return { ok: false, error: "Food bank not found.", status: 404 };
+  if (user.role === "foodbank" && foodBank.userId !== user.id) {
+    return { ok: false, error: "You can update only your own food bank.", status: 403 };
+  }
+  const reported = input.reportedCapacityKg ?? foodBank.reportedCapacityKg;
+  const remaining = input.remainingCapacityKg ?? foodBank.remainingCapacityKg;
+  const range = input.deliveryRangeKm ?? foodBank.deliveryRangeKm;
+  if (![reported, remaining, range].every((value) => Number.isFinite(value))) {
+    return { ok: false, error: "Capacity and range must be numbers.", status: 400 };
+  }
+  if (reported < 0.1 || reported > 5000) {
+    return { ok: false, error: "Reported capacity must be between 0.1 and 5000 kg.", status: 400 };
+  }
+  if (remaining < 0 || remaining > reported) {
+    return { ok: false, error: "Remaining capacity cannot exceed the reported capacity.", status: 400 };
+  }
+  if (range < 1 || range > 200) {
+    return { ok: false, error: "Delivery range must be between 1 and 200 km.", status: 400 };
+  }
+  foodBank.reportedCapacityKg = roundKg(reported);
+  foodBank.remainingCapacityKg = roundKg(remaining);
+  foodBank.deliveryRangeKm = roundKg(range);
+  persist();
+  return { ok: true, foodBank };
+}
+
+export function declineMatchedDonation(
+  donationId: string,
+  user: PublicUser,
+): { ok: true; donation: Donation; match: Match | null; matches: Match[] } | { ok: false; error: string; status: 403 | 404 | 409 } {
+  if (user.role !== "foodbank" && user.role !== "logistics") {
+    return { ok: false, error: "Only a food bank or logistics can decline a match.", status: 403 };
+  }
+  const donation = getDonation(donationId);
+  if (!donation) return { ok: false, error: "Donation not found.", status: 404 };
+  if (donation.status !== "matched") {
+    return { ok: false, error: "Only a matched donation can be declined.", status: 409 };
+  }
+  const matchedBanks = db().matches.filter((item) => item.donationId === donationId);
+  if (user.role === "foodbank") {
+    const owns = matchedBanks.some((match) => {
+      const bank = db().foodBanks.find((item) => item.id === match.foodBankId);
+      return bank?.userId === user.id;
+    });
+    if (!owns) return { ok: false, error: "This match is not for your food bank.", status: 403 };
+  }
+  donation.declinedFoodBankIds = [
+    ...new Set([...donation.declinedFoodBankIds, ...matchedBanks.map((match) => match.foodBankId)]),
+  ];
+  releaseMatches(donation);
+  donation.status = "queued";
+  const matches = placeMatches(donation);
+  persist();
+  return { ok: true, donation, match: matches[0] ?? null, matches };
+}
+
+export function rematchDonation(
+  donationId: string,
+  user: PublicUser,
+): { ok: true; donation: Donation; match: Match | null; matches: Match[] } | { ok: false; error: string; status: 403 | 404 | 409 } {
+  if (user.role !== "logistics") {
+    return { ok: false, error: "Only logistics can run matching again.", status: 403 };
+  }
+  const donation = getDonation(donationId);
+  if (!donation) return { ok: false, error: "Donation not found.", status: 404 };
+  if (donation.status !== "queued" && donation.status !== "matched") {
+    return { ok: false, error: "Matching can run again only before pickup.", status: 409 };
+  }
+  if (donation.status === "matched") releaseMatches(donation);
+  donation.status = "queued";
+  const matches = placeMatches(donation);
+  persist();
+  return { ok: true, donation, match: matches[0] ?? null, matches };
+}
+
+export function confirmFoodBankReceipt(
+  donationId: string,
+  user: PublicUser,
+): { ok: true; donation: Donation } | { ok: false; error: string; status: 403 | 404 | 409 } {
+  if (user.role !== "foodbank" && user.role !== "logistics") {
+    return { ok: false, error: "Only a food bank or logistics can confirm receipt.", status: 403 };
+  }
+  const donation = getDonation(donationId);
+  if (!donation) return { ok: false, error: "Donation not found.", status: 404 };
+  if (donation.status !== "delivered") {
+    return { ok: false, error: "Confirm receipt only after the driver marks the donation delivered.", status: 409 };
+  }
+  if (!donation.foodBankReceivedAt) {
+    donation.foodBankReceivedAt = nowIso();
+    donation.foodBankReceivedBy = user.id;
+    persist();
+  }
+  return { ok: true, donation };
+}
+
+export function markNotificationRead(
+  notificationId: string,
+  user: PublicUser,
+): { ok: true; notification: Notification } | { ok: false; error: string; status: 403 | 404 } {
+  const notification = db().notifications.find((item) => item.id === notificationId);
+  if (!notification) return { ok: false, error: "Notification not found.", status: 404 };
+  if (user.role === "driver" && notification.audience !== "driver") {
+    return { ok: false, error: "Drivers can mark only driver alerts as read.", status: 403 };
+  }
+  notification.read = true;
+  persist();
+  return { ok: true, notification };
 }

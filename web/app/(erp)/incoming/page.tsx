@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { StatusBadge } from "@/components/StatusBadge";
-import { api } from "@/lib/client";
+import { ApiError, api } from "@/lib/client";
 import { formatBangkok } from "@/lib/time";
 
 type IncomingItem = {
@@ -18,6 +18,7 @@ type IncomingItem = {
   driverId: string | null;
   pickedUpAt: string | null;
   deliveredAt: string | null;
+  foodBankReceivedAt: string | null;
   proofKind: "photo" | "signature" | null;
   proofDataUrl: string | null;
   foodBank: { name: string } | null;
@@ -27,21 +28,39 @@ type IncomingItem = {
 export default function IncomingPage() {
   const [items, setItems] = useState<IncomingItem[]>([]);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
 
-  useEffect(() => {
+  function load() {
     api<{ incoming: IncomingItem[] }>("/api/incoming")
       .then((data) => setItems(data.incoming))
       .catch(() => setError("Food bank or logistics role required."));
+  }
+
+  useEffect(() => {
+    load();
   }, []);
+
+  async function act(donationId: string, action: "decline" | "receive") {
+    setError("");
+    setNotice("");
+    try {
+      await api(`/api/donations/${donationId}/${action}`, { method: "POST" });
+      setNotice(action === "decline" ? "Match declined. Matching ran again without that bank." : "Receipt confirmed.");
+      load();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "That action could not be saved.");
+    }
+  }
 
   return (
     <div>
       <PageHeader
         eyebrow="US2a · US2b · Food bank portal"
         title="Incoming pickups"
-        description="Pickup shows driver ID and timestamp. After delivery, proof (photo or signature) and the delivery timestamp appear here."
+        description="Decline a match before pickup, or confirm the food arrived after the driver delivers it. Pickup and the proof stay with the driver."
       />
-      {error ? <p className="text-base text-urgent">{error}</p> : null}
+      {notice ? <p className="mb-3 text-base text-forest">{notice}</p> : null}
+      {error ? <p className="mb-3 text-base text-urgent">{error}</p> : null}
       <div className="grid gap-4">
         {items.map((item) => (
           <article key={item.donationId} className="rounded-2xl border border-line bg-panel p-5">
@@ -101,7 +120,23 @@ export default function IncomingPage() {
                   )}
                 </dd>
               </div>
+              <div>
+                <dt className="text-sm font-semibold text-muted">Food bank received</dt>
+                <dd>{formatBangkok(item.foodBankReceivedAt)}</dd>
+              </div>
             </dl>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {item.status === "matched" ? (
+                <button type="button" className="btn-line rounded-lg px-4 py-2.5 text-base" onClick={() => void act(item.donationId, "decline")}>
+                  We cannot take this
+                </button>
+              ) : null}
+              {item.status === "delivered" && !item.foodBankReceivedAt ? (
+                <button type="button" className="btn-solid rounded-lg px-4 py-2.5 text-base" onClick={() => void act(item.donationId, "receive")}>
+                  Confirm the food arrived
+                </button>
+              ) : null}
+            </div>
           </article>
         ))}
         {items.length === 0 && !error ? (

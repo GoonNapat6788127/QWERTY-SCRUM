@@ -3,8 +3,17 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { StatusBadge } from "@/components/StatusBadge";
-import { api } from "@/lib/client";
+import { ApiError, api } from "@/lib/client";
 import { formatBangkok } from "@/lib/time";
+import type { PublicUser } from "@/lib/types";
+
+function hoursLeftLabel(iso: string): string {
+  const hours = (new Date(iso).getTime() - Date.now()) / 3_600_000;
+  if (!Number.isFinite(hours)) return "";
+  if (hours <= 0) return "Past expiry";
+  if (hours < 1) return "Under 1 hour left";
+  return `${Math.round(hours)} hours left`;
+}
 
 type QueueItem = {
   donationId: string;
@@ -25,6 +34,8 @@ type QueueItem = {
 export default function QueuePage() {
   const [items, setItems] = useState<QueueItem[]>([]);
   const [elapsedMs, setElapsedMs] = useState<number | null>(null);
+  const [role, setRole] = useState<PublicUser["role"] | null>(null);
+  const [notice, setNotice] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -40,6 +51,9 @@ export default function QueuePage() {
       }
     }
     void load();
+    api<{ user: PublicUser }>("/api/auth/me")
+      .then((data) => setRole(data.user.role))
+      .catch(() => undefined);
     const timer = setInterval(() => void load(), 4000);
     return () => {
       active = false;
@@ -57,6 +71,7 @@ export default function QueuePage() {
       <p className="mb-4 text-xs text-muted">
         Queue endpoint `/api/queue` · last fetch {elapsedMs ?? "—"} ms
       </p>
+      {notice ? <p className="mb-3 text-sm text-forest">{notice}</p> : null}
       <div className="overflow-x-auto rounded-2xl border border-line bg-panel">
         <table className="data-table">
           <thead>
@@ -82,7 +97,10 @@ export default function QueuePage() {
                 <td className="px-4 py-3">
                   {item.quantity} {item.quantityUnit}
                 </td>
-                <td className="px-4 py-3">{formatBangkok(item.expiryDateTime)}</td>
+                <td className="px-4 py-3">
+                  {formatBangkok(item.expiryDateTime)}
+                  <span className="mt-1 block text-sm text-muted">{hoursLeftLabel(item.expiryDateTime)}</span>
+                </td>
                 <td className="px-4 py-3">
                   {item.pickupWindow
                     ? `${formatBangkok(item.pickupWindow.start)} – ${formatBangkok(item.pickupWindow.end)}`
@@ -91,6 +109,27 @@ export default function QueuePage() {
                 <td className="px-4 py-3 space-x-1">
                   <StatusBadge value={item.status} />
                   {item.urgent ? <StatusBadge value="urgent" /> : null}
+                  {role === "logistics" && item.status === "queued" ? (
+                    <button
+                      type="button"
+                      className="btn-line ml-2 rounded-lg px-3 py-1 text-sm"
+                      onClick={() => {
+                        setNotice("");
+                        api(`/api/donations/${item.donationId}/rematch`, { method: "POST" })
+                          .then(() => api<{ items: QueueItem[]; elapsedMs: number }>("/api/queue"))
+                          .then((data) => {
+                            setItems(data.items);
+                            setElapsedMs(data.elapsedMs);
+                            setNotice(`Matching ran again for ${item.donationId}.`);
+                          })
+                          .catch((err: unknown) => {
+                            setNotice(err instanceof ApiError ? err.message : "Matching could not run again.");
+                          });
+                      }}
+                    >
+                      Match again
+                    </button>
+                  ) : null}
                 </td>
               </tr>
             ))}
